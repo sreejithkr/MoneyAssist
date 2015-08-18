@@ -1,0 +1,106 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.skr.expensetrack.ShowTotalDetailsActivity">
+
+    <RelativeLayout android:layout_height="wrap_content"
+        android:layout_width="280dp"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:gravity="center_horizontal"
+        android:minHeight="190dp"
+        android:background="@drawable/popupbackground"
+        >
+
+        <FrameLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:id="@+id/headingST"
+            >
+
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginBottom="5dp"
+                android:text="@string/details"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:background="@drawable/text_view_title_background"
+                android:layout_margin="1dp"
+                />
+            <Button
+                android:id="@+id/closeST"
+                android:visibility="visible"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:layout_marginRight="10dp"
+                android:layout_gravity="right|center_vertical"
+                android:background="@drawable/clear_text" />
+
+        </FrameLayout>
+        <LinearLayout android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/headingST"
+            android:orientation="vertical"
+            >
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/expenceTitleST"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/expense_heading_show_total_details"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/messageExpenseST"
+            android:layout_marginLeft="22dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/incomeTitleST"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/income_heading_show_total_details"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/messageIncomeST"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="22dp"
+            android:layout_marginRight="20dp"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="20dp"
+            android:id="@+id/durationTitleST"
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/duration_heading_show_total_details"
+            android:textStyle="bold"
+            />
+        <TextView
+            android:id="@+id/messagedurationST"
+            android:layout_marginLeft="22dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginBottom="5dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        </LinearLayout >
+    </RelativeLayout>
+</RelativeLayout>

@@ -1,0 +1,47 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools" tools:context=".Home">
+
+    <item android:id="@+id/action_settings" android:title="@string/action_settings"
+        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_add_category" android:title="@string/action_add_category_home"
+        android:orderInCategory="1" app:showAsAction="never" />
+    <item android:id="@+id/action_delete_category" android:title="@string/action_delete_category"
+        android:orderInCategory="1" app:showAsAction="never" />
+    <item android:id="@+id/action_add_an_expense_or_income" android:title="@string/side_panel_items_array_income_expense"
+        android:orderInCategory="1" app:showAsAction="never" />
+    <item android:id="@+id/action_sort_by_day" android:title="@string/action_sort_by_day"
+        android:orderInCategory="1" app:showAsAction="never" />
+    <item android:id="@+id/action_sort_by_months" android:title="@string/action_sort_by_month"
+        android:orderInCategory="1" app:showAsAction="never" />
+    <item android:id="@+id/action_sort_by_category" android:title="@string/action_sort_by_category"
+        android:orderInCategory="1" app:showAsAction="never" />
+    <item android:id="@+id/action_sort_by_other_factors" android:title="@string/action_sort_by_other_factors"
+        android:orderInCategory="1" app:showAsAction="never" />
+    <item android:id="@+id/action_reset_to_original" android:title="@string/action_reset_to_original"
+        android:orderInCategory="1" app:showAsAction="never" />
+    <item android:id="@+id/action_delete_an_expense" android:title="@string/action_delete_an_expense"
+        android:orderInCategory="1" app:showAsAction="never" />
+    <item android:id="@+id/action_delete_an_income" android:title="@string/action_delete_an_income"
+        android:orderInCategory="1" app:showAsAction="never" />
+
+    <item
+        android:id="@+id/dataRefresh"
+        android:icon="@drawable/reset_menu"
+        android:title="Refresh"
+        android:alphabeticShortcut="r"
+        android:orderInCategory="1"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/quickAdd"
+        android:icon="@drawable/add_expence_income_white"
+        android:title="Refresh"
+        android:alphabeticShortcut="r"
+        android:orderInCategory="1"
+        app:showAsAction="always" />
+
+
+
+
+
+</menu>

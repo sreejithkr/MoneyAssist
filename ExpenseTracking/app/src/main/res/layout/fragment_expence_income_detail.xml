@@ -1,0 +1,106 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.skr.expensetrack.ExpenceIncomeDetailFragment">
+
+<RelativeLayout android:layout_height="wrap_content"
+    android:layout_width="280dp"
+    android:layout_centerHorizontal="true"
+    android:layout_centerVertical="true"
+    android:gravity="center_horizontal"
+    android:minHeight="190dp"
+    android:background="@drawable/popupbackground"
+    >
+
+    <FrameLayout
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/headingFEID"
+        >
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/details"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/text_view_title_background"
+            android:layout_margin="1dp"
+            />
+        <Button
+            android:id="@+id/closeFEID"
+            android:visibility="visible"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="right|center_vertical"
+            android:background="@drawable/clear_text" />
+
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/expenceIncomeMessageFEID"
+        android:layout_below="@+id/headingFEID"
+        android:layout_width="240dp"
+
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/expense_message"
+        android:gravity="center_horizontal"
+        />
+    <TextView
+        android:id="@+id/expenceIncomeDescriptionTitleFEID"
+        android:layout_below="@+id/expenceIncomeMessageFEID"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/description_title_message"
+        android:textStyle="bold"
+        android:gravity="center_horizontal"
+        />
+    <TextView
+        android:id="@+id/expenceIncomeDescriptionFEID"
+        android:layout_below="@+id/expenceIncomeDescriptionTitleFEID"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="@string/expense_message"
+        />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+android:layout_alignParentRight="true"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:id="@+id/editRelativeParent"
+        android:layout_below="@+id/expenceIncomeDescriptionFEID"
+        android:background="@drawable/roundedbutton"
+
+        >
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/editRelativeParentImgViewFEID"
+            android:src="@drawable/save_add_image"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+
+            android:background="@android:color/transparent"
+            android:text="Edit Details"
+            android:paddingLeft="20dp"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            android:textColor="@color/material_blue_grey_800"
+            android:id="@+id/editRelativeParentBtnViewFEID"
+
+
+            />
+    </RelativeLayout>
+</RelativeLayout>
+</RelativeLayout>

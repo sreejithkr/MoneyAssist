@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+	<include layout="@layout/item_composer_header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+
+	<RelativeLayout
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:padding="6dp"
+        >
+        <ImageView
+            android:id="@+id/homeViewSidePanelListImage"
+            android:layout_height="32dp"
+            android:layout_width="32dp"
+            android:maxWidth="32dp"
+            android:maxHeight="32dp"
+            android:src="@drawable/income_settings"
+            android:layout_alignParentLeft="true"
+            />
+        <TextView
+            android:layout_toRightOf="@+id/homeViewSidePanelListImage"
+            android:layout_width="fill_parent"
+            android:layout_height="32dp"
+
+            android:textColor="@color/app_green"
+            android:text="Header"
+            android:textStyle="bold"
+            android:padding="6dp"
+            android:id="@+id/nameText" />
+
+
+	</RelativeLayout>
+</LinearLayout>

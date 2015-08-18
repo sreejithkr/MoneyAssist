@@ -1,0 +1,224 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/backgroud_white"
+    tools:context="com.skr.expensetrack.HomeExpenceTrackFragment">
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/mainParentHomeFragment"
+
+    >
+    <!-- TODO: Update blank fragment layout -->
+    <RelativeLayout
+        android:id="@+id/income_summaryParentHomeFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/backgroud_white"
+        android:layout_margin="2dp"
+
+        >
+        <RelativeLayout
+            android:id="@+id/nodataParent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/backgroud_white"
+            android:layout_margin="2dp"
+            android:gravity="center_horizontal"
+
+            >
+            <TextView
+                android:id="@+id/nodataText"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:text="@string/no_data_home_message"
+                android:textColor="@color/app_green"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+
+
+                />
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:id="@+id/addExpenceIncomeHomeParent"
+                android:layout_below="@+id/nodataText"
+                android:background="@drawable/roundedbutton"
+                android:gravity="center_horizontal"
+                android:padding="5dp"
+                android:layout_centerHorizontal="true"
+                >
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_centerVertical="true"
+                    android:id="@+id/addExpenceIncomeHomeImgView"
+                    android:src="@drawable/add_expence_income_white"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="32dp"
+                    android:background="@android:color/transparent"
+                    android:text="@string/side_panel_items_array_income_expense"
+                    android:paddingLeft="24dp"
+                    android:textSize="16dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/backgroud_white"
+                    android:id="@+id/addExpenceIncomeHome"
+
+
+
+                    />
+               </RelativeLayout>
+            </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/grapWithDataParent"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:background="@color/backgroud_white"
+            android:layout_margin="2dp"
+            android:gravity="center_horizontal"
+            android:layout_centerHorizontal="true"
+
+            >
+            <TextView
+                android:id="@+id/incomeAmountHomeText"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="30sp"
+                android:textStyle="bold"
+                android:text="2000.00 INR"
+                android:textColor="@color/material_blue_grey_900"
+                android:gravity="center"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone"
+
+
+                />
+            <com.github.mikephil.charting.charts.PieChart
+                android:id="@+id/chart"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            </RelativeLayout>
+
+
+
+    </RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/expense_summaryParentHomeFragment"
+    android:layout_below="@+id/income_summaryParentHomeFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/backgroud_white"
+        android:layout_margin="2dp"
+
+        >
+
+
+        <TextView
+            android:id="@+id/expenseAmountHomeText"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:text="2000.00 INR"
+            android:textColor="@color/material_blue_grey_900"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"
+
+            />
+
+</RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="24dp"
+        android:id="@+id/more_info_LinkParent"
+        android:background="@drawable/roundedbutton"
+        android:gravity="center_horizontal"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/expense_summaryParentHomeFragment"
+
+        >
+        <ImageView
+            android:layout_width="19dp"
+            android:layout_height="19dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/more_info_LinkImgView"
+            android:src="@drawable/more_info"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:layout_height="24dp"
+            android:background="@android:color/transparent"
+            android:text="@string/details"
+            android:paddingLeft="24dp"
+            android:textSize="12dp"
+            android:textStyle="bold"
+            android:textColor="@color/backgroud_white"
+            android:id="@+id/more_info_Link"
+
+
+
+            />
+
+</RelativeLayout>
+
+
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="25dp"
+        android:background="@drawable/roundedbutton"
+        android:textColor="@color/backgroud_white"
+        android:text="@string/calc_new_summary"
+        android:id="@+id/calc_new_summary_button"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+android:layout_alignParentBottom="true"
+        android:visibility="gone"
+
+        />
+
+    <LinearLayout
+        android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/pagerParent"
+        android:layout_below="@+id/expense_summaryParentHomeFragment"
+        android:layout_width="480dp"
+        android:layout_height="480dp"
+        android:layout_alignParentBottom="true"
+        android:background="@drawable/carousel_home_background"
+        />
+    <ImageView
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentBottom="true"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_centerVertical="true"
+        android:id="@+id/swipeIndicator"
+        android:src="@drawable/swipe_icon"/>
+
+
+</RelativeLayout>
+
+
+</RelativeLayout>

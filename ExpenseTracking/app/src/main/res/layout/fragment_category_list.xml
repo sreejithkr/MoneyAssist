@@ -1,0 +1,73 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="com.skr.expensetrack.CategoryListFragment"
+    android:background="@color/backgroud_white">
+    <com.skr.customviews.SegmentedControl
+        android:id="@+id/segmented_control"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_centerHorizontal="true"
+        >
+        <com.skr.customviews.SegmentedControlButton
+            android:layout_height="40dp"
+            android:layout_width="100dp"
+            android:id="@+id/segmented_control_expense"
+            android:text="Expense" />
+        <com.skr.customviews.SegmentedControlButton
+            android:layout_height="40dp"
+            android:layout_width="100dp"
+            android:id="@+id/segmented_control_income"
+            android:text="Income"
+            android:checked="true"
+            />
+
+
+    </com.skr.customviews.SegmentedControl>
+    <ListView
+        android:id="@+id/category_list_view"
+        android:layout_below="@+id/segmented_control"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="5dp"
+        android:id="@+id/cancelDeleteParentFCL"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/roundedbutton"
+        android:visibility="gone"
+        >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:background="@android:color/transparent"
+            android:text="@string/cancel"
+            android:layout_marginLeft="12dp"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="@color/backgroud_white"
+            android:id="@+id/cancelDeleteButtonFCL"
+            android:layout_gravity="center_vertical"
+
+            />
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:layout_alignParentRight="true"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/cancelDeleteImgViewFCL"
+            android:src="@drawable/delete_icon"/>
+
+    </LinearLayout>
+
+
+</RelativeLayout>

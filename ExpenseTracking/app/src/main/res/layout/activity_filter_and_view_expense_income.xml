@@ -1,0 +1,339 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.skr.expensetrack.FilterAndViewExpenseIncomeActivity">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <com.skr.customviews.SegmentedControl
+                android:id="@+id/segmented_control_FAVEIA"
+                android:layout_marginTop="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_centerHorizontal="true"
+                android:visibility="gone"
+                >
+                <com.skr.customviews.SegmentedControlButton
+                    android:layout_height="40dp"
+                    android:layout_width="100dp"
+                    android:id="@+id/segmented_control_expense_FAVEIA"
+                    android:text="Expense" />
+                <com.skr.customviews.SegmentedControlButton
+                    android:layout_height="40dp"
+                    android:layout_width="100dp"
+                    android:id="@+id/segmented_control_income_FAVEIA"
+                    android:text="Income"
+                    android:checked="true"
+                    />
+
+
+            </com.skr.customviews.SegmentedControl>
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/segmented_control_FAVEIA"
+                android:id="@+id/checkBoxListForCategoryListingParent"
+
+                >
+                <TextView
+                    android:id="@+id/checkboxListTitle"
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/check_box_list_title_message"
+                    android:textColor="@color/material_blue_grey_900"
+                    android:textStyle="bold"
+                    />
+                <LinearLayout
+                    android:id="@+id/selectAllNoneCheckboxParent"
+                    android:layout_below="@+id/checkboxListTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
+
+                    <CheckBox
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/select_all_checkbox"
+                        android:text="@string/select_all"/>
+                    <CheckBox
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/select_none_checkbox"
+                        android:text="@string/select_none"/>
+                </LinearLayout>
+            <ListView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:divider="@null"
+                android:id="@+id/checkBoxListForCategoryListing"
+                android:layout_below="@+id/selectAllNoneCheckboxParent"
+                />
+</RelativeLayout>
+        <RelativeLayout
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/checkBoxListForCategoryListingParent"
+            android:id="@+id/parentForStartAndEndDate"
+
+            >
+            <TextView
+            android:id="@+id/parentForFromAndToDateTextBoxTitle"
+                android:layout_margin="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/start_end_date_message"
+                android:textColor="@color/material_blue_grey_900"
+                android:textStyle="bold"
+                />
+            <LinearLayout
+                android:id="@+id/enableDateCriteria"
+                android:layout_below="@+id/parentForFromAndToDateTextBoxTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+
+
+                <CheckBox
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/start_date_checkbox"
+                    android:text="@string/start_date_message"/>
+                <CheckBox
+                    android:layout_margin="10dp"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:id="@+id/end_date_checkbox"
+                    android:text="@string/end_date_message"/>
+                </LinearLayout>
+            <LinearLayout
+                android:id="@+id/parentForFromAndToDateTextBox"
+                android:layout_below="@+id/enableDateCriteria"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="10dp"
+                >
+
+                <FrameLayout
+
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                   >
+
+                    <EditText
+                        android:id="@+id/start_date_edit_text"
+                        android:layout_margin="2dp"
+                        android:layout_height="50dp"
+                        android:layout_width="fill_parent"
+                        android:hint="@string/dd_mm_yyyy"
+                        android:textColorHint="@color/material_blue_grey_900"
+                        android:background="@drawable/normal_edit_text_background"
+                        android:textColor="@color/material_blue_grey_900"
+                        android:enabled="false"
+                        />
+
+                    <Button
+                        android:id="@+id/clear_txt_strt"
+                        android:visibility="invisible"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_gravity="right|center_vertical"
+                        android:background="@drawable/clear_text" />
+
+                </FrameLayout>
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_margin="5dp"
+                    android:text="@string/to"
+                    android:gravity="center"
+                    android:textSize="24dp"
+                    android:visibility="invisible"
+                    />
+                <FrameLayout
+
+                    android:layout_height="wrap_content"
+                    android:layout_width="0dp"
+                    android:layout_weight="5"
+                    >
+                <EditText
+                    android:id="@+id/end_date_edit_text"
+                    android:layout_margin="2dp"
+                    android:layout_height="50dp"
+                    android:layout_width="fill_parent"
+                    android:hint="@string/dd_mm_yyyy"
+                    android:textColorHint="@color/material_blue_grey_900"
+                    android:background="@drawable/normal_edit_text_background"
+                    android:textColor="@color/material_blue_grey_900"
+                    android:enabled="false"
+                    />
+                    <Button
+                        android:id="@+id/calc_clear_txt_end"
+                        android:visibility="invisible"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_marginRight="10dp"
+                        android:layout_gravity="right|center_vertical"
+                        android:background="@drawable/clear_text" />
+
+                </FrameLayout>
+            </LinearLayout>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_below="@+id/parentForStartAndEndDate"
+android:id="@+id/parentForMinAndMaxAmount"
+                >
+                <TextView
+                    android:id="@+id/parentForMinMaxAmountTitle"
+                    android:layout_margin="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/max_min_amount_message"
+                    android:textStyle="bold"
+                    android:textColor="@color/material_blue_grey_900"
+                    />
+                <LinearLayout
+                    android:id="@+id/enableAmountCriteriaParent"
+                    android:layout_below="@+id/parentForMinMaxAmountTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+
+
+                    <CheckBox
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/min_amount_checkbox"
+                        android:text="@string/min_amount_message"/>
+                    <CheckBox
+                        android:layout_margin="10dp"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:id="@+id/max_amount_checkbox"
+                        android:text="@string/max_amount_message"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/parentForMAxMinAmountTextBox"
+                    android:layout_below="@+id/enableAmountCriteriaParent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:layout_margin="10dp"
+                    >
+
+                    <FrameLayout
+
+                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="5"
+                        >
+
+                        <EditText
+                            android:layout_margin="2dp"
+                            android:layout_height="50dp"
+                            android:layout_width="fill_parent"
+                            android:inputType="number"
+                            android:enabled="false"
+                            android:id="@+id/min_amount_edit_text"
+                            android:textColorHint="@color/material_blue_grey_900"
+                            android:background="@drawable/normal_edit_text_background"
+                            android:textColor="@color/material_blue_grey_900"/>
+
+                        <Button
+                            android:id="@+id/clear_txt_min"
+                            android:visibility="invisible"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_gravity="right|center_vertical"
+                            android:background="@drawable/clear_text" />
+
+                    </FrameLayout>
+
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="50dp"
+                        android:layout_margin="5dp"
+                        android:text="@string/to"
+                        android:gravity="center"
+                        android:textSize="24dp"
+                        android:visibility="invisible"
+                        />
+                    <FrameLayout
+
+                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
+                        android:layout_weight="5"
+                        >
+                        <EditText
+                            android:layout_margin="2dp"
+                            android:layout_height="50dp"
+                            android:enabled="false"
+                            android:layout_width="fill_parent"
+                            android:inputType="number"
+                            android:id="@+id/max_amount_edit_text"
+                            android:textColorHint="@color/material_blue_grey_900"
+                            android:background="@drawable/normal_edit_text_background"
+                            android:textColor="@color/material_blue_grey_900"/>
+                        <Button
+                            android:id="@+id/clear_txt_max"
+                            android:visibility="invisible"
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:layout_marginRight="10dp"
+                            android:layout_gravity="right|center_vertical"
+                            android:background="@drawable/clear_text" />
+
+                    </FrameLayout>
+                </LinearLayout>
+
+            </RelativeLayout>
+            <Button
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="25dp"
+                android:background="@drawable/roundedbutton"
+                android:textColor="@color/backgroud_white"
+                android:text="@string/filter"
+                android:id="@+id/filter_button"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@+id/parentForMinAndMaxAmount"
+                />
+
+        </RelativeLayout>
+        </ScrollView>
+
+
+</RelativeLayout>

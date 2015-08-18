@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@color/backgroud_white">
+    <include layout="@layout/expense_income_list_header"
+        android:layout_margin="3dp"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+    <RelativeLayout
+        android:id="@+id/parentListItemWithoutHeader"
+        android:layout_height="wrap_content"
+        android:layout_width="fill_parent"
+        android:orientation="vertical"
+        android:padding="6dp"
+        >
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+
+            android:textColor="@color/material_blue_grey_800"
+            android:text="Header"
+            android:textStyle="normal"
+            android:padding="6dp"
+            android:id="@+id/itemNameExpenceOrIncome" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/itemNameExpenceOrIncome"
+            android:textColor="@color/material_blue_grey_800"
+            android:text="Header"
+            android:textStyle="normal"
+            android:padding="6dp"
+            android:id="@+id/itemDateTextViewExpenceOrIncome" />
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:lines="1"
+android:layout_below="@+id/itemDateTextViewExpenceOrIncome"
+            android:textColor="@color/material_blue_grey_800"
+            android:text="Header"
+            android:textStyle="normal"
+            android:padding="6dp"
+            android:id="@+id/itemDescriptionExpenceOrIncome" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/material_blue_grey_800"
+                android:text="Header"
+                android:textStyle="bold"
+                android:padding="10dp"
+                android:id="@+id/itemAmountExpenceOrIncome"
+                />
+            <ImageView
+                android:id="@+id/deleteIconView"
+                android:layout_width="16dp"
+                android:layout_height="16dp"
+                android:src="@drawable/delete_icon"
+                android:layout_gravity="center_vertical"
+                android:layout_marginRight="10dp"
+                android:visibility="gone"
+
+                />
+            </LinearLayout>
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="1dp"
+            android:gravity="right"
+            android:background="@color/light_gray"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="6dp"
+            android:id="@+id/bottomBorderLine" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right"
+        android:textColor="@color/material_blue_grey_800"
+        android:text="Header"
+        android:textStyle="bold"
+        android:layout_margin="6dp"
+        android:id="@+id/totalLabelExpenceIncomeItem" />
+
+</LinearLayout>

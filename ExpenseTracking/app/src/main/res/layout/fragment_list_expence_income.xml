@@ -1,0 +1,145 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="com.skr.expensetrack.ListExpenceIncomeFragment">
+
+    <com.skr.customviews.AmazingListView android:id="@+id/expenseOrIncomeList"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:choiceMode="singleChoice"
+        android:divider="@android:color/transparent"
+        android:dividerHeight="0dp"
+        android:background="@color/backgroud_white"/>
+    <RelativeLayout
+        android:id="@+id/nodataParentLEIF"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/backgroud_white"
+        android:layout_margin="2dp"
+        android:gravity="center_horizontal"
+        android:visibility="invisible"
+
+        >
+        <TextView
+            android:id="@+id/nodataText"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="30dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:text="@string/no_data_expense_income_message"
+            android:textColor="@color/app_green"
+            android:gravity="center"
+            android:layout_centerHorizontal="true"
+
+
+            />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:id="@+id/addExpenceIncomeHomeParent"
+            android:layout_below="@+id/nodataText"
+            android:background="@drawable/roundedbutton"
+            android:gravity="center_horizontal"
+            android:padding="5dp"
+            android:layout_centerHorizontal="true"
+            >
+            <ImageView
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerVertical="true"
+                android:id="@+id/addExpenceIncomeHomeImgView"
+                android:src="@drawable/add_expence_income_white"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="32dp"
+                android:background="@android:color/transparent"
+                android:text="@string/side_panel_items_array_income_expense"
+                android:paddingLeft="24dp"
+                android:textSize="16dp"
+                android:textStyle="bold"
+                android:textColor="@color/backgroud_white"
+                android:id="@+id/addExpenceIncomeHome"
+
+
+
+                />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="5dp"
+        android:id="@+id/cancelDeleteParentFLEI"
+android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/roundedbutton"
+        >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:background="@android:color/transparent"
+            android:text="@string/cancel"
+            android:layout_marginLeft="12dp"
+            android:textSize="16dp"
+            android:textStyle="bold"
+            android:textColor="@color/backgroud_white"
+            android:id="@+id/cancelDeleteButtonFLEI"
+            android:layout_gravity="center_vertical"
+
+            />
+        <ImageView
+            android:layout_gravity="center_vertical"
+            android:layout_alignParentRight="true"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/cancelDeleteImgViewFLEI"
+            android:src="@drawable/delete_icon"/>
+
+    </LinearLayout>
+    <RelativeLayout
+        android:background="@color/backgroud_white"
+        android:layout_alignParentBottom="true"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/searchViewParent">
+        <Button
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/search_drag_button"
+            android:visibility="visible"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_gravity="right|center_vertical"
+            android:background="@drawable/search_drag_out" />
+        <EditText
+            android:layout_toRightOf="@+id/search_drag_button"
+            android:layout_margin="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:id="@+id/editTextSearchItems"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical"
+            android:inputType="textMultiLine"
+            android:scrollHorizontally="false"
+            android:layout_marginLeft="2dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="20dp"
+            android:hint="Search"
+            android:textColorHint="@color/material_blue_grey_900"
+            android:background="@drawable/normal_edit_text_background"
+            android:textColor="@color/material_blue_grey_900"
+
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>

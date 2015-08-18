@@ -1,0 +1,182 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.skr.expensetrack.AddExpenseIncomeFragment"
+    android:background="@color/backgroud_white"
+    >
+
+<ScrollView android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+<RelativeLayout
+    android:layout_height="wrap_content"
+    android:layout_width="match_parent">
+
+    <com.skr.customviews.SegmentedControl xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_margin="10dp"
+        android:id="@+id/radio_group"
+        android:weightSum="2"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:orientation="horizontal">
+        <com.skr.customviews.SegmentedControlButton android:id="@+id/radio_expense"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="Expense"
+
+            android:layout_weight="1"
+            android:layout_gravity="center_horizontal"/>
+        <com.skr.customviews.SegmentedControlButton android:id="@+id/radio_income"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+
+            android:text="Income"
+            android:layout_gravity="right"/>
+    </com.skr.customviews.SegmentedControl>
+
+    <Spinner
+
+        android:layout_margin="10dp"
+       android:layout_below="@+id/radio_group"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/editTextNameAddIncomeExpense"
+        android:background="@drawable/normal_edit_text_background"
+
+        />
+
+    <Button
+        android:id="@+id/add_category_button_AEI"
+        android:layout_marginTop="19dp"
+        android:layout_marginBottom="19dp"
+        android:layout_marginRight="20dp"
+        android:layout_below="@+id/radio_group"
+
+        android:layout_alignParentRight="true"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
+        android:background="@drawable/green_add"
+        android:text=""
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:textColor="@color/app_green"
+
+
+
+        />
+
+    <EditText
+
+        android:layout_margin="10dp"
+        android:layout_below="@+id/editTextNameAddIncomeExpense"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/editTextAmountAddIncomeExpense"
+        android:layout_gravity="center_horizontal"
+android:inputType="number"
+        android:imeOptions="actionDone"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:hint="@string/amount_add_expense_income"
+
+        android:textColorHint="@color/material_blue_grey_900"
+        android:background="@drawable/normal_edit_text_background"
+        android:textColor="@color/material_blue_grey_900"
+
+        />
+    <EditText
+
+        android:layout_margin="10dp"
+        android:layout_below="@+id/editTextAmountAddIncomeExpense"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:id="@+id/editTextDateAddIncomeExpense"
+        android:layout_gravity="center_horizontal"
+
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+
+        android:hint="@string/date_add_expense_income"
+        android:textColorHint="@color/material_blue_grey_900"
+        android:background="@drawable/normal_edit_text_background"
+        android:textColor="@color/material_blue_grey_900"
+
+        />
+
+    <CheckBox
+        android:id="@+id/investmentAddIncomeExpense"
+        android:layout_below="@+id/editTextDateAddIncomeExpense"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/investement_expense_income"
+
+        android:layout_alignParentLeft="true"
+        android:visibility="gone"
+        />
+    <EditText
+
+        android:layout_margin="10dp"
+        android:layout_below="@+id/investmentAddIncomeExpense"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:id="@+id/editTextDescriptionAddIncomeExpense"
+        android:layout_gravity="center_horizontal"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:scrollHorizontally="false"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:hint="@string/description_add_expense_income"
+        android:textColorHint="@color/material_blue_grey_900"
+        android:background="@drawable/normal_edit_text_background"
+        android:textColor="@color/material_blue_grey_900"
+
+        />
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="15dp"
+        android:layout_marginBottom="5dp"
+        android:id="@+id/addToDbParent"
+
+        android:layout_below="@+id/editTextDescriptionAddIncomeExpense"
+        android:layout_alignParentRight="true"
+        android:background="@drawable/roundedbutton"
+        android:padding="5dp"
+        >
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:id="@+id/addToDbImgView"
+            android:src="@drawable/save_add_image"/>
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:background="@android:color/transparent"
+        android:text="Save Details"
+        android:paddingLeft="24dp"
+        android:textSize="16dp"
+        android:textStyle="bold"
+        android:textColor="@color/backgroud_white"
+        android:id="@+id/addToDb"
+
+
+
+        />
+    </RelativeLayout>
+    </RelativeLayout>
+</ScrollView>
+   </RelativeLayout>
+

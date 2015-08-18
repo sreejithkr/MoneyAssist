@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <item name="pagerIdentifier" type="id"/>
+
+    <string name="id_pager">123091234</string>
+    <string name="app_name">ExpenseTracking</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="wait_message">Please wait...</string>
+    <string name="action_settings">Settings</string>
+    <string name="enter_category_name">Enter category name</string>
+    <string name="action_add_category_home">Add Category</string>
+    <string name="action_edit_category_home">Edit Category</string>
+    <string name="action_delete_an_expense">Delete an Expense</string>
+    <string name="action_delete_an_income">Delete an Income</string>
+    <string name="action_delete_category">Delete Category</string>
+    <string name="category_select_add_expense_income">Select your category</string>
+    <string name="amount_add_expense_income">Enter your amount</string>
+    <string name="date_add_expense_income">Enter your date</string>
+    <string name="investement_expense_income">Is an investment ?</string>
+    <string name="description_add_expense_income">Please provide a description</string>
+    <string name="side_panel_items_array_home">Home</string>
+    <string name="side_panel_items_array_income_expense">Add Expense/Income</string>
+    <string name="side_panel_items_array_expense">Expense</string>
+    <string name="side_panel_items_array_income">Income</string>
+    <string name="side_panel_items_array_category">Category</string>
+    <string name="side_panel_items_array_setting">Setting</string>
+    <string name="side_panel_items_array_get_total">Get Total</string>
+    <string name="side_panel_items_array_currency">Set your currency</string>
+    <string name="edit_income">Edit Income</string>
+    <string name="edit_expense">Edit Expense</string>
+    <string name="income">Income</string>
+    <string name="expense">Expense</string>
+    <string name="future">Future</string>
+    <string name="today">Today</string>
+    <string name="older">Older</string>
+    <string name="within_a_week">Within A Week</string>
+    <string name="within_a_month">Within A Month</string>
+    <string name="will_delete_message">Category will be deleted once save button clicked !</string>
+    <string name="action_reset_to_original">Reset</string>
+    <string name="action_sort_by_day">Group by date</string>
+    <string name="action_sort_by_month">Group by month</string>
+    <string name="action_sort_by_category">Group by categories</string>
+    <string name="action_sort_by_other_factors">Group by other options</string>
+
+    <string-array name="side_panel_items_array">
+        <item>@string/side_panel_items_array_home</item>
+        <item>@string/side_panel_items_array_income_expense</item>
+        <item>@string/side_panel_items_array_get_total</item>
+        <item>@string/side_panel_items_array_expense</item>
+        <item>@string/side_panel_items_array_income</item>
+        <item>@string/side_panel_items_array_category</item>
+        <item>@string/side_panel_items_array_currency</item>
+    </string-array>
+    <string-array name="category_array_expense">
+        <item>Clothes</item>
+        <item>Eating Out</item>
+        <item>Entertainment</item>
+        <item>Fuel</item>
+        <item>General</item>
+        <item>Gifts</item>
+        <item>Holidays</item>
+        <item>Medical</item>
+        <item>Education</item>
+        <item>Books</item>
+        <item>Money Lent</item>
+        <item>Money Borrowed</item>
+        <item>Investments</item>
+    </string-array>
+    <string-array name="category_array_income">
+        <item>General</item>
+        <item>Salary</item>
+        <item>Insurance Claim</item>
+        <item>Money Returned</item>
+        <item>Money Borrowed</item>
+        <item>Investments</item>
+    </string-array>
+    <string-array name="setting_name_array">
+        <item>@string/currency_settings</item>
+        <item>@string/category_settings</item>
+        <item>@string/duration_settings</item>
+        <item>@string/amount_settings</item>
+    </string-array>
+
+    <string name="to">to</string>
+    <string name="income_message">An amount of !*a*! was spent for purchasing an item/service in !*c*! category on !*d*!</string>
+    <string name="expense_message">An amount of !*a*! was spent for purchasing an item/service in !*c*! category on !*d*!</string>
+    <string name="marked_as_investment_message">This item has been marked as an investment.</string>
+    <string name="description_title_message">Description given for the item :</string>
+    <string name="details">More Info</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="drawer_open">Open navigation drawer</string>
+    <string name="drawer_close">Close navigation drawer</string>
+    <string name="home_page">Home</string>
+    <string name="title_activity_add_category">Add New Category</string>
+    <string name="title_activity_expence_income_detail">ExpenceIncomeDetailActivity</string>
+    <string name="title_activity_filter_and_view_expense_income">Advance Filter</string>
+    <string name="check_box_list_title_message">Select categories for your filter</string>
+    <string name="start_end_date_message">Select start and end date check box to enable and include the selected days in your filter</string>
+    <string name="max_min_amount_message">Select maximum and minimum amount check box to enable and filter by using them as at-most and the least value of the amount spent/received</string>
+    <string name="select_all">Select All</string>
+    <string name="select_none">Select None</string>
+    <string name="start_date_message">Start Date </string>
+    <string name="end_date_message">End Date </string>
+    <string name="min_amount_message">Minimum Amount </string>
+    <string name="max_amount_message">Maximum Amount </string>
+    <string name="dd_mm_yyyy">dd-mm-yyyy</string>
+    <string name="filter">Filter</string>
+    <string name="delete">Delete</string>
+    <string name="cancel">Cancel</string>
+    <string name="cancel_delete">Cancel Delete</string>
+    <string name="info">Info</string>
+    <string name="proceed">Proceed</string>
+    <string name="delete_dialog_title_message">Delete Confirmation!</string>
+    <string name="delete_dialog_description_message">Are you sure yow want to delete the item ?</string>
+    <string name="update_dialog_des_sucess_message">Update  Successful!</string>
+    <string name="delete_dialog_des_sucess_message">Delete  Successful!</string>
+    <string name="delete_dialog_des_failed_message">Delete Failed!</string>
+    <string name="title_activity_category_delete_confirmation">Delete Confirmation</string>
+    <string name="category_delete_message_no_items">Are you sure you want to delete the Category ?</string>
+    <string name="category_delete_message_with_items">It seems you have already added !*ei*! items to this category. Please select any of the options below and proceed</string>
+    <string name="category_move_the_items">Move items !*c*! to a different category</string>
+    <string name="category_delete_all_items">Delete all items in !*c*!</string>
+    <string name="error_select_category">Please select a category?</string>
+    <string name="duration_message_title">The data to plot Expense - Income chart, will be within the duration specified in Duration setting</string>
+    <string name="duration_message">Select and enter number of previous days, months or years data to be utilised</string>
+    <string name="start_end_date_message_duration_setting">Select any or both  start and end date check box to specify the duration</string>
+    <string name="max_min_amount_message_amount_Setting">Select and enter maximum and minimum amount check box to specify at-most and the least value of the amount spent/received in amount settings</string>
+    <string name="amount_settings">Amount Settings</string>
+    <string name="duration_settings">Duration Settings</string>
+    <string name="category_settings">Category Settings</string>
+    <string name="currency_settings">Currency Settings</string>
+    <string name="months">Months</string>
+    <string name="days">Days</string>
+    <string name="years">Years</string>
+    <string name="save">Save</string>
+    <string name="add">Add</string>
+    <string name="calc_new_summary">Calculate New Summary</string>
+    <string name="duration_text_box">Enter Duration</string>
+    <string name="title_activity_currency_setting">Currency Setting</string>
+    <string name="title_activity_category_setting">Category Setting</string>
+    <string name="title_activity_duration_setting">Duration Setting</string>
+    <string name="title_activity_amount_setting">Amount Setting</string>
+    <string name="getTotalButton">Get Total</string>
+    <string name="validation_msg_add_edit_expence_income_amount">Please enter a valid amount!</string>
+    <string name="validation_msg_add_edit_expence_income_date">Please enter a valid date!</string>
+    <string name="validation_msg_add_edit_expence_income_description">It seems you have not give any description. Do you want to continue without any description?</string>
+    <string name="validation_msg_add_edit_expence_income_amount_limit">Please enter a value less that 10,000,000. If your Expence/Income exceeds this limit please enter it as two item</string>
+    <string name="success_msg_add_expence_income">Successfully add the details</string>
+    <string name="success_msg_edit_expence_income">Successful updated the details.</string>
+    <string name="success_title_add_edit_expence_income">@string/success_title</string>
+    <string name="no_desc">NO DESCRIPTION</string>
+    <string name="continue_button_String">Continue</string>
+    <string name="return_to_list">Return to List</string>
+    <string name="success_title">Successful</string>
+    <string name="success_msg_add_category">Successfully add the new category</string>
+    <string name="success_msg_update_category">Successfully updated the new category</string>
+    <string name="already_category_name_exist_msg_add_category">It seems there is already a category with this name. Please change the category name to be added</string>
+    <string name="validation_msg_add_edit_expence_category">Please enter a valid category name!</string>
+    <string name="last_item_delete_category">This is the last !*ei*! category. Please create a new !*ei*! category and try again.</string>
+    <string name="validation_msg_set_currency">Please use 3 character for your currency</string>
+
+    <string name="title_activity_set_your_currency">Set Your Currency</string>
+    <string name="currencyHint">Enter your currency</string>
+    <string name="title_activity_show_total_details">ShowTotalDetailsActivity</string>
+    <string name="expense_heading_show_total_details">Expense Incurred for:</string>
+    <string name="income_heading_show_total_details">Income Obtained form:</string>
+    <string name="duration_heading_show_total_details">Calculated for Time Period:</string>
+    <string name="allCategory_default_msg_show_total_details">All Category</string>
+    <string name="no_category_default_msg_show_total_details">No Category</string>
+    <string name="timePeriod_default_msg_show_total_details">For the entire time period</string>
+    <string name="no_data_home_message">It seems you have not added any details of expenditure or income! \n</string>
+    <string name="no_data_expense_income_message">It seems you have not added any details of !*ei*!! \n</string>
+    <string name="search_no_data_expense_income_message">It seems there is no details matching your search in !*ei*!! \n</string>
+
+    <string name="expence_and_income">Expense &amp; Income</string>
+    <string name="validation_get_total_category_selection_activity">Please select at least one category fro either Expense or Income</string>
+    <string name="validation_get_total_date_selection_activity">Start date selected should be an earlier date than the end date selected !</string>
+
+
+</resources>

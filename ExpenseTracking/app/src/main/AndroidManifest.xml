@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.skr.expensetrack" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.GET_TASKS" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_LOGS" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name=".HomeScreen"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".AddCategoryActivity"
+            android:label="@string/title_activity_add_category"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".ExpenceIncomeDetailActivity"
+            android:label="@string/title_activity_expence_income_detail"
+            android:theme="@style/Theme.Transparent"
+            android:screenOrientation="portrait"
+            >
+        </activity>
+        <activity
+            android:name=".FilterAndViewExpenseIncomeActivity"
+            android:label="@string/title_activity_filter_and_view_expense_income"
+            android:screenOrientation="portrait"
+            >
+        </activity>
+        <activity
+            android:name=".CategoryDeleteConfirmationActivity"
+            android:label="@string/title_activity_category_delete_confirmation"
+            android:theme="@style/Theme.Transparent"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".CurrencySettingActivity"
+            android:label="@string/title_activity_currency_setting"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".CategorySettingActivity"
+            android:label="@string/title_activity_category_setting"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".DurationSettingActivity"
+            android:label="@string/title_activity_duration_setting"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".AmountSettingActivity"
+            android:label="@string/title_activity_amount_setting"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".SetYourCurrencyActivity"
+            android:label="@string/title_activity_set_your_currency"
+            android:theme="@style/Theme.Transparent"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".ShowTotalDetailsActivity"
+            android:label="@string/title_activity_show_total_details"
+            android:theme="@style/Theme.Transparent"
+            android:screenOrientation="portrait"
+            >
+        </activity>
+    </application>
+
+</manifest>

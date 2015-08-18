@@ -1,0 +1,30 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="segmentedControlButtonStyle">@style/SegmentedControlButton</item>
+    </style>
+    <style name="SegmentedControlButton" parent="@android:style/Widget.CompoundButton.RadioButton">
+        <item name="android:minWidth">@dimen/segmented_control_min_width</item>
+        <item name="android:minHeight">@dimen/segmented_control_min_height</item>
+        <item name="android:gravity">center</item>
+        <item name="android:button">@null</item>
+        <item name="android:background">@drawable/segmented_control_button_bg</item>
+        <item name="android:textColor">@color/segmented_control_button_text</item>
+    </style>
+    <style name="Theme.Transparent" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:backgroundDimEnabled">true</item>
+        <item name="android:textColor">@color/material_blue_grey_900</item>
+        <item name="colorAccent">@color/app_green</item>
+        <item name="android:textColorSecondary">@color/app_green</item>
+
+
+
+    </style>
+</resources>

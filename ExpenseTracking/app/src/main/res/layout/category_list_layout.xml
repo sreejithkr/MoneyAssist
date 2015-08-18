@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+    <ImageView
+        android:id="@+id/categoryIconView"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:src="@drawable/ic_drawer"
+        android:layout_gravity="center_vertical"
+        android:visibility="gone"
+        />
+
+    <TextView
+    android:id="@+id/categoryNameView"
+    android:layout_width="fill_parent"
+    android:layout_height="24dp"
+    android:layout_marginTop="3dp"
+    android:layout_marginLeft="10dp"
+    android:text="My Category"
+    android:layout_gravity="center_vertical"
+    />
+    <TextView
+        android:id="@+id/categoryDeleteMessageConfimationView"
+        android:layout_below="@+id/categoryNameView"
+        android:layout_width="fill_parent"
+        android:layout_height="24dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginLeft="10dp"
+        android:text="@string/will_delete_message"
+        android:layout_gravity="center_vertical"
+        android:textColor="@color/error_red"
+        android:textSize="9dp"
+
+        />
+    <ImageView
+        android:id="@+id/deleteIconView"
+        android:layout_alignParentRight="true"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:src="@drawable/delete_icon"
+        android:layout_gravity="center_vertical"
+        android:layout_marginRight="10dp"
+        android:visibility="invisible"
+        />
+
+</RelativeLayout>

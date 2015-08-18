@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color
+        name="app_blue_color"
+        >#ff226D8C</color>
+    <color
+        name="backgroud_white"
+        >#ffffffff</color>
+    <color
+        name="textbox_background"
+        >#fff2f6f7</color>
+    <color
+        name="error_red"
+        >#ffFF0000</color>
+    <color name="app_green">#ff2F8575</color>
+    <color name="fefefe">#fffefefe</color>
+    <color name="color_51dC39">#51DC39</color>
+    <color name="button_blue">#00BFFF</color>
+    <color name="light_grey">#ffd3d3d3</color>
+    <color name="text_normal">#ff000000</color>
+    <color name="text_hilite">#ffffffff</color>
+
+    <color name="control_border">#ff439182</color>
+
+    <color name="button_pressed">#ff2F8575</color>
+    <color name="button_checked">#ff439182</color>
+    <color name="title_gray">#ffd3d3d3</color>
+    <color name="light_red">#fd8787</color>
+    <color name="light_green">#82B5AC</color>
+    <color name="light_gray">#d3d3d3</color>
+</resources>
