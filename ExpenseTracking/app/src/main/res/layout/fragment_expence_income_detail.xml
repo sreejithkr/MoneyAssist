@@ -70,37 +70,28 @@
         android:layout_centerHorizontal="true"
         android:text="@string/expense_message"
         />
-    <RelativeLayout
-        android:layout_width="wrap_content"
-        android:layout_height="32dp"
-android:layout_alignParentRight="true"
-        android:layout_marginTop="15dp"
-        android:layout_marginRight="15dp"
-        android:id="@+id/editRelativeParent"
-        android:layout_below="@+id/expenceIncomeDescriptionFEID"
-        android:background="@drawable/roundedbutton"
 
-        >
-        <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
-            android:layout_centerVertical="true"
-            android:id="@+id/editRelativeParentImgViewFEID"
-            android:src="@drawable/save_add_image"/>
+
         <Button
-            android:layout_width="wrap_content"
             android:layout_height="32dp"
-
-            android:background="@android:color/transparent"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginBottom="10dp"
+            android:padding="5dp"
+            android:layout_below="@+id/expenceIncomeDescriptionFEID"
+            android:background="@drawable/roundedbutton"
+            android:layout_width="wrap_content"
+        android:textAlignment="center"
             android:text="Edit Details"
-            android:paddingLeft="20dp"
             android:textSize="12dp"
             android:textStyle="bold"
-            android:textColor="@color/material_blue_grey_800"
+            android:capitalize="characters"
+            android:textColor="@color/backgroud_white"
             android:id="@+id/editRelativeParentBtnViewFEID"
 
 
             />
-    </RelativeLayout>
+
 </RelativeLayout>
 </RelativeLayout>

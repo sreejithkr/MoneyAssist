@@ -9,8 +9,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.skr.AppController;
@@ -78,7 +76,7 @@ public class ExpenceIncomeDetailFragment extends Fragment {
         TextView expenceIncomeMessageFEID = (TextView)rootView.findViewById(R.id.expenceIncomeMessageFEID);
 //        TextView expenceIncomeDescriptionTitleFEID = (TextView)rootView.findViewById(R.id.expenceIncomeDescriptionTitleFEID);
         TextView expenceIncomeDescriptionFEID = (TextView)rootView.findViewById(R.id.expenceIncomeDescriptionFEID);
-        RelativeLayout editRelativeParent = (RelativeLayout)rootView.findViewById(R.id.editRelativeParent);
+       // RelativeLayout editRelativeParent = (RelativeLayout)rootView.findViewById(R.id.editRelativeParent);
 
         String messageSting = getActivity().getResources().getString(R.string.expense_message);
         Log.e("*************&&&&&&&&&&&***************"+categoryName,expenseIncome.toString());
@@ -89,13 +87,13 @@ public class ExpenceIncomeDetailFragment extends Fragment {
         messageSting = messageSting.replace("!*d*!",format.format(date));
         expenceIncomeMessageFEID.setText(messageSting);
         expenceIncomeDescriptionFEID.setText(expenseIncome.getDESCRIPTION());
-        ImageView editRelativeParentImageViewChild = (ImageView)rootView.findViewById(R.id.editRelativeParentImgViewFEID);
-        editRelativeParentImageViewChild.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.editButtonClicked();
-            }
-        });
+//        ImageView editRelativeParentImageViewChild = (ImageView)rootView.findViewById(R.id.editRelativeParentImgViewFEID);
+//        editRelativeParentImageViewChild.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mListener.editButtonClicked();
+//            }
+//        });
         Button editRelativeParentButtonChild = (Button)rootView.findViewById(R.id.editRelativeParentBtnViewFEID);
         editRelativeParentButtonChild.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -103,12 +101,12 @@ public class ExpenceIncomeDetailFragment extends Fragment {
                 mListener.editButtonClicked();
             }
         });
-        editRelativeParent.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mListener.editButtonClicked();
-            }
-        });
+//        editRelativeParent.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                mListener.editButtonClicked();
+//            }
+//        });
         Button closeFEID = (Button)rootView.findViewById(R.id.closeFEID);
         closeFEID.setOnClickListener(new View.OnClickListener() {
             @Override

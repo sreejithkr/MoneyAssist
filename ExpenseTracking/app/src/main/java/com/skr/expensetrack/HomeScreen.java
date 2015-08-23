@@ -19,8 +19,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.Animation;
-import android.view.animation.RotateAnimation;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -46,7 +44,8 @@ enum CurrentPage{
     Expense,Income,
     Category,
     Settings,
-    GetTotal
+    GetTotal,
+    Utilities
 
 
  }
@@ -57,7 +56,6 @@ public class HomeScreen extends ActionBarActivity {
     private String[] mTitles;
     private ActionBarDrawerToggle mDrawerToggle;
     CurrentPage state = CurrentPage.HomePage;
-    private final String categoryprepopulated = "categoryprepopulated";
     private String[] defaultCategoryArray;
     ArrayList<String> subItemsArray;
     Fragment fragment;
@@ -68,32 +66,34 @@ Boolean ifExpenceOrIncomeListEmpty = false;
 
         // Restore preferences
         SharedPreferences settings = getSharedPreferences(AppController.MY_APP_PREFERENCE, 0);
-        boolean isCategoryPresentInDB = settings.getBoolean(categoryprepopulated, false);
-        Log.d("categoryprepopulated",isCategoryPresentInDB+"");
-        if(!isCategoryPresentInDB){
-            defaultCategoryArray = getResources().getStringArray(R.array.category_array_income);
-int cateGoryID = 0;
-            ArrayList<Category> categoryArray = new ArrayList<>();
-            for(int count=0;count< defaultCategoryArray.length;count++){
-                Category category = new Category(count,defaultCategoryArray[count],false);
-                categoryArray.add(category);
-                cateGoryID = count;
-            }
-            cateGoryID = cateGoryID+1;
-            defaultCategoryArray = getResources().getStringArray(R.array.category_array_expense);
-
-            for(int count=0;count< defaultCategoryArray.length;count++){
-                Category category = new Category(cateGoryID+count,defaultCategoryArray[count],true);
-                categoryArray.add(category);
-            }
-            DBHelper dbHelper = DBHelper.getInstance(this);
-
-
-            dbHelper.addAllCategoryFromArrayList(categoryArray);
-            SharedPreferences.Editor editor = settings.edit();
-            editor.putBoolean(categoryprepopulated, true);
-            editor.commit();
-         }
+        boolean isCategoryPresentInDB = settings.getBoolean(AppController.categoryprepopulated, false);
+        AppController.categoryReloadToDB(settings,isCategoryPresentInDB,this);
+//        Log.d("categoryprepopulated",isCategoryPresentInDB+"");
+//        if(!isCategoryPresentInDB){
+//            SharedPreferences.Editor editor = settings.edit();
+//            editor.putBoolean(AppController.categoryprepopulated, true);
+//            editor.commit();
+//            defaultCategoryArray = getResources().getStringArray(R.array.category_array_income);
+//int cateGoryID = 0;
+//            ArrayList<Category> categoryArray = new ArrayList<>();
+//            for(int count=0;count< defaultCategoryArray.length;count++){
+//                Category category = new Category(count,defaultCategoryArray[count],false);
+//                categoryArray.add(category);
+//                cateGoryID = count;
+//            }
+//            cateGoryID = cateGoryID+1;
+//            defaultCategoryArray = getResources().getStringArray(R.array.category_array_expense);
+//
+//            for(int count=0;count< defaultCategoryArray.length;count++){
+//                Category category = new Category(cateGoryID+count,defaultCategoryArray[count],true);
+//                categoryArray.add(category);
+//            }
+//            DBHelper dbHelper = DBHelper.getInstance(this);
+//
+//
+//            dbHelper.addAllCategoryFromArrayList(categoryArray);
+//
+//         }
         
     }
     
@@ -221,13 +221,13 @@ for(int count=0;count< mTitles.length;count++){
         menu.findItem(R.id.action_reset_to_original).setVisible(false);
         menu.findItem(R.id.action_sort_by_months).setVisible(false);
         menu.findItem(R.id.dataRefresh).setVisible(false);
-        menu.findItem(R.id.quickAdd).setVisible(false);
+        menu.findItem(R.id.quickAdd).setVisible(true);
 
         switch(state){
             case HomePage:
-                menu.findItem(R.id.quickAdd).setVisible(true);
                 break;
             case AddExpenceIncome:
+                menu.findItem(R.id.quickAdd).setVisible(false);
                 break;
             case Category:
                 menu.findItem(R.id.action_add_category).setVisible(true);
@@ -241,7 +241,7 @@ for(int count=0;count< mTitles.length;count++){
                 menu.findItem(R.id.action_sort_by_day).setVisible(!ifExpenceOrIncomeListEmpty);
                 menu.findItem(R.id.action_sort_by_category).setVisible(!ifExpenceOrIncomeListEmpty);
                 menu.findItem(R.id.action_sort_by_other_factors).setVisible(!ifExpenceOrIncomeListEmpty);
-                menu.findItem(R.id.action_reset_to_original).setVisible(!ifExpenceOrIncomeListEmpty);
+                menu.findItem(R.id.action_reset_to_original).setVisible(false);
 
                 break;
             case Expense:
@@ -252,7 +252,7 @@ for(int count=0;count< mTitles.length;count++){
                 menu.findItem(R.id.action_sort_by_day).setVisible(!ifExpenceOrIncomeListEmpty);
                 menu.findItem(R.id.action_sort_by_category).setVisible(!ifExpenceOrIncomeListEmpty);
                 menu.findItem(R.id.action_sort_by_other_factors).setVisible(!ifExpenceOrIncomeListEmpty);
-                menu.findItem(R.id.action_reset_to_original).setVisible(!ifExpenceOrIncomeListEmpty);
+                menu.findItem(R.id.action_reset_to_original).setVisible(false);
 
                 break;
             case Settings:
@@ -307,7 +307,7 @@ for(int count=0;count< mTitles.length;count++){
 
             }
 
-        }else if(id == R.id.action_add_an_expense_or_income){
+        }else if(id == R.id.action_add_an_expense_or_income || id == R.id.quickAdd){
             if(fragment != null) {
                 getFragmentManager().beginTransaction().remove(fragment).commit();
             }
@@ -322,6 +322,7 @@ for(int count=0;count< mTitles.length;count++){
             }
            setupAddExpenceIncomeFragement();
             selectItem(position,fragment,R.id.content_frame);
+            setTitle(getString(R.string.side_panel_items_array_income_expense));
 
         }else if(id == R.id.action_delete_an_expense){
             Boolean deleteStatus = ((ListExpenceIncomeFragment)fragment).toggleDelete();
@@ -357,16 +358,6 @@ for(int count=0;count< mTitles.length;count++){
         }else if(id == R.id.action_sort_by_months) {
             ((ListExpenceIncomeFragment)fragment).groupByMonths();
 
-        }else if(id == R.id.quickAdd){
-          //  RotateAnimation rotate = new RotateAnimation(0f, 50,
-                  //  Animation.RELATIVE_TO_PARENT, 1, Animation.ZORDER_NORMAL, 1);
-            RotateAnimation rotate = new RotateAnimation(180, 360, Animation.RELATIVE_TO_SELF,
-                    0.5f,  Animation.RELATIVE_TO_SELF, 0.5f);
-            rotate.setDuration(500);
-// prevents View from restoring to original direction.
-            rotate.setFillAfter(true);
-
-            ((HomeExpenceTrackFragment)homefragment).animateToShowQuickAdd();
         }else if(id == R.id.dataRefresh) {
             ((ListExpenceIncomeFragment)fragment).resetToOriginal();
         }
@@ -558,6 +549,10 @@ for(int count=0;count< mTitles.length;count++){
 
                 // ((AddExpenseIncomeFragment)fragment)
             }
+        }else if(requestCode == ActivityResultIdentifies.LoadFromArchiveListActivityPage){
+
+        }else if(requestCode == ActivityResultIdentifies.ExportToExcelActivityPage){
+
         }
 
     }
@@ -565,11 +560,11 @@ for(int count=0;count< mTitles.length;count++){
 
     public ListExpenceIncomeFragment getExpenceIncomeListFragment(Boolean isExpenseFlag) {
 
-        ListExpenceIncomeFragment fragment = new ListExpenceIncomeFragment();
+        ListExpenceIncomeFragment listExpenceIncomeFragment = new ListExpenceIncomeFragment();
 
         if (isExpenseFlag) {
 
-                ((ListExpenceIncomeFragment)fragment).setmListener(new ListExpenceIncomeFragment.OnFragmentInteractionListener() {
+                ((ListExpenceIncomeFragment)listExpenceIncomeFragment).setmListener(new ListExpenceIncomeFragment.OnFragmentInteractionListener() {
                     @Override
                     public void onFragmentInteraction(Uri uri) {
 
@@ -598,10 +593,27 @@ for(int count=0;count< mTitles.length;count++){
                         invalidateOptionsMenu();
 
                     }
+                    @Override
+                    public void addExpenceIncome(){
+                       if(fragment != null) {
+                            getFragmentManager().beginTransaction().remove(fragment).commit();
+                        }
+                        if(homefragment != null) {
+                            getSupportFragmentManager().beginTransaction().remove(homefragment).commit();
+                        }
+                        int position = 0;
+                        for(int count = 0;count<mTitles.length;count++){
+                            if(mTitles[count].equalsIgnoreCase(getString(R.string.side_panel_items_array_income_expense))){
+                                position = count;
+                            }
+                        }
+                        setupAddExpenceIncomeFragement();
+                        selectItem(position,fragment,R.id.content_frame);
+                    }
                 });
         }else{
-            ((ListExpenceIncomeFragment) fragment).isExpenseFlag = isExpenseFlag;
-        ((ListExpenceIncomeFragment) fragment).setmListener(new ListExpenceIncomeFragment.OnFragmentInteractionListener() {
+            ((ListExpenceIncomeFragment) listExpenceIncomeFragment).isExpenseFlag = isExpenseFlag;
+        ((ListExpenceIncomeFragment) listExpenceIncomeFragment).setmListener(new ListExpenceIncomeFragment.OnFragmentInteractionListener() {
             @Override
             public void onFragmentInteraction(Uri uri) {
 
@@ -634,11 +646,28 @@ for(int count=0;count< mTitles.length;count++){
                 ifExpenceOrIncomeListEmpty = flag;
                 invalidateOptionsMenu();
             }
+            @Override
+            public void addExpenceIncome(){
+                if(fragment != null) {
+                    getFragmentManager().beginTransaction().remove(fragment).commit();
+                }
+                if(homefragment != null) {
+                    getSupportFragmentManager().beginTransaction().remove(homefragment).commit();
+                }
+                int position = 0;
+                for(int count = 0;count<mTitles.length;count++){
+                    if(mTitles[count].equalsIgnoreCase(getString(R.string.side_panel_items_array_income_expense))){
+                        position = count;
+                    }
+                }
+                setupAddExpenceIncomeFragement();
+                selectItem(position,fragment,R.id.content_frame);
+            }
         });
 
 
     }
-        return  fragment;
+        return  listExpenceIncomeFragment;
     }
     /* The click listner for ListView in the navigation drawer */
     private class SidePanelItemClickListener implements ListView.OnItemClickListener {
@@ -783,6 +812,10 @@ for(int count=0;count< mTitles.length;count++){
                 Intent intent = new Intent(getApplication(),SetYourCurrencyActivity.class);
                 startActivityForResult(intent,ActivityResultIdentifies.CurrencyActivityDismissed);
                 return;
+            }else if(sidePanelAdapter.getItem(position).equalsIgnoreCase(getResources().getString(R.string.side_panel_items_array_utilities))){
+
+                fragment = createUtilityFragments();
+
             }
 
 
@@ -791,6 +824,35 @@ for(int count=0;count< mTitles.length;count++){
         }
     }
 
+    private UtilitiesFragment createUtilityFragments(){
+        UtilitiesFragment utilitiesFragment = new UtilitiesFragment();
+        utilitiesFragment.setmListener(new UtilitiesFragment.OnFragmentInteractionListener() {
+            @Override
+            public void onFragmentInteraction(Uri uri) {
+
+            }
+            @Override
+            public void onCreatedFragment(){
+                state = CurrentPage.Utilities;
+                invalidateOptionsMenu();
+            }
+            @Override
+            public void onArchiveButtonClicked(){
+
+            }
+            @Override
+            public void onLoadFromArchiveClicked(){
+                Intent intent = new Intent(getApplicationContext(),LoadFromArchiveListActivity.class);
+                startActivityForResult(intent,ActivityResultIdentifies.LoadFromArchiveListActivityPage);
+            }
+            @Override
+            public void onLoadExportToExcelClicked(){
+                Intent intent = new Intent(getApplicationContext(),ExportToExcelActivity.class);
+                startActivityForResult(intent,ActivityResultIdentifies.ExportToExcelActivityPage);
+            }
+        });
+        return utilitiesFragment;
+    }
 private void setupEditExpenceIncomeFragmetn(Intent data){
 
     if(data.getBooleanExtra(ExpenceIncomeDetailActivity.editStatusFlag,false)){
@@ -850,6 +912,7 @@ private void setupEditExpenceIncomeFragmetn(Intent data){
 
 }
     private void setupAddExpenceIncomeFragement(){
+        Log.e("","*)*)*)*)*)*)*)**)*)*)*)*)*)*)*)*1234567890");
          fragment = new AddExpenseIncomeFragment();
         ((AddExpenseIncomeFragment)fragment).setmListener(new AddExpenseIncomeFragment.OnFragmentInteractionListener() {
             @Override

@@ -131,6 +131,32 @@ public Boolean isExpenseFlag = true;
 
 
        final View rootView = (View)inflater.inflate(R.layout.fragment_list_expence_income, container, false);
+
+        rootView.findViewById(R.id.addExpenceIncomeHomeParent).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    mListener.addExpenceIncome();
+                }
+
+            }
+        });
+        rootView.findViewById(R.id.addExpenceIncomeHomeImgView).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    mListener.addExpenceIncome();
+                }
+            }
+        });
+        rootView.findViewById(R.id.addExpenceIncomeHome).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mListener != null) {
+                    mListener.addExpenceIncome();
+                }
+            }
+        });
         cancelDeleteParentFLEI = (LinearLayout)rootView.findViewById(R.id.cancelDeleteParentFLEI);
         cancelDeleteParentFLEI.setVisibility(View.GONE);
 
@@ -520,6 +546,7 @@ public Boolean isExpenseFlag = true;
         public void onItemClick(AdapterView<?> parent, int position,HashMap<Integer,String> categoryIdName);
         public void onItemClickDelete(AdapterView<?> parent, int position);
         public void invalidateMenu(Boolean flag);
+        public void addExpenceIncome();
 
     }
 

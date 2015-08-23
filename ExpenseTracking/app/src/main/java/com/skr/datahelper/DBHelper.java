@@ -28,8 +28,15 @@ public class DBHelper  extends SQLiteOpenHelper {
     // Database Version
     private static final int DATABASE_VERSION = 2;
     // Database Name
-    private static final String DATABASE_NAME = "expenseincomedb";
+    public static final String DATABASE_NAME = "expenseincomedb";
     public SQLiteDatabase db = null;
+
+
+
+//    public static void setSharedInstance(DBHelper sharedInstance) {
+//        DBHelper.sharedInstance = sharedInstance;
+//    }
+
     private static DBHelper sharedInstance;
     private Context context;
 
@@ -295,6 +302,7 @@ return new Pair<>(0,new Category(category_id, category.getCATEGORY_NAME(),catego
     }
 
     public void addAllCategoryFromArrayList(ArrayList<Category> categories){
+
 
         String sql = "INSERT INTO "+ TABLE_NAME_CATEGORY +" VALUES (?,?,?);";
         SQLiteStatement statement = db.compileStatement(sql);
@@ -785,6 +793,14 @@ Log.e(""+"startDate"+startDate+" endDate"+endDate,"");
         db.execSQL("CREATE TABLE IF NOT EXISTS "+TABLE_NAME_EXPENCE_INCOME+" ("+EXPENCE_INCOME_ID+" INTEGER PRIMARY KEY NOT NULL UNIQUE, "+CATEGORY_ID+" INTEGER NOT NULL, "+AMOUNT+" TEXT NOT NULL, "+DESCRIPTION+" TEXT NOT NULL, "+IF_EXPENSE+" INTEGER NOT NULL, "+IS_AN_INVESTMENT+" INTEGER NOT NULL, "+DAY_DATE+" INTEGER NOT NULL, "+MONTH_DATE+" INTEGER NOT NULL, "+YEAR_DATE+" INTEGER NOT NULL )");
         db.execSQL("CREATE TABLE IF NOT EXISTS "+TABLE_NAME_CATEGORY+" ("+CATEGORY_ID+" INTEGER PRIMARY KEY NOT NULL UNIQUE, "+CATEGORY_NAME+" TEXT NOT NULL, "+IF_EXPENSE+" INTEGER NOT NULL)");
 
+    }
+
+    public void postArchiveOpertaions(){
+db.delete(TABLE_NAME_EXPENCE_INCOME,null,null);
+        db.delete(TABLE_NAME_CATEGORY,null,null);
+
+//        db.execSQL("DELETE "+TABLE_NAME_EXPENCE_INCOME);
+//        db.execSQL("TRUNCATE TABLE "+TABLE_NAME_CATEGORY);
     }
 
 }

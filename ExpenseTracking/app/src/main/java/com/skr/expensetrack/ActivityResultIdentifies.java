@@ -14,4 +14,6 @@ public class ActivityResultIdentifies {
     public static final Integer CategoryAddedConfirmationKey = 105;
     public static final Integer CurrencyActivityDismissed = 106;
     public static final Integer AddCategoryFromAddExpencePage = 107;
+    public static final Integer LoadFromArchiveListActivityPage = 108;
+    public static final Integer ExportToExcelActivityPage = 109;
 }

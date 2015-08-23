@@ -8,6 +8,11 @@
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="android.permission." />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
+    <protected-broadcast android:name="android.intent.action.MEDIA_MOUNTED" />
 
     <application
         android:allowBackup="true"
@@ -17,8 +22,7 @@
         <activity
             android:name=".HomeScreen"
             android:label="@string/app_name"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,59 +32,64 @@
         <activity
             android:name=".AddCategoryActivity"
             android:label="@string/title_activity_add_category"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".ExpenceIncomeDetailActivity"
             android:label="@string/title_activity_expence_income_detail"
-            android:theme="@style/Theme.Transparent"
             android:screenOrientation="portrait"
-            >
+            android:theme="@style/Theme.Transparent" >
         </activity>
         <activity
             android:name=".FilterAndViewExpenseIncomeActivity"
             android:label="@string/title_activity_filter_and_view_expense_income"
-            android:screenOrientation="portrait"
-            >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".CategoryDeleteConfirmationActivity"
             android:label="@string/title_activity_category_delete_confirmation"
-            android:theme="@style/Theme.Transparent"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Transparent" >
         </activity>
         <activity
             android:name=".CurrencySettingActivity"
             android:label="@string/title_activity_currency_setting"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".CategorySettingActivity"
             android:label="@string/title_activity_category_setting"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".DurationSettingActivity"
             android:label="@string/title_activity_duration_setting"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".AmountSettingActivity"
             android:label="@string/title_activity_amount_setting"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".SetYourCurrencyActivity"
             android:label="@string/title_activity_set_your_currency"
-            android:theme="@style/Theme.Transparent"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.Transparent" >
         </activity>
         <activity
             android:name=".ShowTotalDetailsActivity"
             android:label="@string/title_activity_show_total_details"
-            android:theme="@style/Theme.Transparent"
             android:screenOrientation="portrait"
-            >
+            android:theme="@style/Theme.Transparent" >
+        </activity>
+        <activity
+            android:name=".LoadFromArchiveListActivity"
+            android:label="@string/title_activity_load_from_archive_list" >
+        </activity>
+        <activity
+            android:name=".ExportToExcelActivity"
+            android:label="@string/title_activity_export_to_excel" >
         </activity>
     </application>
 

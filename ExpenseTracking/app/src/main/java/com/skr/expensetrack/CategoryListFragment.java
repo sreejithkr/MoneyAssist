@@ -47,6 +47,7 @@ public class CategoryListFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private String[] defaultCategoryArray;
     private CustomProgressDialog progress;
     ArrayList<CategoryWithDeleteFlag> expenceCategories;
     ArrayList<CategoryWithDeleteFlag> incomeCategories;
@@ -158,6 +159,11 @@ public class CategoryListFragment extends Fragment {
         progress.setMessage(getResources().getString(R.string.wait_message));
         final Handler handler = new Handler();
         final View rootView = inflater.inflate(R.layout.fragment_category_list, container, false);
+
+
+        // Restore preferences
+
+
         cancelDeleteParentFCL = (LinearLayout)rootView.findViewById(R.id.cancelDeleteParentFCL);
        // cancelDeleteParentFCL.setText(cancelDeleteParentFCL.getText().toString().toUpperCase());
         cancelDeleteParentFCL.setOnClickListener(new View.OnClickListener() {

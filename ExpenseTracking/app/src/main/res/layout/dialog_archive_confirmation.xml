@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="118dp">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/archive"
+        android:textColor="@color/backgroud_white"
+        android:textAllCaps="true"
+        android:background="@color/app_green"
+        android:contentDescription="@string/app_name" />
+    <EditText
+
+        android:layout_margin="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:id="@+id/editTextArchiveName"
+        android:layout_gravity="center_horizontal"
+
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="5dp"
+
+        android:hint="Enter Archive Name"
+        android:textColorHint="@color/material_blue_grey_900"
+        android:background="@drawable/normal_edit_text_background"
+        android:textColor="@color/material_blue_grey_900"
+
+        />
+    <TextView
+        android:id="@+id/error_message_dialog_archive"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"
+        android:textStyle="bold"
+        android:text="@string/archive_message"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:textColor="@color/error_red"
+        android:textSize="12dp"
+
+        android:visibility="visible"
+
+        />
+
+</LinearLayout>

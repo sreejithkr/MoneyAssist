@@ -4,10 +4,17 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.util.Log;
 
+import com.skr.datahelper.Category;
+import com.skr.datahelper.DBHelper;
+import com.skr.expensetrack.R;
+
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by sreejithkr on 23/06/15.
@@ -64,9 +71,11 @@ public class AppController {
     public static String ThreeWordsMonthSpaceDateSpaceYearFormat = "MMM d, yyyy";
     public static String DateDashMonthDashYearFormat = "dd-MM-yyyy";
     public static String MONTH_YEAR_Format = "MMM yyyy";
-
+    public static String ThreeWordsMonthSpaceDateSpaceYearFormatWithUndeScore = "MMM_d_yyyy";
     public static final String MY_APP_PREFERENCE = "myapppreference";
     public static final String CurrencyString = "CurrencyString";
+    public final static String categoryprepopulated = "categoryprepopulated";
+
 
     public static String getCurrencyString() {
 
@@ -349,9 +358,50 @@ public class AppController {
             sdf = new SimpleDateFormat(AppController.DateDashMonthDashYearFormat, Locale.ENGLISH);
             return sdf.format(date);
         }catch (Exception e){
-            Log.d("exception in formatting date","******************************");
+            Log.d("exception in formatting date","************************");
             return "";
         }
+    }
+    public static boolean isAlphaNumeric(String s){
+
+
+        Pattern pattern = Pattern.compile("^[a-zA-Z0-9]*$");
+        Matcher matcher = pattern.matcher(s);
+        if (matcher.matches()) {
+            return true;
+        }
+        return false;
+    }
+
+    public static void categoryReloadToDB(SharedPreferences settings,Boolean isCategoryPresentInDB,Context activity){
+         String[] defaultCategoryArray;
+        if(!isCategoryPresentInDB){
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putBoolean(categoryprepopulated, true);
+            editor.commit();
+            defaultCategoryArray = activity.getResources().getStringArray(R.array.category_array_income);
+            int cateGoryID = 0;
+
+            ArrayList<Category> categoryArray = new ArrayList<>();
+            for(int count=0;count< defaultCategoryArray.length;count++){
+                Category category = new Category(count,defaultCategoryArray[count],false);
+                categoryArray.add(category);
+                cateGoryID = count;
+            }
+            cateGoryID = cateGoryID+1;
+            defaultCategoryArray = activity.getResources().getStringArray(R.array.category_array_expense);
+
+            for(int count=0;count< defaultCategoryArray.length;count++){
+                Category category = new Category(cateGoryID+count,defaultCategoryArray[count],true);
+                categoryArray.add(category);
+            }
+            DBHelper dbHelper = DBHelper.getInstance(activity);
+
+
+            dbHelper.addAllCategoryFromArrayList(categoryArray);
+
+        }
+
     }
 
 }

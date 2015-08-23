@@ -27,6 +27,11 @@
     <string name="side_panel_items_array_setting">Setting</string>
     <string name="side_panel_items_array_get_total">Get Total</string>
     <string name="side_panel_items_array_currency">Set your currency</string>
+    <string name="side_panel_items_array_export_Excel">Export to Excel</string>
+    <string name="side_panel_items_array_archive">Archive</string>
+    <string name="side_panel_items_array_load_from_archive">Load From Archive</string>
+    <string name="side_panel_items_array_help">How to ?</string>
+    <string name="side_panel_items_array_utilities">Utilities</string>
     <string name="edit_income">Edit Income</string>
     <string name="edit_expense">Edit Expense</string>
     <string name="income">Income</string>
@@ -45,12 +50,13 @@
 
     <string-array name="side_panel_items_array">
         <item>@string/side_panel_items_array_home</item>
-        <item>@string/side_panel_items_array_income_expense</item>
         <item>@string/side_panel_items_array_get_total</item>
         <item>@string/side_panel_items_array_expense</item>
         <item>@string/side_panel_items_array_income</item>
         <item>@string/side_panel_items_array_category</item>
         <item>@string/side_panel_items_array_currency</item>
+        <item>@string/side_panel_items_array_utilities</item>
+        <item>@string/side_panel_items_array_help</item>
     </string-array>
     <string-array name="category_array_expense">
         <item>Clothes</item>
@@ -109,6 +115,7 @@
     <string name="delete">Delete</string>
     <string name="cancel">Cancel</string>
     <string name="cancel_delete">Cancel Delete</string>
+    <string name="archive">Archive</string>
     <string name="info">Info</string>
     <string name="proceed">Proceed</string>
     <string name="delete_dialog_title_message">Delete Confirmation!</string>
@@ -159,7 +166,6 @@
     <string name="validation_msg_add_edit_expence_category">Please enter a valid category name!</string>
     <string name="last_item_delete_category">This is the last !*ei*! category. Please create a new !*ei*! category and try again.</string>
     <string name="validation_msg_set_currency">Please use 3 character for your currency</string>
-
     <string name="title_activity_set_your_currency">Set Your Currency</string>
     <string name="currencyHint">Enter your currency</string>
     <string name="title_activity_show_total_details">ShowTotalDetailsActivity</string>
@@ -172,10 +178,20 @@
     <string name="no_data_home_message">It seems you have not added any details of expenditure or income! \n</string>
     <string name="no_data_expense_income_message">It seems you have not added any details of !*ei*!! \n</string>
     <string name="search_no_data_expense_income_message">It seems there is no details matching your search in !*ei*!! \n</string>
-
     <string name="expence_and_income">Expense &amp; Income</string>
     <string name="validation_get_total_category_selection_activity">Please select at least one category fro either Expense or Income</string>
     <string name="validation_get_total_date_selection_activity">Start date selected should be an earlier date than the end date selected !</string>
-
+    <string name="title_activity_load_from_archive_list">Load From Archive</string>
+    <string name="load_current_archive">Reload Archived Data</string>
+    <string name="delete_current_archive">Delete Archived Data</string>
+    <string name="delete_reloaod_current_archive_title">Reload/Delete Archived Data</string>
+    <string name="validation_archive_name">Please enter a valid name. Only alpha numeric characters are allowed.</string>
+    <string name="validation_archive_name_length">Please enter a valid name with maximum characters less than 15.</string>
+    <string name="validation_archive_name_already_exist">It seems there is already an archive with same name. Do you really want to proceed with same name ?</string>
+    <string name="archive_message">By performing this action your data will be archived. At a later point of time you can load your data back from archive</string>
+    <string name="reload_archive_message">Note: By reloading from archive all your current data will be lost. </string>
+    <string name="deleter_archive_message">Note: By deleting your archive will be permanently lost.</string>
+    <string name="reload_archive_dialog_des_sucess_message">Successfully reloaded from archive!</string>
+    <string name="title_activity_export_to_excel">ExportToExcelActivity</string>
 
 </resources>
