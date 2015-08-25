@@ -311,7 +311,7 @@ public Boolean isExpenseFlag = true;
 
 
 
-        new CustomAlert.Builder(getActivity())
+        new CustomAlert.CustomBuilder(getActivity(),getActivity().getLayoutInflater())
                 .setTitle(dilogHeading)
                 .setMessage(confirmDilogMessage).setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
@@ -336,7 +336,7 @@ public Boolean isExpenseFlag = true;
 
 
 
-        new CustomAlert.Builder(getActivity())
+        new CustomAlert.CustomBuilder(getActivity(),getActivity().getLayoutInflater())
                 .setTitle(R.string.info)
                 .setMessage(confirmDilogMessage).setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {

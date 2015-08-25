@@ -1,5 +1,6 @@
 package com.skr.expensetrack;
 
+import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -20,10 +21,13 @@ import android.widget.Switch;
 import android.widget.TextView;
 
 import com.skr.AppController;
+import com.skr.customviews.CustomAlert;
 import com.skr.customviews.CustomProgressDialog;
 import com.skr.customviews.SegmentedControlButton;
 import com.skr.datahelper.CheckBoxListData;
 import com.skr.datahelper.DBHelper;
+import com.skr.datahelper.ExcelExport;
+import com.skr.datahelper.ExpenseIncome;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -89,10 +93,12 @@ public class ExportToExcelActivity extends ActionBarActivity {
         final SharedPreferences settings = getSharedPreferences(AppController.MY_APP_PREFERENCE, 0);
 
         final Button save_settings_button = (Button)findViewById(R.id.save_settings_button);
+        save_settings_button.setText(getString(R.string.title_activity_export_to_excel));
         save_settings_button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //TODO: the save or teh export action need to be performed here
+                export();
             }
         });
         final TextView start_date_edit_text = (TextView)findViewById(R.id.start_date_edit_text);
@@ -298,7 +304,7 @@ public class ExportToExcelActivity extends ActionBarActivity {
                         segmentedControlButtonExpence.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if(ifExpenseToBeShown || !categorySectionTitle.isChecked()){
+                                if(ifExpenseToBeShown){
                                     return;
                                 }
                                 segmentedControlButtonIncome.setChecked(false);
@@ -325,7 +331,7 @@ public class ExportToExcelActivity extends ActionBarActivity {
                         segmentedControlButtonIncome.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                if(!ifExpenseToBeShown  || !categorySectionTitle.isChecked()){
+                                if(!ifExpenseToBeShown  ){
                                     return;
                                 }
                                 segmentedControlButtonExpence.setChecked(false);
@@ -437,7 +443,144 @@ public class ExportToExcelActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public class CheckBoxListAdapter extends BaseAdapter {
+    void export(){
+
+
+            TextView start_date_edit_text = (TextView) findViewById(R.id.start_date_edit_text);
+            TextView end_date_edit_text = (TextView) findViewById(R.id.end_date_edit_text);
+
+            final ArrayList<CheckBoxListData> checkBoxListDatas = getTotal();
+
+            if (noIncomeSelected && noIncomeSelected) {
+                validationAlert(getString(R.string.validation_get_total_category_selection_activity));
+                return;
+            }
+            final String start_date_edit_textString = AppController.pareseDate_in_Month_comma_Day_space_Year_to_DD_dash_MM_dash_YYYY(start_date_edit_text.getText().toString());
+            final String end_date_edit_textString = AppController.pareseDate_in_Month_comma_Day_space_Year_to_DD_dash_MM_dash_YYYY(end_date_edit_text.getText().toString());
+            if (!start_date_edit_textString.isEmpty() && !end_date_edit_textString.isEmpty() && (AppController.compareTwoDateString(start_date_edit_textString, end_date_edit_textString) > 0)) {
+                validationAlert(getString(R.string.validation_get_total_date_selection_activity));
+                return;
+            }
+        final Handler handler = new Handler();
+        progress = CustomProgressDialog.getInstance(this);
+        progress.setMessage(getResources().getString(R.string.wait_message));
+        progress.show();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                DBHelper dbHelper = DBHelper.getInstance(ExportToExcelActivity.this);
+                ArrayList<ExpenseIncome> expenseIncomes = dbHelper.getexpenceIncomeForCategoriesArrayList(checkBoxListDatas, start_date_edit_textString, end_date_edit_textString);
+                HashMap<Integer,String> categoryHashMap = dbHelper.getAllCategoryHashMap();
+                ExcelExport.saveToExcel(ExportToExcelActivity.this,expenseIncomes,categoryHashMap);
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                      if(progress.isShowing()){
+                          progress.dismiss();
+                      }
+                        new CustomAlert.CustomBuilder(ExportToExcelActivity.this,getLayoutInflater())
+                                .setTitle(R.string.info)
+                                .setMessage(getString(R.string.msg_sucessfully_export_to_excel).replace(AppController.folder,getString(R.string.expenseIncomeDetails))).setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+
+                                // do nothing
+                            }
+                        }).setIcon(R.drawable.success_icon)
+                                .show();
+                    }
+                });
+            }
+        }).start();
+
+        }
+
+
+    private ArrayList<CheckBoxListData>  getTotal(){
+
+        ArrayList<CheckBoxListData> checkBoxListDataArray = new ArrayList<>();
+        final SegmentedControlButton segmentedControlButtonExpence = (SegmentedControlButton)findViewById(R.id.segmented_control_expense_SF);
+        //   if(segmentedControlButtonExpence.isChecked()){
+        noExpenceSelected = false;
+        noIncomeSelected = false;
+        int maxExpenseIncomeCategoryList = expenseCategoryPairList.size();
+        Boolean expenseSelectAll = false;
+        int i = 0;
+        for (int count = 0; count < maxExpenseIncomeCategoryList; count++) {
+            Pair<CheckBoxListData, CheckBoxListData> pair = expenseCategoryPairList.get(count);
+            if (pair.first.checkState) {
+                i++;
+                //category is checked
+                pair.first.ifExpence = true;
+                checkBoxListDataArray.add(pair.first);
+            }
+            if (pair.second.ifCheckBoxRequired) {
+                if (pair.second.checkState) {
+                    i++;
+                    pair.second.ifExpence = true;
+                    //category is checked
+                    checkBoxListDataArray.add(pair.second);
+                }
+            }
+
+
+
+
+
+        }
+        if(i == 0){
+            noExpenceSelected = true;
+            // noIncomeSelected = false;
+        }
+        expenseSelectAll = (i == expenseCategorySize);
+
+        Boolean incomeSelectAll = false;
+
+        maxExpenseIncomeCategoryList = incomeCategoryPairList.size();
+        i = 0;
+        for (int count = 0; count < maxExpenseIncomeCategoryList; count++) {
+            Pair<CheckBoxListData, CheckBoxListData> pair = incomeCategoryPairList.get(count);
+            if (pair.first.checkState) {
+                i++;
+                //category is checked
+                pair.first.ifExpence = false;
+                checkBoxListDataArray.add(pair.first);
+            }
+            if (pair.second.ifCheckBoxRequired) {
+                if (pair.second.checkState) {
+                    i++;
+                    pair.second.ifExpence = false;
+                    //category is checked
+                    checkBoxListDataArray.add(pair.second);
+                }
+            }
+
+
+
+
+        }
+        if(i == 0){
+            //   noExpenceSelected = false;
+            noIncomeSelected = true;
+        }
+        incomeSelectAll = (i == incomeCategorySize);
+        return checkBoxListDataArray;
+    }
+
+    public void validationAlert(String msg){
+
+        new CustomAlert.CustomBuilder(this,getLayoutInflater())
+                .setTitle(R.string.info)
+                .setMessage(msg).setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+
+                // do nothing
+            }
+        }).setIcon(R.drawable.error_info)
+                .show();
+    }
+            public class CheckBoxListAdapter extends BaseAdapter {
         ArrayList<Pair<CheckBoxListData,CheckBoxListData>> all;
 
         public ArrayList<Pair<CheckBoxListData, CheckBoxListData>> getAll() {

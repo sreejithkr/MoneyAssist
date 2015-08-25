@@ -155,7 +155,7 @@ public class AddCategoryActivity extends ActionBarActivity {
                                 }else{
 
                                 }
-//                                new CustomAlert.Builder(addCategoryActivity)
+//                                new CustomAlert.CustomBuilder(addCategoryActivity)
 //                                        .setTitle(R.string.success_title)
 //                                        .setMessage(msg)
 //                                        .setNegativeButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -222,7 +222,7 @@ public class AddCategoryActivity extends ActionBarActivity {
 
     public void validationAlert(String msg){
 
-        new CustomAlert.Builder(this)
+        new CustomAlert.CustomBuilder(this,getLayoutInflater())
                 .setTitle(R.string.info)
                 .setMessage(msg).setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {

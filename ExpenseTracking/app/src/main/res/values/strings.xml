@@ -24,6 +24,7 @@
     <string name="side_panel_items_array_expense">Expense</string>
     <string name="side_panel_items_array_income">Income</string>
     <string name="side_panel_items_array_category">Category</string>
+    <string name="CURRENCY">CURRENCY</string>
     <string name="side_panel_items_array_setting">Setting</string>
     <string name="side_panel_items_array_get_total">Get Total</string>
     <string name="side_panel_items_array_currency">Set your currency</string>
@@ -179,7 +180,7 @@
     <string name="no_data_expense_income_message">It seems you have not added any details of !*ei*!! \n</string>
     <string name="search_no_data_expense_income_message">It seems there is no details matching your search in !*ei*!! \n</string>
     <string name="expence_and_income">Expense &amp; Income</string>
-    <string name="validation_get_total_category_selection_activity">Please select at least one category fro either Expense or Income</string>
+    <string name="validation_get_total_category_selection_activity">Please select at least one category from either Expense or Income</string>
     <string name="validation_get_total_date_selection_activity">Start date selected should be an earlier date than the end date selected !</string>
     <string name="title_activity_load_from_archive_list">Load From Archive</string>
     <string name="load_current_archive">Reload Archived Data</string>
@@ -192,6 +193,9 @@
     <string name="reload_archive_message">Note: By reloading from archive all your current data will be lost. </string>
     <string name="deleter_archive_message">Note: By deleting your archive will be permanently lost.</string>
     <string name="reload_archive_dialog_des_sucess_message">Successfully reloaded from archive!</string>
-    <string name="title_activity_export_to_excel">ExportToExcelActivity</string>
+    <string name="title_activity_export_to_excel">@string/side_panel_items_array_export_Excel</string>
+    <string name="msg_sucessfully_export_to_excel">Saved to phone successfully ! Please check your !*folder*! folder</string>
+    <string name="expenseIncomeDetails">ExpenseIncomeDetails</string>
+
 
 </resources>

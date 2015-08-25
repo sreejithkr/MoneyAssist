@@ -61,6 +61,7 @@ enum Months {
 
 public class AppController {
     public static final String ei=  "!*ei*!";
+    public static final String folder = "!*folder*!";
     private static AppController ourInstance = new AppController();
 
     public static AppController getInstance() {

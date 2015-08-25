@@ -1,7 +1,9 @@
 package com.skr.expensetrack;
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -19,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -105,6 +108,25 @@ Boolean ifExpenceOrIncomeListEmpty = false;
         Crittercism.initialize(getApplicationContext(), "559aa1145c69e80d008f93f7");
         mTitles = getResources().getStringArray(R.array.side_panel_items_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.homeDrawerLayout);
+        mDrawerLayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener(){
+            @Override
+            public void onDrawerSlide(View drawerView, float slideOffset) {
+                hideKeyboard(HomeScreen.this);
+            }
+
+            @Override
+            public void onDrawerOpened(View drawerView) {
+            }
+
+            @Override
+            public void onDrawerClosed(View drawerView) {
+            }
+
+            @Override
+            public void onDrawerStateChanged(int newState) {
+            }
+
+        });
 
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
@@ -416,7 +438,7 @@ for(int count=0;count< mTitles.length;count++){
                 }else {
                     ((CategoryListFragment) fragment).removeCategoryFromListAfterSuccessfulDelete();
                     String confirmDilogMessage = getResources().getString(R.string.delete_dialog_des_sucess_message);
-                    new CustomAlert.Builder(this)
+                    new CustomAlert.CustomBuilder(this,getLayoutInflater())
                             .setTitle(R.string.info)
                             .setMessage(confirmDilogMessage).setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
@@ -439,7 +461,7 @@ for(int count=0;count< mTitles.length;count++){
                 }
                 String confirmDilogMessage = getResources().getString(R.string.success_msg_add_category);
 
-                new CustomAlert.Builder(this)
+                new CustomAlert.CustomBuilder(this,getLayoutInflater())
                         .setTitle(R.string.info)
                         .setMessage(confirmDilogMessage).setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -462,7 +484,7 @@ for(int count=0;count< mTitles.length;count++){
                 }
                 String confirmDilogMessage = getResources().getString(R.string.success_msg_update_category);;
 
-                new CustomAlert.Builder(this)
+                new CustomAlert.CustomBuilder(this,getLayoutInflater())
                         .setTitle(R.string.info)
                         .setMessage(confirmDilogMessage).setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -676,7 +698,7 @@ for(int count=0;count< mTitles.length;count++){
 
             SidePanelAdapter sidePanelAdapter = (SidePanelAdapter)parent.getAdapter();
 
-
+            hideKeyboard(HomeScreen.this);
             if(fragment != null) {
                 getFragmentManager().beginTransaction().remove(fragment).commit();
             }
@@ -1121,5 +1143,12 @@ private Drawable getDrawableFromStringID(String settingString){
 
 }
 
+    public static void hideKeyboard(Activity activity) {
+        View v = activity.getWindow().getCurrentFocus();
+        if (v != null) {
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        }
+    }
 
 }

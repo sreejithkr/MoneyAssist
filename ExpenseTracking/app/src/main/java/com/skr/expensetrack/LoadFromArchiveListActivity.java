@@ -91,7 +91,7 @@ public class LoadFromArchiveListActivity extends ActionBarActivity {
 
                 ArchiveDBHelper.reloadTheDataBAseFromArchive(archiveDetails.getCombinedArchiveName());
                 dialog.dismiss();
-                new CustomAlert.Builder(v.getContext())
+                new CustomAlert.CustomBuilder(v.getContext(),getLayoutInflater())
                         .setTitle(R.string.info)
                         .setMessage(getResources().getString(R.string.delete_dialog_des_sucess_message))
                         .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -111,7 +111,7 @@ public class LoadFromArchiveListActivity extends ActionBarActivity {
 
 
                 archiveItemsListAdapter.reloadData(archiveList());
-                new CustomAlert.Builder(v.getContext())
+                new CustomAlert.CustomBuilder(v.getContext(),getLayoutInflater())
                         .setTitle(R.string.info)
                         .setMessage(getResources().getString(R.string.reload_archive_dialog_des_sucess_message))
                         .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {

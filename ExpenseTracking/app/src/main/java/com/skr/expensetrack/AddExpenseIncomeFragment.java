@@ -360,7 +360,7 @@ public class AddExpenseIncomeFragment extends Fragment {
                 }
                 String descString  =  editTextDescriptionAddIncomeExpense.getText().toString();
                 if(descString == null ||descString.equalsIgnoreCase("")){
-                    new CustomAlert.Builder(getActivity())
+                    new CustomAlert.CustomBuilder(getActivity(),getActivity().getLayoutInflater())
                             .setTitle(R.string.info)
                             .setMessage(getResources().getString(R.string.validation_msg_add_edit_expence_income_description))
                             .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
@@ -447,7 +447,7 @@ public class AddExpenseIncomeFragment extends Fragment {
                             msg = getResources().getString(R.string.success_msg_add_expence_income);
                         }
 
-                        new CustomAlert.Builder(getActivity())
+                        new CustomAlert.CustomBuilder(getActivity(),getActivity().getLayoutInflater())
                                 .setTitle(R.string.success_title_add_edit_expence_income)
                                 .setMessage(msg)
                                 .setNegativeButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -583,15 +583,14 @@ if(mListener != null){
 
     public void validationAlert(String msg){
 
-        new CustomAlert.Builder(getActivity())
-                .setTitle(R.string.info)
+    new CustomAlert.CustomBuilder(getActivity(),getActivity().getLayoutInflater()).setTitle(R.string.info)
                 .setMessage(msg).setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
+                    public void onClick(DialogInterface dialog, int which) {
 
 
-                // do nothing
-            }
-        }).setIcon(R.drawable.error_info)
+                        // do nothing
+                    }
+                }).setIcon(R.drawable.error_info)
                 .show();
     }
 

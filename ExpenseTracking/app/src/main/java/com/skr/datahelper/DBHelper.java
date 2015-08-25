@@ -191,6 +191,31 @@ public class DBHelper  extends SQLiteOpenHelper {
         return new Pair<>(categoryIDS,categoryNames);
 
     }
+
+    public HashMap<Integer,String> getAllCategoryHashMap() {
+        HashMap<Integer,String> categories = new HashMap<>();
+        String query = "SELECT  * FROM " + TABLE_NAME_CATEGORY ;
+        // 2. get reference to writable DB
+        // SQLiteDatabase db = this.getWritableDatabase();
+        Cursor cursor = db.rawQuery(query, null);
+        int i =  0;
+        // 3. go over each row, build book and add it to list
+
+        if (cursor.moveToFirst()) {
+            do {
+
+
+
+
+                    categories.put(Integer.parseInt(cursor.getString(0)),cursor.getString(1));
+
+
+            } while (cursor.moveToNext());
+        }
+        //db.close();
+        return categories;
+
+    }
     public HashMap<Integer,String> getAllIncomeCategory() {
         HashMap<Integer,String> categories = new HashMap<>();
         String query = "SELECT  * FROM " + TABLE_NAME_CATEGORY + " WHERE "+IF_EXPENSE+" = 0";
@@ -565,7 +590,12 @@ Log.d("addExpenseIncome ",expenseIncome.toString());
             return new ArrayList<> ();
 
         }
-
+        if(startDate == null || startDate.isEmpty()){
+            startDate = null;
+        }
+        if(endDate == null || endDate.isEmpty()){
+            endDate = null;
+        }
         ArrayList<ExpenseIncome> expenseIncomeList = new ArrayList<>();
         // SQLiteDatabase db = this.getWritableDatabase();
         String query = "SELECT * FROM "+ TABLE_NAME_EXPENCE_INCOME +" WHERE  ";
@@ -600,13 +630,29 @@ Log.d("addExpenseIncome ",expenseIncome.toString());
                         (Integer.parseInt(cursor.getString(4))!=0),
                         (Integer.parseInt(cursor.getString(5))!=0),
                         cursor.getString(6)+"-"+cursor.getString(7)+"-"+cursor.getString(8));
-                if(AppController.compareDateSFallsBetweenTwoGivenDate(expenseIncome.dateString,startDate,endDate)) {
+
+
+                if(startDate != null && endDate != null) {
+                    if (AppController.compareDatesFallsBetweenTwoGivenDate_dd_mm_yyyy(expenseIncome.dateString, startDate, endDate)) {
+                        expenseIncomeList.add(expenseIncome);
+                    }
+                }else if(startDate != null   && endDate == null){
+                    if(AppController.compareTwoDateString(expenseIncome.getDateString(),startDate)>=0){
+                        expenseIncomeList.add(expenseIncome);
+                    }
+                }else if(startDate == null   && endDate != null){
+                    if(AppController.compareTwoDateString(expenseIncome.getDateString(),startDate)<=0) {
+                        expenseIncomeList.add(expenseIncome);
+                    }
+                }else {
+
                     expenseIncomeList.add(expenseIncome);
+
                 }
                 // Add book to books
             } while (cursor.moveToNext());
         }
-        //db.close();
+        Log.e("expenseIncomeList count"+expenseIncomeList.size(),"expenseIncomeList expenseIncomeList");
         return expenseIncomeList;
     }
 
