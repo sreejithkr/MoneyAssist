@@ -20,14 +20,20 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".HomeScreen"
-            android:label="@string/app_name"
-            android:screenOrientation="portrait" >
+            android:name=".SplashActivity"
+            android:label="@string/title_activity_splash"
+            android:screenOrientation="portrait"
+            android:theme="@style/Theme.AppCompat.NoActionBar" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".HomeScreen"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".AddCategoryActivity"
@@ -36,13 +42,12 @@
         </activity>
         <activity
             android:name=".ExpenceIncomeDetailActivity"
-            android:label="@string/title_activity_expence_income_detail"
             android:screenOrientation="portrait"
             android:theme="@style/Theme.Transparent" >
         </activity>
         <activity
             android:name=".FilterAndViewExpenseIncomeActivity"
-            android:label="@string/title_activity_filter_and_view_expense_income"
+            android:label="@string/action_sort_by_other_factors"
             android:screenOrientation="portrait" >
         </activity>
         <activity
@@ -85,11 +90,22 @@
         </activity>
         <activity
             android:name=".LoadFromArchiveListActivity"
-            android:label="@string/title_activity_load_from_archive_list" >
+            android:label="@string/title_activity_load_from_archive_list"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".ExportToExcelActivity"
-            android:label="@string/title_activity_export_to_excel" >
+            android:label="@string/title_activity_export_to_excel"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".AddExpenceIncomeActivity"
+            android:label="@string/title_activity_add_expence_income"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".HelpScreenActivity"
+            android:label="@string/title_activity_help_screen" >
         </activity>
     </application>
 

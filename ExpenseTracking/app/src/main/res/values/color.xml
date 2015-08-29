@@ -8,6 +8,9 @@
         name="backgroud_white"
         >#ffffffff</color>
     <color
+        name="backgroud_white2"
+        >#e5e5e5</color>
+    <color
         name="textbox_background"
         >#fff2f6f7</color>
     <color

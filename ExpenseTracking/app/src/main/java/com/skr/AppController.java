@@ -76,6 +76,8 @@ public class AppController {
     public static final String MY_APP_PREFERENCE = "myapppreference";
     public static final String CurrencyString = "CurrencyString";
     public final static String categoryprepopulated = "categoryprepopulated";
+    public Boolean listExpenseIncomeItemClicked = false;
+
 
 
     public static String getCurrencyString() {

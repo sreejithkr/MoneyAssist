@@ -1,6 +1,8 @@
 package com.skr.datahelper;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
 
@@ -25,13 +27,27 @@ public class ExcelExport {
 
     final static String income = "Income";
     final static String expense = "Expense";
-    public static void saveToExcel(Context context,ArrayList<ExpenseIncome>expenseIncomes,HashMap<Integer,String>categoryHashMap){
-         String expenseIncomeDetails = context.getString(R.string.expenseIncomeDetails);
-        File sdCard = Environment.getExternalStorageDirectory();
-        Date date = new Date();
 
-        String fileName = expenseIncomeDetails+"_"+date.toString()+".xls";
+    public static void openFolder(Context context,String path)
+    {
+        File file = new File(Environment.getExternalStorageDirectory(),
+                "myFolder");
+
+        Log.d("path", file.toString());
+
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        //intent.setDataAndType(Uri.fromFile(file), "*/*");
+        intent.setDataAndType(Uri.fromFile(file), "resource/folder");
+        context.startActivity(intent);
+    }
+    public static void saveToExcel(Context context,ArrayList<ExpenseIncome>expenseIncomes,HashMap<Integer,String>categoryHashMap){
+
         try {
+            String expenseIncomeDetails = context.getString(R.string.expenseIncomeDetails);
+            File sdCard = Environment.getExternalStorageDirectory();
+            Date date = new Date();
+
+            String fileName = expenseIncomeDetails+"_"+date.toString()+".xls";
             File dir = new File(sdCard.getAbsolutePath() + "/ExpenseIncomeDetails");
             dir.mkdirs();
             File file = new File(dir, fileName);
@@ -145,6 +161,8 @@ Integer row_num_income = 0;
             }
             workbook.write();
             workbook.close();
+
+            openFolder(context,dir.getPath());
         }catch (Exception e){
             Log.e("Exception 123",""+e.toString());
 

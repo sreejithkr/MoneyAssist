@@ -1,5 +1,6 @@
 package com.skr.expensetrack;
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -14,6 +15,8 @@ public class ShowTotalDetailsActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_show_total_details);
+        if(getSupportActionBar() != null){getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_green)));}
+
         Button closeST = (Button)findViewById(R.id.closeST);
         closeST.setOnClickListener(new View.OnClickListener() {
             @Override

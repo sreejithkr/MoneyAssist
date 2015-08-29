@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.skr.expensetrack.R;
@@ -18,28 +19,40 @@ public class CustomAlert extends AlertDialog {
         super(context);
         setCancelable(cancelFlag);
 
+
     }
 
     public CustomAlert(final Context context, final int theme) {
         super(context, theme);
         setCancelable(cancelFlag);
+
     }
 
     public CustomAlert(final Context context, final boolean cancelable, final OnCancelListener cancelListener) {
         super(context, cancelable, cancelListener);
         setCancelable(cancelFlag);
+
     }
 
     public  static class CustomBuilder extends Builder {
         TextView cutomeAlertTitle;
         Context context;
+        WebView webViewTextJustyfy;
         public CustomBuilder(final Context context,LayoutInflater inflater){
             super(context);
             this.context = context;
             // LayoutInflater inflater = getLayoutInflater();
             View view=inflater.inflate(R.layout.title_text_view, null);
             cutomeAlertTitle= (TextView)view.findViewById(R.id.cutomeAlertTitle);
+
+            setCancelable(cancelFlag);
             this.setCustomTitle(view);
+
+
+
+
+
+
         }
         @Override
         public CustomBuilder setTitle(int titleId) {
@@ -47,6 +60,8 @@ public class CustomAlert extends AlertDialog {
             cutomeAlertTitle.setText(context.getString(titleId));
             return this;
         }
+
+
 
     }
 

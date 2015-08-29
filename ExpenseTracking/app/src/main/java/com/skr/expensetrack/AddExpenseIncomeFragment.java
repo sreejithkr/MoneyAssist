@@ -1,11 +1,10 @@
 package com.skr.expensetrack;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.content.DialogInterface;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -22,6 +21,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.skr.AppController;
 import com.skr.customviews.CustomAlert;
@@ -33,7 +33,6 @@ import com.skr.datahelper.ExpenseIncome;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -52,6 +51,8 @@ import java.util.Map;
 public class AddExpenseIncomeFragment extends Fragment {
     public static final String ExpenceIncomeToBeUpdatedStatus =  "ExpenceIncomeToBeUpdatedStatus";
     public static final String ExpenceIncomeToBeUpdated =  "ExpenceIncomeToBeUpdated";
+    public static final String DonotShowNoDescriptionFlag =  "DonotShowNoDescriptionFlag";
+    public static final String ExpenseFlagKey = "ExpenseFlagKey";
    // public Boolean ifExpenceToBeUpdated = false;
     HashMap <String,Integer> incomeCategory ;
     HashMap <String,Integer> expenseCategory ;
@@ -68,7 +69,7 @@ public class AddExpenseIncomeFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    public Boolean expenseFlag = true;
     public Boolean isToEditFlag = false;
     public ExpenseIncome expenseIncome;
     private OnFragmentInteractionListener mListener;
@@ -199,13 +200,14 @@ public class AddExpenseIncomeFragment extends Fragment {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
 
+
                 enableOrDisableTextFiled(false);
-                DatePickerFragment newFragment = new DatePickerFragment();
+                final DatePickerFragment newFragment = new DatePickerFragment();
                 newFragment.show(getFragmentManager(), "timePicker");
-                newFragment.setDatePickerFragmentListener(new DatePickerFragmentListener(){
+                newFragment.setDatePickerFragmentListener(new DatePickerFragment.DatePickerFragmentListener(){
                     public void onCancel(){
                         enableOrDisableTextFiled(true);
-
+                        newFragment.getDialog().dismiss();
                     }
                     public void onDateSet(DatePicker view, int year, int month, int day ){
                         enableOrDisableTextFiled(true);
@@ -226,6 +228,8 @@ public class AddExpenseIncomeFragment extends Fragment {
                         }
                         format = new SimpleDateFormat(AppController.MonthSpaceDateSpaceYearFormat, Locale.ENGLISH);
                         editTextDateAddIncomeExpense.setText(format.format(date));
+                        newFragment.getDialog().dismiss();
+
                     }
                 });
 
@@ -313,8 +317,28 @@ public class AddExpenseIncomeFragment extends Fragment {
             spinner.setSelection(position);
           //  buttonAdd.setVisibility(View.GONE);
         }else{
-            spinner.setAdapter(dataAdapterExpense);
-            radioExpense.setChecked(true);
+
+            if(expenseFlag) {
+
+                dataAdapterExpense
+                        .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                // attaching data adapter to spinner
+                spinner.setAdapter(dataAdapterExpense);
+
+                radioIncome.setChecked(false);
+                radioExpense.setChecked(true);
+            }else{
+                // Drop down layout style - list view with radio button
+                dataAdapterIncome
+                        .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
+                // attaching data adapter to spinner
+                spinner.setAdapter(dataAdapterIncome);
+                radioExpense.setChecked(false);
+                spinner.setAdapter(dataAdapterIncome);
+                radioIncome.setChecked(true);
+            }
 
         }
 
@@ -360,24 +384,50 @@ public class AddExpenseIncomeFragment extends Fragment {
                 }
                 String descString  =  editTextDescriptionAddIncomeExpense.getText().toString();
                 if(descString == null ||descString.equalsIgnoreCase("")){
-                    new CustomAlert.CustomBuilder(getActivity(),getActivity().getLayoutInflater())
-                            .setTitle(R.string.info)
-                            .setMessage(getResources().getString(R.string.validation_msg_add_edit_expence_income_description))
-                            .setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
 
+                    final SharedPreferences settings = getActivity().getSharedPreferences(AppController.MY_APP_PREFERENCE, 0);
+                    if(settings.getBoolean(DonotShowNoDescriptionFlag,false)){
+                        editTextDescriptionAddIncomeExpense.setText(getString(R.string.no_desc));
+                        progress.show();
+                        onAddButtonPressedSave(rootView, radioIncome, handler);
+                        return;
+                    }
+                    AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                    // Get the layout inflater
+                    LayoutInflater inflater = getActivity().getLayoutInflater();
+                    // Inflate and set the layout for the dialog
+                    // Pass null as the parent view because its going in the dialog layout
+                    final View view = inflater.inflate(R.layout.dialog_add_expence_income_without_desc_confirmation, null);
+                    final TextView error_message_dialog = (TextView)view.findViewById(R.id.error_message_dialog);
+                    final CheckBox donotShowCheckBox = (CheckBox)view.findViewById(R.id.donotShowCheckBox);
 
-                            // do nothing
-                        }
-                    }).setPositiveButton(R.string.continue_button_String,new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            editTextDescriptionAddIncomeExpense.setText(getString(R.string.no_desc));
-                            progress.show();
-                            onAddButtonPressedSave(rootView, radioIncome, handler);
-                        }
-                    }).setIcon(R.drawable.error_info)
-                            .show();
+                    error_message_dialog.setText(getString(R.string.validation_msg_add_edit_expence_income_description));
+                    builder.setView(view)
+                            // Add action buttons
+                            .setPositiveButton(R.string.continue_button_String, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int id) {
+                                    if (donotShowCheckBox.isChecked()) {
+
+                                        SharedPreferences.Editor editor = settings.edit();
+
+                                        editor.putBoolean(DonotShowNoDescriptionFlag, true);
+                                        editor.commit();
+                                    }
+                                    editTextDescriptionAddIncomeExpense.setText(getString(R.string.no_desc));
+                                    progress.show();
+                                    onAddButtonPressedSave(rootView, radioIncome, handler);
+                                }
+                            })
+                            .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+
+                                }
+                            });
+                    final AlertDialog dialog = builder.create();
+
+                    dialog.show();
+
                     return;
                 }
                 progress.show();
@@ -527,51 +577,7 @@ if(mListener != null){
             // Do nothing.
         }
     }
-    private interface DatePickerFragmentListener {
-        public void onCancel();
-        public void onDateSet(DatePicker view, int year, int month, int day);
-    }
 
-    public static class DatePickerFragment extends DialogFragment
-            implements DatePickerDialog.OnDateSetListener,DatePickerDialog.OnCancelListener {
-
-        DatePickerFragmentListener datePickerFragmentListener;
-
-        public void setDatePickerFragmentListener(DatePickerFragmentListener datePickerFragmentListener) {
-            this.datePickerFragmentListener = datePickerFragmentListener;
-        }
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current date as the default date in the picker
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-
-            // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
-        }
-
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-
-
-            if(datePickerFragmentListener != null){
-                datePickerFragmentListener.onDateSet(view, year, month, day);
-            }
-        }
-
-
-        public void onCancel(DialogInterface dialog){
-
-
-
-            if(datePickerFragmentListener != null){
-                datePickerFragmentListener.onCancel();
-            }
-        }
-
-    }
     public void enableOrDisableTextFiled(Boolean flag){
         final EditText editTextAmountAddIncomeExpense = ((EditText)getView().findViewById(R.id.editTextAmountAddIncomeExpense));
         final EditText editTextDateAddIncomeExpense = (EditText) getView().findViewById(R.id.editTextDateAddIncomeExpense);
@@ -606,6 +612,10 @@ if(mListener != null){
         spinner.setSelection(0);
     }
 
+    public void onCreateDialog(String message) {
 
+
+
+    }
 
 }

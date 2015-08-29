@@ -1,11 +1,10 @@
 package com.skr.expensetrack;
 
-import android.support.v7.app.ActionBarActivity;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-
-import com.skr.expensetrack.R;
 
 public class DurationSettingActivity extends ActionBarActivity {
 
@@ -13,6 +12,8 @@ public class DurationSettingActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_duration_setting);
+        if(getSupportActionBar() != null){getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_green)));}
+
     }
 
 

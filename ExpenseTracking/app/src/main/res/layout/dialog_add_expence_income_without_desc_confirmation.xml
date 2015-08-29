@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minHeight="118dp"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="36dp"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/dialog_title_message_confirmation"
+        android:textColor="@color/backgroud_white"
+        android:textAllCaps="true"
+        android:background="@color/app_green"
+        android:contentDescription="@string/app_name" />
+    <TextView
+        android:id="@+id/error_message_dialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"
+        android:layout_marginTop="30dp"
+        android:textStyle="bold"
+        android:text="@string/validation_msg_add_edit_expence_income_description"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_horizontal"
+        android:textColor="@color/text_normal"
+        android:textSize="12dp"
+        android:visibility="visible"
+
+        />
+    <CheckBox
+        android:id="@+id/donotShowCheckBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:layout_marginBottom="20dp"
+        android:text="@string/validation_msg_add_edit_expence_income_amount__no_description_alert"
+        />
+
+</LinearLayout>

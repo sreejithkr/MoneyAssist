@@ -16,4 +16,5 @@ public class ActivityResultIdentifies {
     public static final Integer AddCategoryFromAddExpencePage = 107;
     public static final Integer LoadFromArchiveListActivityPage = 108;
     public static final Integer ExportToExcelActivityPage = 109;
+    public static final Integer AddExpenceIncomeActivityKey = 110;
 }

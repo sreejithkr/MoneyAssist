@@ -96,11 +96,9 @@ android:inputType="number"
         android:layout_height="50dp"
         android:id="@+id/editTextDateAddIncomeExpense"
         android:layout_gravity="center_horizontal"
-
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="20dp"
-
         android:hint="@string/date_add_expense_income"
         android:textColorHint="@color/material_blue_grey_900"
         android:background="@drawable/normal_edit_text_background"

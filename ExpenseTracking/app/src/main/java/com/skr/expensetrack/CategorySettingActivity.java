@@ -3,6 +3,7 @@ package com.skr.expensetrack;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
@@ -70,11 +71,18 @@ public class CategorySettingActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_setting);
+        if(getSupportActionBar() != null){getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_green)));}
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_white);
         ifGetTotalToBeCalculated = getIntent().getBooleanExtra(CategorySettingActivityGetTotalFlag,false);
 
+        TextView checkboxListTitle = (TextView)findViewById(R.id.checkboxListTitle);
+        if(ifGetTotalToBeCalculated){
+            checkboxListTitle.setText(getString(R.string.check_box_list_title_message_total_calculate));
+        }else{
 
+        }
 
         select_all_checkbox = (CheckBox)findViewById(R.id.select_all_checkbox);
         select_none_checkbox = (CheckBox)findViewById(R.id.select_none_checkbox);
@@ -124,22 +132,19 @@ public class CategorySettingActivity extends ActionBarActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 start_date_edit_text.setEnabled(false);
 
-                FilterAndViewExpenseIncomeActivity.DatePickerFragment newFragment = new FilterAndViewExpenseIncomeActivity.DatePickerFragment();
+                DatePickerFragment newFragment = new DatePickerFragment();
                     newFragment.show(getFragmentManager(), "timePicker");
-                newFragment.setDatePickerFragmentListener(new FilterAndViewExpenseIncomeActivity.DatePickerFragmentListener() {
+                newFragment.setDatePickerFragmentListener(new DatePickerFragment.DatePickerFragmentListener() {
                     @Override
                     public void onCancel() {
                         start_date_edit_text.setEnabled(true);
-
                     }
 
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int day) {
                         String dateString = day+"-"+(month+1)+"-"+year;
-
                         start_date_edit_text.setText(AppController.pareseDate_in_DD_dash_MM_dash_YYYY_to_Month_comma_Day_space_Year(dateString));
                         start_date_edit_text.setEnabled(true);
-
                     }
                 });
 
@@ -163,9 +168,9 @@ public class CategorySettingActivity extends ActionBarActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 end_date_edit_text.setEnabled(false);
-                FilterAndViewExpenseIncomeActivity.DatePickerFragment newFragment = new FilterAndViewExpenseIncomeActivity.DatePickerFragment();
+                DatePickerFragment newFragment = new DatePickerFragment();
                 newFragment.show(getFragmentManager(), "timePicker");
-                newFragment.setDatePickerFragmentListener(new FilterAndViewExpenseIncomeActivity.DatePickerFragmentListener() {
+                newFragment.setDatePickerFragmentListener(new DatePickerFragment.DatePickerFragmentListener() {
                     @Override
                     public void onCancel() {
                         end_date_edit_text.setEnabled(true);
@@ -892,6 +897,8 @@ if(i == 0){
         }
 
     }
+
+
 
 
 }

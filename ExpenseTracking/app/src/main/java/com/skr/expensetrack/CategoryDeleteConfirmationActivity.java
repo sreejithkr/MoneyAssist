@@ -1,6 +1,7 @@
 package com.skr.expensetrack;
 
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
@@ -33,6 +34,8 @@ public final static String AddCategoryFlag =  "AddCategoryFlag";
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category_delete_confirmation);
+        if(getSupportActionBar() != null){getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_green)));}
+
         final Category category = getIntent().getParcelableExtra(CategoryListFragment.CategoryToBeDeletedOrUpdated);
         final String expenseorIncome = getIntent().getStringExtra(CategoryListFragment.ExpenseOrIncome);
         final TextView expenceIncomeMessageCGDA = (TextView)findViewById(R.id.expenceIncomeMessageCGDA);

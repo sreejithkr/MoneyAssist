@@ -1,10 +1,7 @@
 package com.skr.expensetrack;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
@@ -15,12 +12,14 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.skr.AppController;
 import com.skr.customviews.CustomProgressDialog;
@@ -28,7 +27,6 @@ import com.skr.datahelper.CheckBoxListData;
 import com.skr.datahelper.DBHelper;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Iterator;
 
@@ -52,10 +50,16 @@ public class FilterAndViewExpenseIncomeActivity extends ActionBarActivity {
     private CustomProgressDialog progress;
     CheckBox select_all_checkbox;
     CheckBox select_none_checkbox;
+    Boolean if_min_touched = false;
+    Boolean if_max_touched = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_filter_and_view_expense_income);
+
+        if(getSupportActionBar() != null){getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_green)));}
+
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_white);
         final Handler handler = new Handler();
@@ -125,7 +129,9 @@ progress.show();
                     public void run() {
                         if(progress.isShowing()) {
                             progress.dismiss();
+
                         }
+
 
                         checkBoxListForCategoryListing.setAdapter(checkBoxListAdapter);
                         setListViewHeightBasedOnChildren(checkBoxListForCategoryListing);
@@ -134,32 +140,32 @@ progress.show();
             }
         }).start();
 
-
-        final CheckBox start_date_checkbox = (CheckBox)findViewById(R.id.start_date_checkbox);
+        checkBoxListForCategoryListing.setFocusable(true);
+        final TextView start_date_checkbox = (TextView)findViewById(R.id.start_date_checkbox);
         final EditText start_date_edit_text = (EditText)findViewById(R.id.start_date_edit_text);
-        start_date_checkbox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(start_date_checkbox.isChecked()){
-                    start_date_edit_text.setEnabled(true);
-                }else{
-                    start_date_edit_text.setText("");
-                    start_date_edit_text.setEnabled(false);
-
-                }
-            }
-        });
+//        start_date_checkbox.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(start_date_checkbox.isChecked()){
+//                    start_date_edit_text.setEnabled(true);
+//                }else{
+//                    start_date_edit_text.setText("");
+//                    start_date_edit_text.setEnabled(false);
+//
+//                }
+//            }
+//        });
 
 
         start_date_edit_text.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(start_date_checkbox.isChecked()) {
+              //  if(start_date_checkbox.isChecked()) {
                     start_date_edit_text.setEnabled(true);
                     DatePickerFragment newFragment = new DatePickerFragment();
                     newFragment.show(getFragmentManager(), "timePicker");
                     start_date_edit_text.setEnabled(false);
-                    newFragment.setDatePickerFragmentListener(new FilterAndViewExpenseIncomeActivity.DatePickerFragmentListener() {
+                    newFragment.setDatePickerFragmentListener(new DatePickerFragment.DatePickerFragmentListener() {
                         @Override
                         public void onCancel() {
                             start_date_edit_text.setEnabled(true);
@@ -176,35 +182,36 @@ progress.show();
                         }
                     });
 
-                }
+              //  }
                     return false;
 
 
             }
         });
-        final CheckBox end_date_checkbox = (CheckBox)findViewById(R.id.end_date_checkbox);
+        final TextView end_date_checkbox = (TextView)findViewById(R.id.end_date_checkbox);
         final EditText end_date_edit_text = (EditText)findViewById(R.id.end_date_edit_text);
-        end_date_checkbox.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(end_date_checkbox.isChecked()){
-                    end_date_edit_text.setEnabled(true);
-                }else{
-                    end_date_edit_text.setText("");
-                    end_date_edit_text.setEnabled(false);
-
-                }
-            }
-        });
+        start_date_edit_text.setSelected(true);
+//        end_date_checkbox.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if(end_date_checkbox.isChecked()){
+//                    end_date_edit_text.setEnabled(true);
+//                }else{
+//                    end_date_edit_text.setText("");
+//                    end_date_edit_text.setEnabled(false);
+//
+//                }
+//            }
+//        });
         end_date_edit_text.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                if(end_date_checkbox.isChecked()) {
+              //  if(end_date_checkbox.isChecked()) {
                     end_date_edit_text.setEnabled(true);
                     DatePickerFragment newFragment = new DatePickerFragment();
                     newFragment.show(getFragmentManager(), "timePicker");
                     end_date_edit_text.setEnabled(false);
-                    newFragment.setDatePickerFragmentListener(new FilterAndViewExpenseIncomeActivity.DatePickerFragmentListener() {
+                    newFragment.setDatePickerFragmentListener(new DatePickerFragment.DatePickerFragmentListener() {
                         @Override
                         public void onCancel() {
                             end_date_edit_text.setEnabled(true);
@@ -221,39 +228,35 @@ progress.show();
                         }
                     });
 
-                }
+              //  }
                     return false;
 
 
             }
         });
-        final CheckBox min_amount_checkbox = (CheckBox)findViewById(R.id.min_amount_checkbox);
+        final TextView min_amount_checkbox = (TextView)findViewById(R.id.min_amount_checkbox);
         final EditText min_amount_edit_text = (EditText)findViewById(R.id.min_amount_edit_text);
-        min_amount_checkbox.setOnClickListener(new View.OnClickListener() {
+
+        final TextView max_amount_checkbox = (TextView)findViewById(R.id.max_amount_checkbox);
+        final EditText max_amount_edit_text = (EditText)findViewById(R.id.max_amount_edit_text);
+        start_date_edit_text.setFocusable(false);
+        end_date_edit_text.setFocusable(false);
+
+
+        max_amount_edit_text.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
+        min_amount_edit_text.setInputType(EditorInfo.TYPE_CLASS_NUMBER);
+
+        min_amount_edit_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(min_amount_checkbox.isChecked()){
-                    min_amount_edit_text.setEnabled(true);
-                }else{
-                    min_amount_edit_text.setText("");
-                    min_amount_edit_text.setEnabled(false);
-
-                }
+               if_min_touched = true;
             }
         });
 
-        final CheckBox max_amount_checkbox = (CheckBox)findViewById(R.id.max_amount_checkbox);
-        final EditText max_amount_edit_text = (EditText)findViewById(R.id.max_amount_edit_text);
-        max_amount_checkbox.setOnClickListener(new View.OnClickListener() {
+        max_amount_edit_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(max_amount_checkbox.isChecked()){
-                    max_amount_edit_text.setEnabled(true);
-                }else{
-                    max_amount_edit_text.setText("");
-                    max_amount_edit_text.setEnabled(false);
-
-                }
+                if_min_touched = false;
             }
         });
 
@@ -319,51 +322,92 @@ progress.show();
                 /*
                 * TODO Show alert for no category selected
                 * */
+               // if(start_date_checkbox.isChecked()){
 
-                if(start_date_checkbox.isChecked()){
-
-                    String text = start_date_edit_text.getText().toString();
-
-                    /*
-                    * TODO the required validations
-                    *
-                    * */
-
-                    intent.putExtra(FilterAndViewExpenseIncomeActivity.start_date_edit_text_key,text);
-                }
-                if(end_date_checkbox.isChecked()){
-
-                    String text = end_date_edit_text.getText().toString();
+                    String start_date_edit_text_val = start_date_edit_text.getText().toString();
 
                     /*
                     * TODO the required validations
                     *
                     * */
 
-                    intent.putExtra(FilterAndViewExpenseIncomeActivity.end_date_edit_text_key,text);
-                }
-                if(min_amount_checkbox.isChecked()){
+               // }
+               // if(end_date_checkbox.isChecked()){
 
-                    String text = min_amount_edit_text.getText().toString();
-
-                    /*
-                    * TODO the required validations
-                    *
-                    * */
-
-                    intent.putExtra(FilterAndViewExpenseIncomeActivity.min_amt_edit_text_key,text);
-                }
-                if(max_amount_checkbox.isChecked()){
-
-                    String text = max_amount_edit_text.getText().toString();
+                    String end_date_edit_text_val = end_date_edit_text.getText().toString();
 
                     /*
                     * TODO the required validations
                     *
                     * */
 
-                    intent.putExtra(FilterAndViewExpenseIncomeActivity.max_amt_edit_text_key,text);
+
+                if((AppController.compareTwoDateString(start_date_edit_text_val,end_date_edit_text_val)>0)){
+                    intent.putExtra(FilterAndViewExpenseIncomeActivity.start_date_edit_text_key,end_date_edit_text_val);
+                    intent.putExtra(FilterAndViewExpenseIncomeActivity.end_date_edit_text_key,start_date_edit_text_val);
+
+
+                }else{
+                    intent.putExtra(FilterAndViewExpenseIncomeActivity.start_date_edit_text_key,start_date_edit_text_val);
+                    intent.putExtra(FilterAndViewExpenseIncomeActivity.end_date_edit_text_key,end_date_edit_text_val);
+
+
                 }
+
+                // }
+             //   if(min_amount_checkbox.isChecked()){
+
+                    String min_amount_edit_text_val = min_amount_edit_text.getText().toString();
+
+                    /*
+                    * TODO the required validations
+                    *
+                    * */
+
+              //  }
+               // if(max_amount_checkbox.isChecked()){
+
+                    String max_amount_edit_text_val = max_amount_edit_text.getText().toString();
+
+                    /*
+                    * TODO the required validations
+                    *
+                    * */
+
+Integer minVal = null;
+                Integer maxVal = null;
+
+                try{
+                    minVal = Integer.parseInt(min_amount_edit_text_val);
+                }catch(Exception e){
+
+                }
+
+                try{
+maxVal = Integer.parseInt(max_amount_edit_text_val);
+                }catch(Exception e){
+
+                }
+                if(maxVal != null && minVal != null) {
+                    if (Integer.parseInt(min_amount_edit_text_val) > Integer.parseInt(max_amount_edit_text_val)) {
+                        intent.putExtra(FilterAndViewExpenseIncomeActivity.min_amt_edit_text_key, max_amount_edit_text_val);
+
+                        intent.putExtra(FilterAndViewExpenseIncomeActivity.max_amt_edit_text_key, min_amount_edit_text_val);
+                    } else {
+                        intent.putExtra(FilterAndViewExpenseIncomeActivity.min_amt_edit_text_key, min_amount_edit_text_val);
+
+                        intent.putExtra(FilterAndViewExpenseIncomeActivity.max_amt_edit_text_key, max_amount_edit_text_val);
+                    }
+                }else{
+                    if(minVal != null) {
+                        intent.putExtra(FilterAndViewExpenseIncomeActivity.min_amt_edit_text_key, min_amount_edit_text_val);
+                    }
+                    if(maxVal != null) {
+                        intent.putExtra(FilterAndViewExpenseIncomeActivity.max_amt_edit_text_key, max_amount_edit_text_val);
+                    }
+
+                }
+               // }
                 setResult(RESULT_OK, intent);
                 finish();
 
@@ -404,6 +448,7 @@ void reloadDataOFIncomeOrExpenseWithState(Boolean state){
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_filter_and_view_expense_income, menu);
+
         return true;
     }
 
@@ -443,7 +488,7 @@ void reloadDataOFIncomeOrExpenseWithState(Boolean state){
             totalHeight += view.getMeasuredHeight();
         }
         ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1))+20;
         listView.setLayoutParams(params);
         listView.requestLayout();
     }
@@ -592,51 +637,7 @@ void reloadDataOFIncomeOrExpenseWithState(Boolean state){
         }
 
     }
-    public interface DatePickerFragmentListener {
-        public void onCancel();
-        public void onDateSet(DatePicker view, int year, int month, int day);
-    }
 
-    public static class DatePickerFragment extends DialogFragment
-            implements DatePickerDialog.OnDateSetListener,DatePickerDialog.OnCancelListener {
-
-        DatePickerFragmentListener datePickerFragmentListener;
-
-        public void setDatePickerFragmentListener(DatePickerFragmentListener datePickerFragmentListener) {
-            this.datePickerFragmentListener = datePickerFragmentListener;
-        }
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current date as the default date in the picker
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-
-            // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
-        }
-
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-
-
-            if(datePickerFragmentListener != null){
-                datePickerFragmentListener.onDateSet(view, year, month, day);
-            }
-        }
-
-
-        public void onCancel(DialogInterface dialog){
-
-
-
-            if(datePickerFragmentListener != null){
-                datePickerFragmentListener.onCancel();
-            }
-        }
-
-    }
 
 
 }

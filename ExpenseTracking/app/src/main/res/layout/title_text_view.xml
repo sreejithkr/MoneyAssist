@@ -7,7 +7,7 @@ android:layout_height="118dp">
 <TextView
     android:id="@+id/cutomeAlertTitle"
     android:layout_width="match_parent"
-    android:layout_height="36dp"
+    android:layout_height="44dp"
     android:gravity="center"
     android:layout_gravity="center"
     android:text="@string/archive"

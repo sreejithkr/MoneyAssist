@@ -2,6 +2,7 @@ package com.skr.expensetrack;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
@@ -33,7 +34,7 @@ public class AddCategoryActivity extends ActionBarActivity {
         setContentView(R.layout.activity_add_category);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_white);
-
+        if(getSupportActionBar() != null){getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_green)));}
         final Handler handler = new Handler();
 
         ifCategoryToBeUpdated = getIntent().getBooleanExtra(CategoryToBeUpdatedStatus,false);

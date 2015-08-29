@@ -1,11 +1,7 @@
 package com.skr.expensetrack;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
-import android.app.Dialog;
-import android.app.DialogFragment;
 import android.app.Fragment;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
@@ -36,7 +32,6 @@ import com.skr.datahelper.CheckBoxListData;
 import com.skr.datahelper.DBHelper;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -407,7 +402,7 @@ public class SettingFragment extends Fragment {
                     start_date_edit_text.setEnabled(true);
                     DatePickerFragment newFragment = new DatePickerFragment();
                     newFragment.show(getFragmentManager(), "timePicker");
-                    newFragment.setDatePickerFragmentListener( new DatePickerFragmentListener() {
+                    newFragment.setDatePickerFragmentListener( new DatePickerFragment.DatePickerFragmentListener() {
                         @Override
                         public void onCancel() {
 
@@ -452,7 +447,7 @@ public class SettingFragment extends Fragment {
                     end_date_edit_text.setEnabled(true);
                     DatePickerFragment newFragment = new DatePickerFragment();
                     newFragment.show(getFragmentManager(), "timePicker");
-                    newFragment.setDatePickerFragmentListener( new DatePickerFragmentListener() {
+                    newFragment.setDatePickerFragmentListener( new DatePickerFragment.DatePickerFragmentListener() {
                         @Override
                         public void onCancel() {
 
@@ -838,51 +833,7 @@ public class SettingFragment extends Fragment {
         }
 
     }
-    private interface DatePickerFragmentListener {
-        public void onCancel();
-        public void onDateSet(DatePicker view, int year, int month, int day);
-    }
 
-    public static class DatePickerFragment extends DialogFragment
-            implements DatePickerDialog.OnDateSetListener,DatePickerDialog.OnCancelListener {
-
-        DatePickerFragmentListener datePickerFragmentListener;
-
-        public void setDatePickerFragmentListener(DatePickerFragmentListener datePickerFragmentListener) {
-            this.datePickerFragmentListener = datePickerFragmentListener;
-        }
-
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current date as the default date in the picker
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-
-            // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
-        }
-
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-
-
-            if(datePickerFragmentListener != null){
-                datePickerFragmentListener.onDateSet(view, year, month, day);
-            }
-        }
-
-
-        public void onCancel(DialogInterface dialog){
-
-
-
-            if(datePickerFragmentListener != null){
-                datePickerFragmentListener.onCancel();
-            }
-        }
-
-    }
 
     public void currencySectionSwitch(Boolean hideFlag,View res){
 

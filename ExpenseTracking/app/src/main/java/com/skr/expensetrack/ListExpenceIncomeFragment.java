@@ -125,6 +125,8 @@ public Boolean isExpenseFlag = true;
         if (mListener != null) {
             mListener.onCreatedFragment();
         }
+        AppController.getInstance().listExpenseIncomeItemClicked = false;
+
         progress =  CustomProgressDialog.getInstance(getActivity());
         progress.setMessage(getResources().getString(R.string.wait_message));
         final Handler handler = new Handler();
@@ -203,7 +205,6 @@ public Boolean isExpenseFlag = true;
 
             }
         });
-
 
         // convert the DP into pixel
         final int minWidth =  (int)(50 * scale + 0.5f);
@@ -315,6 +316,7 @@ public Boolean isExpenseFlag = true;
                 .setTitle(dilogHeading)
                 .setMessage(confirmDilogMessage).setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
+                AppController.getInstance().listExpenseIncomeItemClicked = false;
 
                  DBHelper dbHelper = DBHelper.getInstance(getActivity());
                 showAlert(dbHelper.deleteExpenseIncome(expenseIncomeFunctionParam) != 0);
@@ -323,6 +325,8 @@ public Boolean isExpenseFlag = true;
         }).setNegativeButton(android.R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 // do nothing
+                AppController.getInstance().listExpenseIncomeItemClicked = false;
+
 
             }
         }).setIcon(R.drawable.delete_alert)
@@ -473,16 +477,26 @@ public Boolean isExpenseFlag = true;
             Boolean ifGreaterThanMinAmount= true;
             Boolean ifSmallerThanMaxAmount = true;
             if(start_date_edit_text != null) {
-                ifGreaterThanStartDate = (AppController.compareTwoDateString(start_date_edit_text, expenceIncomeLcl.getDateString()) >= 0);
+                if(!start_date_edit_text.isEmpty()){
+                    ifGreaterThanStartDate = (AppController.compareTwoDateString(start_date_edit_text, expenceIncomeLcl.getDateString()) >= 0);
+
+                }
             }
             if(end_date_edit_text != null){
-                ifSmallerThanStartDate =  (AppController.compareTwoDateString(end_date_edit_text, expenceIncomeLcl.getDateString()) <= 0);
+                if(!end_date_edit_text.isEmpty()) {
+                    ifSmallerThanStartDate =  (AppController.compareTwoDateString(end_date_edit_text, expenceIncomeLcl.getDateString()) <= 0);
+
+                }
             }
             if(min_amt_edit_text != null){
-                ifGreaterThanMinAmount = ( Integer.parseInt(min_amt_edit_text)<= expenceIncomeLcl.getAMOUNT());
+                if(!min_amt_edit_text.isEmpty()) {
+                    ifGreaterThanMinAmount = (Integer.parseInt(min_amt_edit_text) <= expenceIncomeLcl.getAMOUNT());
+                }
             }
             if(max_amt_edit_text != null){
-               ifSmallerThanMaxAmount =  (Integer.parseInt(max_amt_edit_text) >= expenceIncomeLcl.getAMOUNT());
+                if(!max_amt_edit_text.isEmpty()) {
+                    ifSmallerThanMaxAmount = (Integer.parseInt(max_amt_edit_text) >= expenceIncomeLcl.getAMOUNT());
+                }
             }
             if(ifGreaterThanStartDate && ifSmallerThanStartDate && ifGreaterThanMinAmount && ifSmallerThanMaxAmount && checkBoxListCateGoryIDArrayList.contains(expenceIncomeLcl.getCATEGORY_ID())){
                 tempExpenceIncomeList.add(expenceIncomeLcl);
@@ -503,6 +517,36 @@ public Boolean isExpenseFlag = true;
         groupByDate();
         hideRefreshIcon = true;
         getActivity().invalidateOptionsMenu();
+        resetSerachView();
+        View v = getActivity().getWindow().getCurrentFocus();
+        if (v != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
+        }
+    }
+
+    private void resetSerachView(){
+        if(getView() != null) {
+            DisplayMetrics displaymetrics = new DisplayMetrics();
+            RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) searchViewParent.getLayoutParams();
+            getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+            final EditText editTextSearchItems = (EditText) getView().findViewById(R.id.editTextSearchItems);
+            final int width = displaymetrics.widthPixels;
+            final Button search_drag = (Button)getView().findViewById(R.id.search_drag_button);
+            editTextSearchItems.setText("");
+            final float scale = getActivity().getResources().getDisplayMetrics().density;
+            final int minWidth =  (int)(50 * scale + 0.5f);
+            mParams.leftMargin = width - minWidth;
+            InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(editTextSearchItems.getWindowToken(), 0);
+            editTextSearchItems.setText("");
+            editTextSearchItems.clearFocus();
+            ((ExpenceIncomeListAdapter)listView.getAdapter()).filter("");
+            searchViewParent.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+            search_drag.setBackgroundDrawable(getResources().getDrawable(R.drawable.search_drag_out));
+            searchButtonIsCollapsed = true;
+
+        }
     }
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
@@ -654,6 +698,12 @@ public Boolean isExpenseFlag = true;
             parentListItemWithoutHeader.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
+                    if(AppController.getInstance().listExpenseIncomeItemClicked == true){
+
+                        return;
+                    }
+                    AppController.getInstance().listExpenseIncomeItemClicked = true;
                     if(((ExpenceIncomeListAdapter)listView.getAdapter()).deleteFlag){
 
                         mListener.onItemClickDelete(listView,positionFinal);
@@ -849,12 +899,17 @@ public Boolean isExpenseFlag = true;
             charText = charText.toLowerCase(Locale.getDefault());
             all.clear();
             if (charText.length() == 0) {
-
+                hideRefreshIcon = true;
+                getActivity().invalidateOptionsMenu();
                 nodataText.setText(nodataTextString);
                 all.addAll(originalAll);
             }
             else 
             {
+                if(hideRefreshIcon != false) {
+                    hideRefreshIcon = false;
+                    getActivity().invalidateOptionsMenu();
+                }
                 if(isExpenseFlag) {
                     nodataText.setText(getString(R.string.search_no_data_expense_income_message).replace(AppController.ei, getString(R.string.income)));
 

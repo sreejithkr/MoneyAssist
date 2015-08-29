@@ -1,0 +1,103 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.skr.expensetrack.HelpScreenActivity">
+
+    <ScrollView
+        android:id="@+id/helpImageViewParent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        >
+    <ImageView
+        android:id="@+id/helpImageView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+
+       />
+    </ScrollView>
+
+   <LinearLayout
+       android:orientation="horizontal"
+       android:layout_height="48dp"
+       android:layout_width="match_parent"
+       android:layout_alignParentBottom="true"
+       android:background="@color/app_green"
+       android:weightSum="10"
+       >
+       <RelativeLayout
+           android:layout_width="wrap_content"
+           android:layout_height="32dp"
+           android:id="@+id/prevBtnParent"
+           android:padding="5dp"
+           android:layout_gravity="center_vertical"
+           android:layout_weight="2"
+           >
+       <ImageView
+           android:layout_width="24dp"
+           android:layout_height="24dp"
+           android:layout_centerVertical="true"
+           android:id="@+id/prevImgView"
+           android:src="@drawable/back_white"/>
+       <Button
+           android:layout_width="wrap_content"
+           android:layout_height="32dp"
+           android:background="@android:color/transparent"
+           android:text="PREV"
+           android:textSize="16dp"
+           android:textStyle="bold"
+           android:textColor="@color/backgroud_white"
+           android:id="@+id/prevBtn"
+
+
+
+           />
+       </RelativeLayout>
+       <Button
+           android:layout_width="0dp"
+           android:layout_height="32dp"
+           android:background="@android:color/transparent"
+           android:text="GET STARTED"
+           android:textSize="16dp"
+           android:textStyle="bold"
+           android:textColor="@color/backgroud_white"
+           android:id="@+id/addToDb"
+           android:layout_weight="8"
+           android:layout_gravity="center_vertical"
+
+
+
+           />
+       <RelativeLayout
+           android:layout_width="wrap_content"
+           android:layout_height="32dp"
+           android:id="@+id/nextBtnParent"
+           android:layout_gravity="center_vertical"
+           android:layout_weight="2"
+
+           >
+
+           <Button
+               android:layout_width="wrap_content"
+               android:layout_height="32dp"
+               android:background="@android:color/transparent"
+               android:text="NEXT"
+               android:textSize="16dp"
+               android:textStyle="bold"
+               android:textColor="@color/backgroud_white"
+               android:id="@+id/nextBtn"
+               android:gravity="right|center_vertical"
+               />
+           <ImageView
+
+               android:layout_toRightOf="@+id/nextBtn"
+               android:layout_width="24dp"
+               android:layout_height="24dp"
+               android:layout_centerVertical="true"
+               android:id="@+id/nextImgView"
+               android:src="@drawable/back_white_reverse"/>
+       </RelativeLayout>
+
+   </LinearLayout>
+
+</RelativeLayout>

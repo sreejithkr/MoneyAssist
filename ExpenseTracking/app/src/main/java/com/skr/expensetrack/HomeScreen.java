@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -54,6 +55,7 @@ enum CurrentPage{
  }
 
 public class HomeScreen extends ActionBarActivity {
+    public Boolean onDrawerSlideFlag = false;
     private DrawerLayout mDrawerLayout;
     private AmazingListView mDrawerList;
     private String[] mTitles;
@@ -106,20 +108,26 @@ Boolean ifExpenceOrIncomeListEmpty = false;
         setContentView(R.layout.activity_home_screen);
 
         Crittercism.initialize(getApplicationContext(), "559aa1145c69e80d008f93f7");
+
+        if(getSupportActionBar() != null){getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_green)));}
         mTitles = getResources().getStringArray(R.array.side_panel_items_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.homeDrawerLayout);
         mDrawerLayout.setDrawerListener(new DrawerLayout.SimpleDrawerListener(){
             @Override
             public void onDrawerSlide(View drawerView, float slideOffset) {
+
+                onDrawerSlideFlag = true;
                 hideKeyboard(HomeScreen.this);
             }
 
             @Override
             public void onDrawerOpened(View drawerView) {
+                onDrawerSlideFlag = false;
             }
 
             @Override
             public void onDrawerClosed(View drawerView) {
+                onDrawerSlideFlag = false;
             }
 
             @Override
@@ -191,20 +199,10 @@ for(int count=0;count< mTitles.length;count++){
 
             @Override
             public void onAddExpenceOrIncome() {
-                if(fragment != null) {
-                    getFragmentManager().beginTransaction().remove(fragment).commit();
-                }
-                if(homefragment != null) {
-                    getSupportFragmentManager().beginTransaction().remove(homefragment).commit();
-                }
-                int position = 0;
-                for(int count = 0;count<mTitles.length;count++){
-                    if(mTitles[count].equalsIgnoreCase(getString(R.string.side_panel_items_array_income_expense))){
-                        position = count;
-                    }
-                }
-                setupAddExpenceIncomeFragement();
-                selectItem(position,fragment,R.id.content_frame);
+
+
+                //TODO: check implementation
+                addExpenceIncomeActivityShow(null);
             }
 
         });
@@ -330,21 +328,24 @@ for(int count=0;count< mTitles.length;count++){
             }
 
         }else if(id == R.id.action_add_an_expense_or_income || id == R.id.quickAdd){
-            if(fragment != null) {
-                getFragmentManager().beginTransaction().remove(fragment).commit();
-            }
-            if(homefragment != null) {
-                getSupportFragmentManager().beginTransaction().remove(homefragment).commit();
-            }
-            int position = 0;
-            for(int count = 0;count<mTitles.length;count++){
-                if(mTitles[count].equalsIgnoreCase(getString(R.string.side_panel_items_array_income_expense))){
-                    position = count;
-                }
-            }
-           setupAddExpenceIncomeFragement();
-            selectItem(position,fragment,R.id.content_frame);
-            setTitle(getString(R.string.side_panel_items_array_income_expense));
+addExpenceIncomeActivityShow(null);
+
+
+//            if(fragment != null) {
+//                getFragmentManager().beginTransaction().remove(fragment).commit();
+//            }
+//            if(homefragment != null) {
+//                getSupportFragmentManager().beginTransaction().remove(homefragment).commit();
+//            }
+//            int position = 0;
+//            for(int count = 0;count<mTitles.length;count++){
+//                if(mTitles[count].equalsIgnoreCase(getString(R.string.side_panel_items_array_income_expense))){
+//                    position = count;
+//                }
+//            }
+//           setupAddExpenceIncomeFragement();
+//            selectItem(position,fragment,R.id.content_frame);
+//            setTitle(getString(R.string.side_panel_items_array_income_expense));
 
         }else if(id == R.id.action_delete_an_expense){
             Boolean deleteStatus = ((ListExpenceIncomeFragment)fragment).toggleDelete();
@@ -412,14 +413,33 @@ for(int count=0;count< mTitles.length;count++){
             startActivityForResult(intent, 0);
       //  }
     }
+
+    public void addExpenceIncomeActivityShow(Intent data){
+
+        Intent addExpenceIncomeActivity = new Intent(this, AddExpenceIncomeActivity.class);
+        Boolean editStatusFlag = false;
+        if(data != null) {
+            editStatusFlag = data.getBooleanExtra(ExpenceIncomeDetailActivity.editStatusFlag, false);
+        }
+        addExpenceIncomeActivity.putExtra(ExpenceIncomeDetailActivity.editStatusFlag,editStatusFlag);
+
+        if(editStatusFlag && data != null) {
+            final ExpenseIncome ei = data.getParcelableExtra(ListExpenceIncomeFragment.expenseIncome);
+            addExpenceIncomeActivity.putExtra(ListExpenceIncomeFragment.expenseIncome,ei);
+        }
+
+        startActivityForResult(addExpenceIncomeActivity,ActivityResultIdentifies.AddExpenceIncomeActivityKey);
+    }
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         Log.e("(((((((((((((((())))))))))))))))))","ssfdsdfsdfsd"+requestCode);
+        AppController.getInstance().listExpenseIncomeItemClicked = false;
+
         if (requestCode == ActivityResultIdentifies.ExpenceIncomeDetailFromList) {
 
             if (resultCode == RESULT_OK) {
 
-                setupEditExpenceIncomeFragmetn(data);
+                addExpenceIncomeActivityShow(data);
             }
 
         }else if(requestCode == ActivityResultIdentifies.FilterAndViewExpenseIncomeActivityResult){
@@ -500,6 +520,7 @@ for(int count=0;count< mTitles.length;count++){
 
         else if(requestCode == ActivityResultIdentifies.GetTotal){
             Log.e("(resultCode == RESULT_OK) ",""+(resultCode == RESULT_OK) );
+
             if (resultCode == RESULT_OK) {
 
 
@@ -541,40 +562,42 @@ for(int count=0;count< mTitles.length;count++){
 
 
             }
-        }else if(requestCode == ActivityResultIdentifies.AddCategoryFromAddExpencePage) {
-            if (resultCode == RESULT_OK) {
-                final Intent dataFinal = data;
-                new Handler().post(new Runnable() {
-                    public void run() {
-                        if (fragment != null) {
-                            getFragmentManager().beginTransaction().remove(fragment).commit();
-                        }
-                        if (homefragment != null) {
-                            getSupportFragmentManager().beginTransaction().remove(homefragment).commit();
-                        }
-                        int position = 0;
-                        for (int count = 0; count < mTitles.length; count++) {
-                            if (mTitles[count].equalsIgnoreCase(getString(R.string.side_panel_items_array_income_expense))) {
-                                position = count;
-                            }
-                        }
-                        if (dataFinal.getBooleanExtra(ExpenceIncomeDetailActivity.editStatusFlag, false)) {
-                            setupEditExpenceIncomeFragmetn(dataFinal);
-                        } else {
-                            setupAddExpenceIncomeFragement();
-
-                        }
-                        selectItem(position, fragment, R.id.content_frame);
-
-                    }
-                });
-
-                // ((AddExpenseIncomeFragment)fragment)
-            }
         }else if(requestCode == ActivityResultIdentifies.LoadFromArchiveListActivityPage){
 
         }else if(requestCode == ActivityResultIdentifies.ExportToExcelActivityPage){
 
+        }else if(requestCode == ActivityResultIdentifies.AddExpenceIncomeActivityKey){
+            if (resultCode == RESULT_OK) {
+
+               if(data.getBooleanExtra(AddExpenceIncomeActivity.ReturnToListFlagKey,false)){
+                  final  Boolean ifExpense = data.getBooleanExtra(AddExpenceIncomeActivity.ExpenceOrIncomeFlagKey,false);
+
+
+                   new Handler().post(new Runnable() {
+                       @Override
+                       public void run() {
+                           if(fragment != null) {
+                               getFragmentManager().beginTransaction().remove(fragment).commit();
+                           }
+                           if(homefragment != null) {
+                               getSupportFragmentManager().beginTransaction().remove(homefragment).commit();
+                           }
+                           fragment = null;
+                           homefragment = null;
+                           fragment = getExpenceIncomeListFragment(ifExpense);
+                           int position = 0;
+                           if(ifExpense){
+                               position = subItemsArray.indexOf(getResources().getString(R.string.side_panel_items_array_expense));
+                           }else{
+                               position = subItemsArray.indexOf(getResources().getString(R.string.side_panel_items_array_income));
+                           }
+                           selectItem(position, fragment, R.id.content_frame);
+
+                       }
+                   });
+
+               }
+            }
         }
 
     }
@@ -617,20 +640,23 @@ for(int count=0;count< mTitles.length;count++){
                     }
                     @Override
                     public void addExpenceIncome(){
-                       if(fragment != null) {
-                            getFragmentManager().beginTransaction().remove(fragment).commit();
-                        }
-                        if(homefragment != null) {
-                            getSupportFragmentManager().beginTransaction().remove(homefragment).commit();
-                        }
-                        int position = 0;
-                        for(int count = 0;count<mTitles.length;count++){
-                            if(mTitles[count].equalsIgnoreCase(getString(R.string.side_panel_items_array_income_expense))){
-                                position = count;
-                            }
-                        }
-                        setupAddExpenceIncomeFragement();
-                        selectItem(position,fragment,R.id.content_frame);
+
+                        //TODO: CHECK IMPLEMENTATION
+                        addExpenceIncomeActivityShow(null);
+//                       if(fragment != null) {
+//                            getFragmentManager().beginTransaction().remove(fragment).commit();
+//                        }
+//                        if(homefragment != null) {
+//                            getSupportFragmentManager().beginTransaction().remove(homefragment).commit();
+//                        }
+//                        int position = 0;
+//                        for(int count = 0;count<mTitles.length;count++){
+//                            if(mTitles[count].equalsIgnoreCase(getString(R.string.side_panel_items_array_income_expense))){
+//                                position = count;
+//                            }
+//                        }
+//                        setupAddExpenceIncomeFragement();
+//                        selectItem(position,fragment,R.id.content_frame);
                     }
                 });
         }else{
@@ -670,20 +696,22 @@ for(int count=0;count< mTitles.length;count++){
             }
             @Override
             public void addExpenceIncome(){
-                if(fragment != null) {
-                    getFragmentManager().beginTransaction().remove(fragment).commit();
-                }
-                if(homefragment != null) {
-                    getSupportFragmentManager().beginTransaction().remove(homefragment).commit();
-                }
-                int position = 0;
-                for(int count = 0;count<mTitles.length;count++){
-                    if(mTitles[count].equalsIgnoreCase(getString(R.string.side_panel_items_array_income_expense))){
-                        position = count;
-                    }
-                }
-                setupAddExpenceIncomeFragement();
-                selectItem(position,fragment,R.id.content_frame);
+                //TODO: CHECK IMPLEMENTATION
+                addExpenceIncomeActivityShow(null);
+//                if(fragment != null) {
+//                    getFragmentManager().beginTransaction().remove(fragment).commit();
+//                }
+//                if(homefragment != null) {
+//                    getSupportFragmentManager().beginTransaction().remove(homefragment).commit();
+//                }
+//                int position = 0;
+//                for(int count = 0;count<mTitles.length;count++){
+//                    if(mTitles[count].equalsIgnoreCase(getString(R.string.side_panel_items_array_income_expense))){
+//                        position = count;
+//                    }
+//                }
+//                setupAddExpenceIncomeFragement();
+//                selectItem(position,fragment,R.id.content_frame);
             }
         });
 
@@ -705,14 +733,15 @@ for(int count=0;count< mTitles.length;count++){
             if(homefragment != null) {
                 getSupportFragmentManager().beginTransaction().remove(homefragment).commit();
             }
-             fragment = new AddExpenseIncomeFragment();
+            fragment = null;
+            homefragment = null;
             Log.d(sidePanelAdapter.getItem(position),"test");
             if(sidePanelAdapter.getItem(position).equalsIgnoreCase(getResources().getString(R.string.side_panel_items_array_home))){
                navigateToHome();
                 return;
 
             }else if(sidePanelAdapter.getItem(position).equalsIgnoreCase(getResources().getString(R.string.side_panel_items_array_income_expense))){
-                setupAddExpenceIncomeFragement();
+                //setupAddExpenceIncomeFragement();
 
             }else if(sidePanelAdapter.getItem(position).equalsIgnoreCase(getResources().getString(R.string.side_panel_items_array_category))){
                 fragment = new CategoryListFragment();
@@ -798,20 +827,22 @@ for(int count=0;count< mTitles.length;count++){
                     }
                     @Override
                     public void onAddExpenceOrIncome() {
-                        if(fragment != null) {
-                            getFragmentManager().beginTransaction().remove(fragment).commit();
-                        }
-                        if(homefragment != null) {
-                            getSupportFragmentManager().beginTransaction().remove(homefragment).commit();
-                        }
-                        int position = 0;
-                        for(int count = 0;count<mTitles.length;count++){
-                            if(mTitles[count].equalsIgnoreCase(getString(R.string.side_panel_items_array_income_expense))){
-                                position = count;
-                            }
-                        }
-                        setupAddExpenceIncomeFragement();
-                        selectItem(position,fragment,R.id.content_frame);
+                        //TODO: CHECK IMPLEMENTATION
+                        addExpenceIncomeActivityShow(null);
+//                        if(fragment != null) {
+//                            getFragmentManager().beginTransaction().remove(fragment).commit();
+//                        }
+//                        if(homefragment != null) {
+//                            getSupportFragmentManager().beginTransaction().remove(homefragment).commit();
+//                        }
+//                        int position = 0;
+//                        for(int count = 0;count<mTitles.length;count++){
+//                            if(mTitles[count].equalsIgnoreCase(getString(R.string.side_panel_items_array_income_expense))){
+//                                position = count;
+//                            }
+//                        }
+//                        setupAddExpenceIncomeFragement();
+//                        selectItem(position,fragment,R.id.content_frame);
                     }
                 });
 
@@ -823,6 +854,7 @@ for(int count=0;count< mTitles.length;count++){
                 mDrawerLayout.closeDrawer(mDrawerList);
                 Intent intent = new Intent(getApplication(),CategorySettingActivity.class);
                 intent.putExtra(CategorySettingActivity.CategorySettingActivityGetTotalFlag, true);
+
 
                 startActivityForResult(intent,ActivityResultIdentifies.GetTotal);
                 return;
@@ -875,104 +907,7 @@ for(int count=0;count< mTitles.length;count++){
         });
         return utilitiesFragment;
     }
-private void setupEditExpenceIncomeFragmetn(Intent data){
 
-    if(data.getBooleanExtra(ExpenceIncomeDetailActivity.editStatusFlag,false)){
-        final ExpenseIncome ei = data.getParcelableExtra(ListExpenceIncomeFragment.expenseIncome);
-        fragment = new AddExpenseIncomeFragment();
-        ((AddExpenseIncomeFragment)fragment).isToEditFlag = true;
-        ((AddExpenseIncomeFragment)fragment).expenseIncome = ei;
-        if(ei.getIF_EXPENSE()){
-            setTitle(getResources().getString(R.string.edit_expense));
-        }else {
-
-            setTitle(getResources().getString(R.string.edit_income));
-        }
-
-        ((AddExpenseIncomeFragment)fragment).setmListener(new AddExpenseIncomeFragment.OnFragmentInteractionListener() {
-            @Override
-            public void onFragmentInteraction(Uri uri) {
-
-            }
-            @Override
-            public void onCreatedFragment(){
-                state = CurrentPage.AddExpenceIncome;
-                invalidateOptionsMenu();
-            }
-            @Override
-            public void onClickedReturnExpense(Boolean ifExpense){
-                Log.e("test1","test1");
-                if(fragment != null) {
-                    getFragmentManager().beginTransaction().remove(fragment).commit();
-                }
-                fragment = getExpenceIncomeListFragment(ifExpense);
-                int position = 0;
-                if(ifExpense){
-                    position = subItemsArray.indexOf(getResources().getString(R.string.side_panel_items_array_expense));
-                }else{
-                    position = subItemsArray.indexOf(getResources().getString(R.string.side_panel_items_array_income));
-                }
-
-                selectItem(position,fragment,R.id.content_frame);
-            }
-            @Override
-            public void addCategoryButtonCLicked(){
-                Intent addCategoryActivity = new Intent(getApplicationContext(), AddCategoryActivity.class);
-                addCategoryActivity.putExtra(AddCategoryActivity.AddCategoryFromAddExpenceIncomeScreen,true);
-                addCategoryActivity.putExtra(ExpenceIncomeDetailActivity.editStatusFlag,true);
-                addCategoryActivity.putExtra(ListExpenceIncomeFragment.expenseIncome,ei);
-                startActivityForResult(addCategoryActivity,ActivityResultIdentifies.AddCategoryFromAddExpencePage);
-            }
-        });
-
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-
-
-    }
-
-
-}
-    private void setupAddExpenceIncomeFragement(){
-        Log.e("","*)*)*)*)*)*)*)**)*)*)*)*)*)*)*)*1234567890");
-         fragment = new AddExpenseIncomeFragment();
-        ((AddExpenseIncomeFragment)fragment).setmListener(new AddExpenseIncomeFragment.OnFragmentInteractionListener() {
-            @Override
-            public void onFragmentInteraction(Uri uri) {
-
-            }
-            @Override
-            public void onCreatedFragment(){
-                state = CurrentPage.AddExpenceIncome;
-                invalidateOptionsMenu();
-            }
-            @Override
-            public void onClickedReturnExpense(Boolean ifExpense){
-
-                Log.e("test","test");
-
-                if(fragment != null) {
-                    getFragmentManager().beginTransaction().remove(fragment).commit();
-                }
-                fragment = getExpenceIncomeListFragment(ifExpense);
-                int position = 0;
-                if(ifExpense){
-                    position = subItemsArray.indexOf(getResources().getString(R.string.side_panel_items_array_expense));
-                }else{
-                    position = subItemsArray.indexOf(getResources().getString(R.string.side_panel_items_array_income));
-                }
-
-                selectItem(position,fragment,R.id.content_frame);
-            }
-
-            @Override
-            public void addCategoryButtonCLicked(){
-                Intent addCategoryActivity = new Intent(getApplicationContext(), AddCategoryActivity.class);
-                startActivityForResult(addCategoryActivity,ActivityResultIdentifies.AddCategoryFromAddExpencePage);
-            }
-        });
-
-    }
     private void selectItem(int position,Fragment fragment,int contentFrame) {
         // update the main content by replacing fragments
 
@@ -1129,7 +1064,13 @@ private Drawable getDrawableFromStringID(String settingString){
     }
     else if(settingString.equalsIgnoreCase(getResources().getString(R.string.side_panel_items_array_category))){
         return getResources().getDrawable(R.drawable.category_setting);
+    }else if(settingString.equalsIgnoreCase(getResources().getString(R.string.side_panel_items_array_utilities))){
+        return getResources().getDrawable(R.drawable.extras_utilities);
+
+    }else if(settingString.equalsIgnoreCase(getResources().getString(R.string.side_panel_items_array_currency))){
+        return getResources().getDrawable(R.drawable.currency_drawer);
     }
+
     else{
         return getResources().getDrawable(R.drawable.income_settings);
 

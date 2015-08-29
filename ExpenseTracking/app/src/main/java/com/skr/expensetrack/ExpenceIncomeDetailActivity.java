@@ -19,7 +19,8 @@ public class ExpenceIncomeDetailActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_expence_income_detail);
-       final ExpenseIncome expenseIncome =  getIntent().getParcelableExtra(ListExpenceIncomeFragment.expenseIncome);
+
+        final ExpenseIncome expenseIncome =  getIntent().getParcelableExtra(ListExpenceIncomeFragment.expenseIncome);
 
         FragmentManager fragmentManager = getFragmentManager();
         ExpenceIncomeDetailFragment fragment = new ExpenceIncomeDetailFragment();

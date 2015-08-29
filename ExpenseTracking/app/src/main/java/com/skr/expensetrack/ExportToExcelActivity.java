@@ -2,6 +2,7 @@ package com.skr.expensetrack;
 
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.ActionBarActivity;
@@ -53,7 +54,9 @@ public class ExportToExcelActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_export_to_excel);
-
+        if(getSupportActionBar() != null){getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_green)));}
+        TextView checkboxListTitle = (TextView)findViewById(R.id.checkboxListTitle);
+        checkboxListTitle.setText(getString(R.string.check_box_list_title_message_total_excel_export));
         findViewById(R.id.categorySectionTitle).setVisibility(View.GONE);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_white);
@@ -107,9 +110,9 @@ public class ExportToExcelActivity extends ActionBarActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 start_date_edit_text.setEnabled(false);
 
-                FilterAndViewExpenseIncomeActivity.DatePickerFragment newFragment = new FilterAndViewExpenseIncomeActivity.DatePickerFragment();
+                DatePickerFragment newFragment = new DatePickerFragment();
                 newFragment.show(getFragmentManager(), "timePicker");
-                newFragment.setDatePickerFragmentListener(new FilterAndViewExpenseIncomeActivity.DatePickerFragmentListener() {
+                newFragment.setDatePickerFragmentListener(new DatePickerFragment.DatePickerFragmentListener() {
                     @Override
                     public void onCancel() {
                         start_date_edit_text.setEnabled(true);
@@ -146,9 +149,9 @@ public class ExportToExcelActivity extends ActionBarActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 end_date_edit_text.setEnabled(false);
-                FilterAndViewExpenseIncomeActivity.DatePickerFragment newFragment = new FilterAndViewExpenseIncomeActivity.DatePickerFragment();
+                DatePickerFragment newFragment = new DatePickerFragment();
                 newFragment.show(getFragmentManager(), "timePicker");
-                newFragment.setDatePickerFragmentListener(new FilterAndViewExpenseIncomeActivity.DatePickerFragmentListener() {
+                newFragment.setDatePickerFragmentListener(new DatePickerFragment.DatePickerFragmentListener() {
                     @Override
                     public void onCancel() {
                         end_date_edit_text.setEnabled(true);
@@ -738,4 +741,6 @@ public class ExportToExcelActivity extends ActionBarActivity {
         }
 
     }
+
+
 }
