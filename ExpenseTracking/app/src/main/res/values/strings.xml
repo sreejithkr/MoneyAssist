@@ -25,12 +25,12 @@
     <string name="side_panel_items_array_category">Category</string>
     <string name="CURRENCY">CURRENCY</string>
     <string name="side_panel_items_array_setting">Setting</string>
-    <string name="side_panel_items_array_get_total">Get Total</string>
+    <string name="side_panel_items_array_get_total">Income And Expense Total</string>
     <string name="side_panel_items_array_currency">Set your currency</string>
     <string name="side_panel_items_array_export_Excel">Export to Excel</string>
     <string name="side_panel_items_array_archive">Archive</string>
     <string name="side_panel_items_array_load_from_archive">Load From Archive</string>
-    <string name="side_panel_items_array_help">How to ?</string>
+    <string name="side_panel_items_array_help">Contact Us</string>
     <string name="side_panel_items_array_utilities">Utilities</string>
     <string name="edit_income">Edit Income</string>
     <string name="edit_expense">Edit Expense</string>
@@ -79,7 +79,7 @@
     <string name="home_page">Home</string>
     <string name="title_activity_add_category">Add New Category</string>
     <string name="check_box_list_title_message">Select categories for your search filter</string>
-    <string name="check_box_list_title_message_total_calculate">Select categories to be included while calculating total</string>
+    <string name="check_box_list_title_message_total_calculate">Select categories to be included while calculating Income And Expense total</string>
     <string name="check_box_list_title_message_total_excel_export">Select categories from which data should be exported to Excel</string>
     <string name="start_end_date_message">Select start and end date check box to enable and include the selected days in your filter</string>
     <string name="max_min_amount_message">Select maximum and minimum amount check box to enable and filter by using them as at-most and the least value of the amount spent/received</string>
@@ -180,5 +180,14 @@
     <string name="title_activity_add_expence_income">@string/side_panel_items_array_income_expense</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_help_screen">HelpScreenActivity</string>
+    <string name="contactus_message">First of all thank you all for supporting our initiative to make life simpler with Mobile Application. \n
+
+
+        By the time you have reached this page we presume you might have downloaded the mobile application Money Assist.\n
+
+        Managing and accounting your day to day finance is really a great practice. If this has come at finger tips in our mobile devices one would definitely be a lot happier. \n
+
+        Money Assist is definitely one such app.</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

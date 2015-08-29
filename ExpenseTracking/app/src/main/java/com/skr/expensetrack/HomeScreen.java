@@ -49,7 +49,8 @@ enum CurrentPage{
     Category,
     Settings,
     GetTotal,
-    Utilities
+    Utilities,
+    ContactUs
 
 
  }
@@ -279,6 +280,8 @@ for(int count=0;count< mTitles.length;count++){
 
                 break;
             case GetTotal:
+                break;
+            case ContactUs:
                 break;
 
 
@@ -870,6 +873,21 @@ addExpenceIncomeActivityShow(null);
 
                 fragment = createUtilityFragments();
 
+            }else if(sidePanelAdapter.getItem(position).equalsIgnoreCase(getResources().getString(R.string.side_panel_items_array_help))){
+
+                fragment = new ContactUsFragment();
+                ((ContactUsFragment)fragment).setmListener( new ContactUsFragment.OnFragmentInteractionListener() {
+                    @Override
+                    public void onFragmentInteraction(Uri uri) {
+
+                    }
+
+                    @Override
+                    public void onCreatedFragment() {
+                        state = CurrentPage.ContactUs;
+
+                    }
+                });
             }
 
 
