@@ -183,6 +183,15 @@ public class UtilitiesFragment extends Fragment {
                 String textValue = editText.getText().toString();
 
                 proceedFlag = textValue.equalsIgnoreCase(onProceedString);
+                if (textValue.isEmpty()){
+
+                    error_message_dialog_archive.setTextColor(getResources().getColor(R.color.error_red));
+
+                    error_message_dialog_archive.setText(getString(R.string.validation_archive_name_empty));
+                    error_message_dialog_archive.setVisibility(View.VISIBLE);
+
+                    return;
+                }
                 if (textValue.length() > 15) {
                     error_message_dialog_archive.setTextColor(getResources().getColor(R.color.error_red));
 

@@ -169,6 +169,7 @@
     <string name="load_current_archive">Reload Archived Data</string>
     <string name="delete_current_archive">Delete Archived Data</string>
     <string name="delete_reloaod_current_archive_title">Reload/Delete Archived Data</string>
+    <string name="validation_archive_name_empty">Please enter a valid name.</string>
     <string name="validation_archive_name">Please enter a valid name. Only alpha numeric characters are allowed.</string>
     <string name="validation_archive_name_length">Please enter a valid name with maximum characters less than 15.</string>
     <string name="validation_archive_name_already_exist">It seems there is already an archive with same name. Do you really want to proceed with same name ?</string>
@@ -186,14 +187,6 @@
     <string name="title_activity_add_expence_income">@string/side_panel_items_array_income_expense</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_help_screen">HelpScreenActivity</string>
-    <string name="contactus_message">First of all thank you all for supporting our initiative to make life simpler with Mobile Application. \n
 
-
-        By the time you have reached this page we presume you might have downloaded the mobile application Money Assist.\n
-
-        Managing and accounting your day to day finance is really a great practice. If this has come at finger tips in our mobile devices one would definitely be a lot happier. \n
-
-        Money Assist is definitely one such app.</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

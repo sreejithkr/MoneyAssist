@@ -251,6 +251,7 @@ for(int count=0;count< mTitles.length;count++){
                 menu.findItem(R.id.quickAdd).setVisible(false);
                 break;
             case Category:
+                menu.findItem(R.id.quickAdd).setVisible(false);
                 menu.findItem(R.id.action_add_category).setVisible(true);
                 menu.findItem(R.id.action_delete_category).setVisible(true);
                 break;
@@ -334,21 +335,7 @@ for(int count=0;count< mTitles.length;count++){
 addExpenceIncomeActivityShow(null);
 
 
-//            if(fragment != null) {
-//                getFragmentManager().beginTransaction().remove(fragment).commit();
-//            }
-//            if(homefragment != null) {
-//                getSupportFragmentManager().beginTransaction().remove(homefragment).commit();
-//            }
-//            int position = 0;
-//            for(int count = 0;count<mTitles.length;count++){
-//                if(mTitles[count].equalsIgnoreCase(getString(R.string.side_panel_items_array_income_expense))){
-//                    position = count;
-//                }
-//            }
-//           setupAddExpenceIncomeFragement();
-//            selectItem(position,fragment,R.id.content_frame);
-//            setTitle(getString(R.string.side_panel_items_array_income_expense));
+
 
         }else if(id == R.id.action_delete_an_expense){
             Boolean deleteStatus = ((ListExpenceIncomeFragment)fragment).toggleDelete();

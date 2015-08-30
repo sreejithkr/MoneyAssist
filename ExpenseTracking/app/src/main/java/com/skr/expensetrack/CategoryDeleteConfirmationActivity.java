@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -91,6 +92,7 @@ public final static String AddCategoryFlag =  "AddCategoryFlag";
 
                     parentRadioButton.setVisibility(View.GONE);
                     categoryListOthers.setVisibility(View.GONE);
+                    proceed_button.setText(getString(R.string.action_add_category_home));
                     proceed_button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
@@ -112,9 +114,13 @@ public final static String AddCategoryFlag =  "AddCategoryFlag";
 
                     parentRadioButton.setVisibility(View.GONE);
 
+                    proceed_button.setText(getString(R.string.action_delete_category));
+
                     proceed_button.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            Log.e(" dbHelper.deleteCategory(category)",""+category.toString());
+                            dbHelper.deleteCategory(category);
 
                             Intent intent = new Intent();
                             setResult(RESULT_OK, intent);
