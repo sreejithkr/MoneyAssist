@@ -27,7 +27,7 @@ public class ContactUsFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-  private String htmlCode = "<html> <body> <p align='justify'> <b>First of all let us Thank you all for supporting our initiative to make life simpler with Mobile Applications. <br/><br/>By the time you have reached this page we should have you downloaded the mobile application Money Assist.<br/><br/>Managing and accounting your day to day finance is really a great practice. If this comes at our finger tips, in our mobile devices, one would definitely be a lot happier. Money Assist is definitely one such app.</b></p><p align='justify'>To know more about the Money Assist or how to use the application feel free to visit <a href='http://moneyassistmobile.blogspot.in/'>Our Blog</a></p> <p align='center'> You may also write to us @ <a href='mailto:mobileapps.teamskr@gmail.com'>mobileapps.teamskr@gmail.com</a></p></body></html>";
+  private String htmlCode = "<html> <body> <p align='justify'> <b>Thank you all for supporting our initiative to make life simpler with Mobile Application. <br/><br/>Managing and accounting your day to day finance is really a great practice. If this comes at our finger tips, in our mobile devices, one would definitely be a lot happier. Money Assist is definitely one such app.</b></p><p align='justify'>To know more about the Money Assist or how to use the application feel free to visit <a href='http://moneyassistmobile.blogspot.in/'>Our Blog</a></p> <p align='center'> You may also write to us @ <a href='mailto:mobileapps.teamskr@gmail.com'>mobileapps.teamskr@gmail.com</a></p></body></html>";
 
     private OnFragmentInteractionListener mListener;
     public OnFragmentInteractionListener getmListener() {

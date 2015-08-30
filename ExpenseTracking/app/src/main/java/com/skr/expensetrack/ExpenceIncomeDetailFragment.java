@@ -79,6 +79,9 @@ public class ExpenceIncomeDetailFragment extends Fragment {
        // RelativeLayout editRelativeParent = (RelativeLayout)rootView.findViewById(R.id.editRelativeParent);
 
         String messageSting = getActivity().getResources().getString(R.string.expense_message);
+        if(!expenseIncome.getIF_EXPENSE()){
+            messageSting = getActivity().getResources().getString(R.string.income_message);
+        }
         Log.e("*************&&&&&&&&&&&***************"+categoryName,expenseIncome.toString());
         messageSting = messageSting.replace("!*a*!",expenseIncome.getAMOUNTWithCurrency());
         messageSting = messageSting.replace("!*c*!",categoryName);

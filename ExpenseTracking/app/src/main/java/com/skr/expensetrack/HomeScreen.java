@@ -1087,6 +1087,8 @@ private Drawable getDrawableFromStringID(String settingString){
 
     }else if(settingString.equalsIgnoreCase(getResources().getString(R.string.side_panel_items_array_currency))){
         return getResources().getDrawable(R.drawable.currency_drawer);
+    }else if(settingString.equalsIgnoreCase(getResources().getString(R.string.side_panel_items_array_help))){
+        return getResources().getDrawable(R.drawable.contact_us);
     }
 
     else{

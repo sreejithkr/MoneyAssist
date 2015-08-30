@@ -133,6 +133,8 @@
     <string name="validation_msg_add_edit_expence_income_date">Please enter a valid date!</string>
     <string name="validation_msg_add_edit_expence_income_description">It seems you have not give any description. Do you want to continue without any description?</string>
     <string name="validation_msg_add_edit_expence_income_amount_limit">Please enter a value less that 10,000,000. If your Expence/Income exceeds this limit please enter it as two item</string>
+    <string name="validation_msg_add_edit_expence_income_amount_limit_filter">Please enter a value less that 10,000,000.</string>
+
     <string name="validation_msg_add_edit_expence_income_amount__no_description_alert">Do not show this message again</string>
     <string name="success_msg_add_expence_income">Successfully add the details</string>
     <string name="success_msg_edit_expence_income">Successful updated the details.</string>
@@ -145,6 +147,7 @@
     <string name="success_msg_update_category">Successfully updated the new category</string>
     <string name="already_category_name_exist_msg_add_category">It seems there is already a category with this name. Please change the category name to be added</string>
     <string name="validation_msg_add_edit_expence_category">Please enter a valid category name!</string>
+    <string name="validation_msg_add_edit_expence_category_max">Please ensure only a maximum of 15 character is used in your category name</string>
     <string name="last_item_delete_category">This is the last !*ei*! category. Please create a new !*ei*! category to delete this category.</string>
     <string name="validation_msg_set_currency">Please ensure only a maximum of three character is used to represent your currency</string>
     <string name="title_activity_set_your_currency">Set Your Currency</string>
@@ -175,6 +178,9 @@
     <string name="reload_archive_dialog_des_sucess_message">Successfully reloaded from archive!</string>
     <string name="title_activity_export_to_excel">@string/side_panel_items_array_export_Excel</string>
     <string name="msg_sucessfully_export_to_excel">Saved to phone successfully ! Please check your !*folder*! folder</string>
+    <string name="open_folder_export_excel">Open Folder</string>
+    <string name="msg_nodata__export_to_excel">It seem there is no data for the selected criteria. Please try again with different set</string>
+    <string name="msg_problem_contactus">It seems there is some problem while exporting data to Excel. Please reach us at Blog or Email mentioned in Contact Us</string>
     <string name="expenseIncomeDetails">ExpenseIncomeDetails</string>
     <string name="title_activity_splash">Money Assist</string>
     <string name="title_activity_add_expence_income">@string/side_panel_items_array_income_expense</string>

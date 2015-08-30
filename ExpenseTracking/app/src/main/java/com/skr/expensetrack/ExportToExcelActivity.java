@@ -458,12 +458,16 @@ public class ExportToExcelActivity extends ActionBarActivity {
                 validationAlert(getString(R.string.validation_get_total_category_selection_activity));
                 return;
             }
-            final String start_date_edit_textString = AppController.pareseDate_in_Month_comma_Day_space_Year_to_DD_dash_MM_dash_YYYY(start_date_edit_text.getText().toString());
-            final String end_date_edit_textString = AppController.pareseDate_in_Month_comma_Day_space_Year_to_DD_dash_MM_dash_YYYY(end_date_edit_text.getText().toString());
-            if (!start_date_edit_textString.isEmpty() && !end_date_edit_textString.isEmpty() && (AppController.compareTwoDateString(start_date_edit_textString, end_date_edit_textString) > 0)) {
-                validationAlert(getString(R.string.validation_get_total_date_selection_activity));
-                return;
+             String start_date_edit_textString_val = AppController.pareseDate_in_Month_comma_Day_space_Year_to_DD_dash_MM_dash_YYYY(start_date_edit_text.getText().toString());
+             String end_date_edit_textString_val = AppController.pareseDate_in_Month_comma_Day_space_Year_to_DD_dash_MM_dash_YYYY(end_date_edit_text.getText().toString());
+            if (!start_date_edit_textString_val.isEmpty() && !end_date_edit_textString_val.isEmpty() && (AppController.compareTwoDateString(start_date_edit_textString_val, end_date_edit_textString_val) > 0)) {
+               String tempString = start_date_edit_textString_val;
+                start_date_edit_textString_val = end_date_edit_textString_val;
+                end_date_edit_textString_val = tempString;
             }
+
+        final String start_date_edit_textString = start_date_edit_textString_val;
+        final String end_date_edit_textString = end_date_edit_textString_val;
         final Handler handler = new Handler();
         progress = CustomProgressDialog.getInstance(this);
         progress.setMessage(getResources().getString(R.string.wait_message));
@@ -474,25 +478,68 @@ public class ExportToExcelActivity extends ActionBarActivity {
                 DBHelper dbHelper = DBHelper.getInstance(ExportToExcelActivity.this);
                 ArrayList<ExpenseIncome> expenseIncomes = dbHelper.getexpenceIncomeForCategoriesArrayList(checkBoxListDatas, start_date_edit_textString, end_date_edit_textString);
                 HashMap<Integer,String> categoryHashMap = dbHelper.getAllCategoryHashMap();
-                ExcelExport.saveToExcel(ExportToExcelActivity.this,expenseIncomes,categoryHashMap);
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                      if(progress.isShowing()){
-                          progress.dismiss();
-                      }
-                        new CustomAlert.CustomBuilder(ExportToExcelActivity.this,getLayoutInflater())
-                                .setTitle(R.string.info)
-                                .setMessage(getString(R.string.msg_sucessfully_export_to_excel).replace(AppController.folder,getString(R.string.expenseIncomeDetails))).setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
+                if(expenseIncomes.size()>0){
+                    final String exportedDirectory = ExcelExport.saveToExcel(ExportToExcelActivity.this,expenseIncomes,categoryHashMap);
+
+                   if(exportedDirectory.isEmpty()){
+                       handler.post(new Runnable() {
+                           @Override
+                           public void run() {
+                               if (progress.isShowing()) {
+                                   progress.dismiss();
+                               }
+                               validationAlert(getString(R.string.msg_problem_contactus));
+                           }
 
 
-                                // do nothing
+
+                       });
+                       return;
+                   }
+                       handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(progress.isShowing()){
+                                progress.dismiss();
                             }
-                        }).setIcon(R.drawable.success_icon)
-                                .show();
-                    }
-                });
+                            new CustomAlert.CustomBuilder(ExportToExcelActivity.this,getLayoutInflater())
+                                    .setTitle(R.string.info)
+                                    .setMessage(getString(R.string.msg_sucessfully_export_to_excel).replace(AppController.folder,getString(R.string.expenseIncomeDetails)))
+                                    .setNegativeButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+
+
+                                    // do nothing
+                                }
+                            }).setPositiveButton(R.string.open_folder_export_excel, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+
+                                    ExcelExport.openFolder(ExportToExcelActivity.this,exportedDirectory);
+
+                                    // do nothing
+                                }
+                            } ).setIcon(R.drawable.success_icon)
+                                    .show();
+                        }
+                    });
+                }else{
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (progress.isShowing()) {
+                                progress.dismiss();
+                            }
+                            validationAlert(getString(R.string.msg_nodata__export_to_excel));
+
+                        }
+
+
+
+                    });
+
+
+                }
+
             }
         }).start();
 

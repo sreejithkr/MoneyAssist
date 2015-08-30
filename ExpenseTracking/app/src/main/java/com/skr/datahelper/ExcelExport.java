@@ -40,7 +40,7 @@ public class ExcelExport {
         intent.setDataAndType(Uri.fromFile(file), "resource/folder");
         context.startActivity(intent);
     }
-    public static void saveToExcel(Context context,ArrayList<ExpenseIncome>expenseIncomes,HashMap<Integer,String>categoryHashMap){
+    public static String saveToExcel(Context context,ArrayList<ExpenseIncome>expenseIncomes,HashMap<Integer,String>categoryHashMap){
 
         try {
             String expenseIncomeDetails = context.getString(R.string.expenseIncomeDetails);
@@ -161,10 +161,10 @@ Integer row_num_income = 0;
             }
             workbook.write();
             workbook.close();
-
-            openFolder(context,dir.getPath());
+            return  dir.getPath();
         }catch (Exception e){
             Log.e("Exception 123",""+e.toString());
+            return  "";
 
         }
 

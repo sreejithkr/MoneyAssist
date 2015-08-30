@@ -1,5 +1,6 @@
 package com.skr.expensetrack;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -22,6 +23,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.skr.AppController;
+import com.skr.customviews.CustomAlert;
 import com.skr.customviews.CustomProgressDialog;
 import com.skr.datahelper.CheckBoxListData;
 import com.skr.datahelper.DBHelper;
@@ -358,7 +360,15 @@ progress.show();
              //   if(min_amount_checkbox.isChecked()){
 
                     String min_amount_edit_text_val = min_amount_edit_text.getText().toString();
+                try{
+                    Integer valueAmount = Integer.parseInt(min_amount_edit_text_val);
+                    if(valueAmount >10000000){
+                        validationAlert(getResources().getString(R.string.validation_msg_add_edit_expence_income_amount_limit_filter));
+                        return;
+                    }
+                }catch(Exception e){
 
+                }
                     /*
                     * TODO the required validations
                     *
@@ -368,7 +378,15 @@ progress.show();
                // if(max_amount_checkbox.isChecked()){
 
                     String max_amount_edit_text_val = max_amount_edit_text.getText().toString();
+                try{
+                    Integer valueAmount = Integer.parseInt(max_amount_edit_text_val);
+                    if(valueAmount >10000000){
+                        validationAlert(getResources().getString(R.string.validation_msg_add_edit_expence_income_amount_limit_filter));
+                        return;
+                    }
+                }catch(Exception e){
 
+                }
                     /*
                     * TODO the required validations
                     *
@@ -415,6 +433,18 @@ maxVal = Integer.parseInt(max_amount_edit_text_val);
         });
 
 
+    }
+    public void validationAlert(String msg){
+
+        new CustomAlert.CustomBuilder(this,getLayoutInflater()).setTitle(R.string.info)
+                .setMessage(msg).setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+
+
+                // do nothing
+            }
+        }).setIcon(R.drawable.error_info)
+                .show();
     }
 void reloadDataOFIncomeOrExpenseWithState(Boolean state){
     if(ifExpenseToBeShown) {

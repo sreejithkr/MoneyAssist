@@ -121,8 +121,6 @@ public class AddExpenseIncomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-
     }
 
     @Override
@@ -136,11 +134,9 @@ public class AddExpenseIncomeFragment extends Fragment {
         progress.setMessage(getResources().getString(R.string.wait_message));
         progress.show();
     final Handler handler = new Handler();
-
         new Thread(new Runnable() {
             @Override
             public void run() {
-
                 DBHelper dbHelper = DBHelper.getInstance(getActivity());
                 ArrayList<Category> categories = dbHelper.getAllCategory();
                 incomeCategory = new HashMap<>();
@@ -172,14 +168,6 @@ public class AddExpenseIncomeFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_add_expense_income, container, false);
 
 
-        rootView.findViewById(R.id.add_category_button_AEI).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(mListener != null){
-                    mListener.addCategoryButtonCLicked();
-                }
-            }
-        });
         final Spinner spinner = (Spinner) rootView.findViewById(R.id.editTextNameAddIncomeExpense);
         spinner.setSelection(0);
 
@@ -199,8 +187,6 @@ public class AddExpenseIncomeFragment extends Fragment {
         editText.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-
-
                 enableOrDisableTextFiled(false);
                 final DatePickerFragment newFragment = new DatePickerFragment();
                 newFragment.show(getFragmentManager(), "timePicker");
@@ -212,24 +198,18 @@ public class AddExpenseIncomeFragment extends Fragment {
                     public void onDateSet(DatePicker view, int year, int month, int day ){
                         enableOrDisableTextFiled(true);
                         final EditText editTextDateAddIncomeExpense = (EditText) getView().findViewById(R.id.editTextDateAddIncomeExpense);
-
                         // Do something with the date chosen by the user
                         String dateString = day+"-"+(month+1)+"-"+year;
-
                         //"MMMM d, yyyy"
                         Date date = null;
                         DateFormat format = new SimpleDateFormat(AppController.DateDashMonthDashYearFormat, Locale.ENGLISH);
                         try {
-
                             date = format.parse(dateString);
-
                         }catch(Exception e){
-
                         }
                         format = new SimpleDateFormat(AppController.MonthSpaceDateSpaceYearFormat, Locale.ENGLISH);
                         editTextDateAddIncomeExpense.setText(format.format(date));
                         newFragment.getDialog().dismiss();
-
                     }
                 });
 
@@ -240,16 +220,23 @@ public class AddExpenseIncomeFragment extends Fragment {
         final RadioButton radioExpense = (RadioButton)rootView.findViewById(R.id.radio_expense);
         final RadioButton radioIncome = (RadioButton)rootView.findViewById(R.id.radio_income);
         final CheckBox investmentAddIncomeExpense = (CheckBox)rootView.findViewById(R.id.investmentAddIncomeExpense);
+        rootView.findViewById(R.id.add_category_button_AEI).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(mListener != null){
+                    final RadioButton radioExpenseView = (RadioButton)getView().findViewById(R.id.radio_expense);
 
+                    mListener.addCategoryButtonCLicked(radioExpenseView.isChecked());
+                }
+            }
+        });
         radioExpense.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dataAdapterExpense
                         .setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
                 // attaching data adapter to spinner
                 spinner.setAdapter(dataAdapterExpense);
-
                 radioIncome.setChecked(false);
             }
         });
@@ -562,7 +549,7 @@ if(mListener != null){
         public void onFragmentInteraction(Uri uri);
         public void onCreatedFragment();
         public void onClickedReturnExpense(Boolean ifExpense);
-        public void addCategoryButtonCLicked();
+        public void addCategoryButtonCLicked(Boolean ifExpense);
     }
 
 

@@ -96,7 +96,7 @@ public class LoadFromArchiveListActivity extends ActionBarActivity {
                 dialog.dismiss();
                 new CustomAlert.CustomBuilder(v.getContext(),getLayoutInflater())
                         .setTitle(R.string.info)
-                        .setMessage(getResources().getString(R.string.delete_dialog_des_sucess_message))
+                        .setMessage(getResources().getString(R.string.reload_archive_dialog_des_sucess_message))
                         .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
 
@@ -104,6 +104,7 @@ public class LoadFromArchiveListActivity extends ActionBarActivity {
                             }
                         }).setIcon(R.drawable.success_icon)
                         .show();
+
             }
         });
         view.findViewById(R.id.delete_current_archive).setOnClickListener(new View.OnClickListener() {
@@ -116,13 +117,13 @@ public class LoadFromArchiveListActivity extends ActionBarActivity {
                 archiveItemsListAdapter.reloadData(archiveList());
                 new CustomAlert.CustomBuilder(v.getContext(),getLayoutInflater())
                         .setTitle(R.string.info)
-                        .setMessage(getResources().getString(R.string.reload_archive_dialog_des_sucess_message))
+                        .setMessage(getResources().getString(R.string.delete_dialog_des_sucess_message))
                         .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
+                            public void onClick(DialogInterface dialog, int which) {
 
-                        // do nothing
-                    }
-                }).setIcon(R.drawable.success_icon)
+                                // do nothing
+                            }
+                        }).setIcon(R.drawable.success_icon)
                         .show();
 
             }

@@ -26,6 +26,7 @@ public class AddCategoryActivity extends ActionBarActivity {
     public static final String CategoryToBeUpdated =  "CategoryToBeUpdated";
     public static final String UpdatedCategory =  "UpdatedCategory";
     public static final String AddCategoryFromAddExpenceIncomeScreen =  "AddCategoryFromAddExpenceIncomeScreen";
+    public static final String ExpenseCategoryToBeAddedFlag = "ExpenseCategoryToBeAddedFlag";
     Boolean ifCategoryToBeUpdated = false;
     Category categoryUpdatedOrAdded = null;
     @Override
@@ -59,6 +60,15 @@ public class AddCategoryActivity extends ActionBarActivity {
             }
             editTextNameAddCategory.setText(category.getCATEGORY_NAME());
             save_category_button.setText(getResources().getString(R.string.save));
+        }else{
+
+            if(getIntent().getBooleanExtra(ExpenseCategoryToBeAddedFlag,true)){
+                radio_income_add_category.setChecked(false);
+                radio_expense_add_category.setChecked(true);
+            }else{
+                radio_income_add_category.setChecked(true);
+                radio_expense_add_category.setChecked(false);
+            }
         }
 
         final AddCategoryActivity addCategoryActivity = this;
@@ -77,7 +87,7 @@ public class AddCategoryActivity extends ActionBarActivity {
                 int length = categoryName.length();
                 if(length >= 15){
 
-                    validationAlert(getResources().getString(R.string.validation_msg_add_edit_expence_category));
+                    validationAlert(getResources().getString(R.string.validation_msg_add_edit_expence_category_max));
                     return;
                 }
                 /*

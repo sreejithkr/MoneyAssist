@@ -75,18 +75,16 @@ public class AddExpenceIncomeActivity extends ActionBarActivity {
                     onClickedReturnExpenseToListClicked(ifExpense);
                 }
                 @Override
-                public void addCategoryButtonCLicked(){
+                public void addCategoryButtonCLicked(Boolean ifExpense){
+                    Log.e("addCategoryButtonCLicked","addCategoryButtonCLicked"+ifExpense);
                     Intent addCategoryActivity = new Intent(getApplicationContext(), AddCategoryActivity.class);
                     addCategoryActivity.putExtra(AddCategoryActivity.AddCategoryFromAddExpenceIncomeScreen,true);
                     addCategoryActivity.putExtra(ExpenceIncomeDetailActivity.editStatusFlag,true);
+                    addCategoryActivity.putExtra(AddCategoryActivity.ExpenseCategoryToBeAddedFlag,ifExpense);
                     addCategoryActivity.putExtra(ListExpenceIncomeFragment.expenseIncome,ei);
                     startActivityForResult(addCategoryActivity,ActivityResultIdentifies.AddCategoryFromAddExpencePage);
                 }
             });
-
-
-
-
         }else{
             setupAddExpenceIncomeFragement(data);
 
@@ -118,8 +116,11 @@ public class AddExpenceIncomeActivity extends ActionBarActivity {
             }
 
             @Override
-            public void addCategoryButtonCLicked() {
+            public void addCategoryButtonCLicked(Boolean ifExpense) {
+                Log.e("addCategoryButtonCLicked","addCategoryButtonCLicked"+ifExpense);
                 Intent addCategoryActivity = new Intent(getApplicationContext(), AddCategoryActivity.class);
+                addCategoryActivity.putExtra(AddCategoryActivity.ExpenseCategoryToBeAddedFlag,ifExpense);
+
                 startActivityForResult(addCategoryActivity, ActivityResultIdentifies.AddCategoryFromAddExpencePage);
             }
         });

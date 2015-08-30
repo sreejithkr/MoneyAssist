@@ -63,7 +63,7 @@
         </activity>
         <activity
             android:name=".CategorySettingActivity"
-            android:label="@string/title_activity_category_setting"
+            android:label="@string/side_panel_items_array_get_total"
             android:screenOrientation="portrait" >
         </activity>
         <activity
