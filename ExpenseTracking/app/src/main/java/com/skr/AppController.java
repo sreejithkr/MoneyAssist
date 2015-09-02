@@ -88,7 +88,7 @@ public class AppController {
     public static String getCurrencyString() {
 
 
-        return currencyString;
+        return " " + currencyString;
     }
     public static void setCurrencyStringWithContext(Context context) {
         SharedPreferences settings = context.getSharedPreferences(AppController.MY_APP_PREFERENCE, 0);

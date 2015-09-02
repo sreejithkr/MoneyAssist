@@ -691,8 +691,8 @@ Log.d("addExpenseIncome ",expenseIncome.toString());
             endDate = null;
         }
 Log.e(""+"startDate"+startDate+" endDate"+endDate,"");
-        Integer expenceTotal = 0;
-        Integer incomeTotal = 0;
+        Long expenceTotal = Long.decode("0");
+        Long incomeTotal =  Long.decode("0");
         String query = "SELECT  * FROM " + TABLE_NAME_EXPENCE_INCOME;
         String condition = ""+CATEGORY_ID+ "= ";
         String leftOverQuery = "";

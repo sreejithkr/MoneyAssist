@@ -260,7 +260,7 @@ public class HomeExpenceTrackFragment extends Fragment {
     }
 
 
-    public void reloadValuesForTotal(Integer expence,Integer income,ArrayList<CheckBoxListData> checkBoxListDataArrayList,Pair<Boolean,Boolean> allSlectedFlagPair, Pair<String,String> startEndDatePair,Pair<Boolean,Boolean> noIncomeExpenceSelectedPair){
+    public void reloadValuesForTotal(Long expence,Long income,ArrayList<CheckBoxListData> checkBoxListDataArrayList,Pair<Boolean,Boolean> allSlectedFlagPair, Pair<String,String> startEndDatePair,Pair<Boolean,Boolean> noIncomeExpenceSelectedPair){
 //        TextView expenseAmountHomeText = (TextView)getView().findViewById(R.id.expenseAmountHomeText);
 //        TextView incomeAmountHomeText = (TextView)getView().findViewById(R.id.incomeAmountHomeText);
 //        expenseAmountHomeText.setText(expence);
@@ -536,7 +536,7 @@ RelativeLayout grapWithDataParent = (RelativeLayout)rootView.findViewById(R.id.g
                 grapWithDataParent.setVisibility(View.VISIBLE);
                 nodataParent.setVisibility(View.GONE);
                 pieChart = configureChart(pieChart);
-                pieChart = setData(pieChart,incomeVal0.intValue(),expenceValue0.intValue());
+                pieChart = setData(pieChart,incomeVal0.longValue(),expenceValue0.longValue());
                 pieChart.animateXY(1500, 1500);
                 Legend l = pieChart.getLegend();
                 l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART_INSIDE);
@@ -607,7 +607,7 @@ RelativeLayout grapWithDataParent = (RelativeLayout)rootView.findViewById(R.id.g
                         grapWithDataParent.setVisibility(View.VISIBLE);
                         nodataParent.setVisibility(View.GONE);
                         pieChart = configureChart(pieChart);
-                        pieChart = setData(pieChart,fragment.incomeVal.intValue(),fragment.expenceValue.intValue());
+                        pieChart = setData(pieChart,fragment.incomeVal.longValue(),fragment.expenceValue.longValue());
                         pieChart.animateXY(1500, 1500);
                         Legend l = pieChart.getLegend();
                         l.setPosition(Legend.LegendPosition.RIGHT_OF_CHART_INSIDE);
@@ -709,7 +709,7 @@ RelativeLayout grapWithDataParent = (RelativeLayout)rootView.findViewById(R.id.g
 
         return chart;
     }
-    private PieChart setData(PieChart chart,Integer income,Integer expence) {
+    private PieChart setData(PieChart chart,Long income,Long expence) {
 
      //   l.setYOffset(0f);
         ArrayList<Entry> yVals1 = new ArrayList<>();

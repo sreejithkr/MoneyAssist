@@ -10,27 +10,27 @@ public class TotalComponentsClass {
 //    ArrayList<ExpenseIncome> expenseList;
 //    ArrayList<ExpenseIncome> incomeList;
 
-    Integer expenceTotal = 0;
-    Integer incomeTotal = 0;
+    Long expenceTotal ;
+    Long incomeTotal ;
 
-public TotalComponentsClass(Integer expenceTotal, Integer incomeTotal) {
+public TotalComponentsClass(Long expenceTotal, Long incomeTotal) {
     this.expenceTotal = expenceTotal;
     this.incomeTotal = incomeTotal;
 }
 
-    public Integer getExpenceTotal() {
+    public Long getExpenceTotal() {
         return expenceTotal;
     }
 
-    public void setExpenceTotal(Integer expenceTotal) {
+    public void setExpenceTotal(Long expenceTotal) {
         this.expenceTotal = expenceTotal;
     }
 
-    public Integer getIncomeTotal() {
+    public Long getIncomeTotal() {
         return incomeTotal;
     }
 
-    public void setIncomeTotal(Integer incomeTotal) {
+    public void setIncomeTotal(Long incomeTotal) {
         this.incomeTotal = incomeTotal;
     }
 
