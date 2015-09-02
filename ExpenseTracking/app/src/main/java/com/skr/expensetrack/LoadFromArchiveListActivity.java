@@ -37,7 +37,7 @@ public class LoadFromArchiveListActivity extends ActionBarActivity {
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.back_white);
         ListView archive_list_view =  (ListView)findViewById(R.id.archive_list_view);
 
-
+        archive_list_view.setEmptyView(findViewById(R.id.nodataTextNo_archive));
          archiveItemsListAdapter =  new ArchiveItemsListAdapter(archiveList());
         archive_list_view.setAdapter(archiveItemsListAdapter);
 

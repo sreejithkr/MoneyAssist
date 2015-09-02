@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.GravityCompat;
+import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
@@ -26,6 +27,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.crittercism.app.Crittercism;
@@ -50,7 +52,8 @@ enum CurrentPage{
     Settings,
     GetTotal,
     Utilities,
-    ContactUs
+    ContactUs,
+    Currency
 
 
  }
@@ -74,32 +77,7 @@ Boolean ifExpenceOrIncomeListEmpty = false;
         SharedPreferences settings = getSharedPreferences(AppController.MY_APP_PREFERENCE, 0);
         boolean isCategoryPresentInDB = settings.getBoolean(AppController.categoryprepopulated, false);
         AppController.categoryReloadToDB(settings,isCategoryPresentInDB,this);
-//        Log.d("categoryprepopulated",isCategoryPresentInDB+"");
-//        if(!isCategoryPresentInDB){
-//            SharedPreferences.Editor editor = settings.edit();
-//            editor.putBoolean(AppController.categoryprepopulated, true);
-//            editor.commit();
-//            defaultCategoryArray = getResources().getStringArray(R.array.category_array_income);
-//int cateGoryID = 0;
-//            ArrayList<Category> categoryArray = new ArrayList<>();
-//            for(int count=0;count< defaultCategoryArray.length;count++){
-//                Category category = new Category(count,defaultCategoryArray[count],false);
-//                categoryArray.add(category);
-//                cateGoryID = count;
-//            }
-//            cateGoryID = cateGoryID+1;
-//            defaultCategoryArray = getResources().getStringArray(R.array.category_array_expense);
-//
-//            for(int count=0;count< defaultCategoryArray.length;count++){
-//                Category category = new Category(cateGoryID+count,defaultCategoryArray[count],true);
-//                categoryArray.add(category);
-//            }
-//            DBHelper dbHelper = DBHelper.getInstance(this);
-//
-//
-//            dbHelper.addAllCategoryFromArrayList(categoryArray);
-//
-//         }
+
         
     }
     
@@ -109,7 +87,7 @@ Boolean ifExpenceOrIncomeListEmpty = false;
         setContentView(R.layout.activity_home_screen);
 
         Crittercism.initialize(getApplicationContext(), "559aa1145c69e80d008f93f7");
-
+       
         if(getSupportActionBar() != null){getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_green)));}
         mTitles = getResources().getStringArray(R.array.side_panel_items_array);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.homeDrawerLayout);
@@ -243,6 +221,7 @@ for(int count=0;count< mTitles.length;count++){
         menu.findItem(R.id.action_sort_by_months).setVisible(false);
         menu.findItem(R.id.dataRefresh).setVisible(false);
         menu.findItem(R.id.quickAdd).setVisible(true);
+        menu.findItem(R.id.action_search_currency).setVisible(false);
 
         switch(state){
             case HomePage:
@@ -283,6 +262,44 @@ for(int count=0;count< mTitles.length;count++){
             case GetTotal:
                 break;
             case ContactUs:
+                break;
+            case Currency:
+                menu.findItem(R.id.quickAdd).setVisible(false);
+                menu.findItem(R.id.action_search_currency).setVisible(true);
+                final MenuItem searchItem = menu.findItem(R.id.action_search_currency);
+                final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
+
+                MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
+                    @Override
+                    public boolean onMenuItemActionExpand(MenuItem item) {
+                        searchView.setQuery("",false);
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onMenuItemActionCollapse(MenuItem item) {
+                        ((CurrencyListFragment)fragment).filter("");
+                        return true;
+                    }
+                });
+
+                ((CurrencyListFragment)fragment).searchItem = searchItem;
+                // Configure the search info and add any event listeners
+                searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+                    @Override
+                    public boolean onQueryTextSubmit(String query) {
+                        ((CurrencyListFragment)fragment).filter(query);
+                        return true;
+                    }
+
+                    @Override
+                    public boolean onQueryTextChange(String newText) {
+
+                        ((CurrencyListFragment)fragment).filter(newText);
+                        return true;
+                    }
+                });
+
                 break;
 
 
@@ -546,7 +563,9 @@ addExpenceIncomeActivityShow(null);
             if (resultCode == RESULT_OK) {
                 new Handler().post(new Runnable() {
                     public void run() {
-                        navigateToHome();
+
+                        ((CurrencyListFragment)fragment).reloadData();
+
                     }
                 });
 
@@ -586,7 +605,21 @@ addExpenceIncomeActivityShow(null);
                        }
                    });
 
+               }else{
+                   new Handler().post(new Runnable() {
+                       @Override
+                       public void run() {
+                   reloadFragmentsOnRetrunignFromAddExpenceIncome();
+                       }
+                   });
                }
+            }else {
+                new Handler().post(new Runnable() {
+                    @Override
+                    public void run() {
+                        reloadFragmentsOnRetrunignFromAddExpenceIncome();
+                    }
+                });
             }
         }
 
@@ -734,38 +767,7 @@ addExpenceIncomeActivityShow(null);
                 //setupAddExpenceIncomeFragement();
 
             }else if(sidePanelAdapter.getItem(position).equalsIgnoreCase(getResources().getString(R.string.side_panel_items_array_category))){
-                fragment = new CategoryListFragment();
-                ((CategoryListFragment)fragment).setmListener(new CategoryListFragment.OnFragmentInteractionListener() {
-                    @Override
-                    public void onFragmentInteraction(Uri uri) {
-
-                    }
-                    public void onCreatedFragment(){
-                        state = CurrentPage.Category;
-                        invalidateOptionsMenu();
-                    }
-                    @Override
-                    public void onItemClick(AdapterView<?> parent, View view, int position, long id,Boolean segmentedCheckStatus,Category category){
-                        CategoryListFragment.CategoryListAdapter categoryListAdapter = (CategoryListFragment.CategoryListAdapter)parent.getAdapter();
-                        if(categoryListAdapter.toBeDeletedFlag) {
-                            Intent intent = new Intent(getApplication(),CategoryDeleteConfirmationActivity.class);
-
-
-                                intent.putExtra(CategoryListFragment.CategoryToBeDeletedOrUpdated, category);
-
-                            startActivityForResult(intent,ActivityResultIdentifies.CategoryDeleteConfirmationKey);
-
-                        }else{
-                            Intent intent = new Intent(getApplication(),AddCategoryActivity.class);
-
-                            intent.putExtra(AddCategoryActivity.CategoryToBeUpdatedStatus,true);
-                            intent.putExtra(AddCategoryActivity.CategoryToBeUpdated, category);
-
-                            startActivityForResult(intent,ActivityResultIdentifies.CategoryUpdateConfirmationKey);
-
-                        }
-                    }
-                });
+                fragment = getCategoryListFragement();
             }else if(sidePanelAdapter.getItem(position).equalsIgnoreCase(getResources().getString(R.string.side_panel_items_array_expense))){
 
                 fragment = getExpenceIncomeListFragment(true);
@@ -849,13 +851,14 @@ addExpenceIncomeActivityShow(null);
                 startActivityForResult(intent,ActivityResultIdentifies.GetTotal);
                 return;
             }else if(sidePanelAdapter.getItem(position).equalsIgnoreCase(getResources().getString(R.string.side_panel_items_array_currency))){
-                mDrawerList.setItemChecked(0, true);
-                setTitle(mTitles[0]);
-                mDrawerLayout.closeDrawer(mDrawerList);
-                homefragment = null;
-                Intent intent = new Intent(getApplication(),SetYourCurrencyActivity.class);
-                startActivityForResult(intent,ActivityResultIdentifies.CurrencyActivityDismissed);
-                return;
+                 fragment = getCurrencyListFragment();
+//                mDrawerList.setItemChecked(0, true);
+//                setTitle(mTitles[0]);
+//                mDrawerLayout.closeDrawer(mDrawerList);
+//                homefragment = null;
+//                Intent intent = new Intent(getApplication(),SetYourCurrencyActivity.class);
+//                startActivityForResult(intent,ActivityResultIdentifies.CurrencyActivityDismissed);
+               // return;
             }else if(sidePanelAdapter.getItem(position).equalsIgnoreCase(getResources().getString(R.string.side_panel_items_array_utilities))){
 
                 fragment = createUtilityFragments();
@@ -927,6 +930,68 @@ addExpenceIncomeActivityShow(null);
         mDrawerList.setItemChecked(position, true);
         setTitle(mTitles[position]);
         mDrawerLayout.closeDrawer(mDrawerList);
+    }
+
+
+    private CurrencyListFragment getCurrencyListFragment(){
+        CurrencyListFragment currencyListFragment = new CurrencyListFragment();
+
+        currencyListFragment.setmListener(new CurrencyListFragment.OnFragmentInteractionListener() {
+            @Override
+            public void onFragmentInteraction(Uri uri) {
+
+            }
+
+            @Override
+            public void onCreatedFragment() {
+                state = CurrentPage.Currency;
+                invalidateOptionsMenu();
+            }
+            @Override
+
+            public void editOtherCurrencyActivity(){
+                Intent intent = new Intent(HomeScreen.this,SetYourCurrencyActivity.class);
+                startActivityForResult(intent,ActivityResultIdentifies.CurrencyActivityDismissed);
+            }
+        });
+               return currencyListFragment;
+
+    }
+    private CategoryListFragment getCategoryListFragement(){
+
+        CategoryListFragment categoryListFragment = new CategoryListFragment();
+        ((CategoryListFragment)categoryListFragment).setmListener(new CategoryListFragment.OnFragmentInteractionListener() {
+            @Override
+            public void onFragmentInteraction(Uri uri) {
+
+            }
+            public void onCreatedFragment(){
+                state = CurrentPage.Category;
+                invalidateOptionsMenu();
+            }
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id,Boolean segmentedCheckStatus,Category category){
+                CategoryListFragment.CategoryListAdapter categoryListAdapter = (CategoryListFragment.CategoryListAdapter)parent.getAdapter();
+                if(categoryListAdapter.toBeDeletedFlag) {
+                    Intent intent = new Intent(getApplication(),CategoryDeleteConfirmationActivity.class);
+
+
+                    intent.putExtra(CategoryListFragment.CategoryToBeDeletedOrUpdated, category);
+
+                    startActivityForResult(intent,ActivityResultIdentifies.CategoryDeleteConfirmationKey);
+
+                }else{
+                    Intent intent = new Intent(getApplication(),AddCategoryActivity.class);
+
+                    intent.putExtra(AddCategoryActivity.CategoryToBeUpdatedStatus,true);
+                    intent.putExtra(AddCategoryActivity.CategoryToBeUpdated, category);
+
+                    startActivityForResult(intent,ActivityResultIdentifies.CategoryUpdateConfirmationKey);
+
+                }
+            }
+        });
+        return categoryListFragment;
     }
     public class SidePanelAdapter extends AmazingAdapter {
         private ArrayList<Pair<String, ArrayList<String>>> all ;
@@ -1097,6 +1162,67 @@ private Drawable getDrawableFromStringID(String settingString){
             InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
         }
+    }
+
+    private void reloadFragmentsOnRetrunignFromAddExpenceIncome(){
+        if(AppController.getInstance().expenceOrIncomeOrCategoryAdded) {
+            switch (state) {
+
+                case HomePage:
+                    // reaload any way
+
+                    navigateToHome();
+                    break;
+
+                case Category:
+                    if(AppController.getInstance().categoryAdded){
+                        //reload category
+                        if(fragment != null) {
+                            getFragmentManager().beginTransaction().remove(fragment).commit();
+                        }
+                        fragment = getCategoryListFragement();
+                        FragmentManager fragmentManager = getFragmentManager();
+                        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+                    }
+                    break;
+                case Income:
+                    if(AppController.getInstance().incomeAdded){
+                        //reload
+                        if(fragment != null) {
+                            getFragmentManager().beginTransaction().remove(fragment).commit();
+                        }
+                        fragment = getExpenceIncomeListFragment(false);
+                        FragmentManager fragmentManager = getFragmentManager();
+                        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+                    }
+                    break;
+                case Expense:
+                    if(AppController.getInstance().expenceAdded){
+                        //reload
+                        if(fragment != null) {
+                            getFragmentManager().beginTransaction().remove(fragment).commit();
+                        }
+                        fragment = getExpenceIncomeListFragment(true);
+                        FragmentManager fragmentManager = getFragmentManager();
+                        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+
+                    }
+                    break;
+                case Settings:
+                    break;
+                case GetTotal:
+                    //reload get total
+                    navigateToHome();
+                    break;
+                case ContactUs:
+                    break;
+
+
+            }
+        }
+
     }
 
 }

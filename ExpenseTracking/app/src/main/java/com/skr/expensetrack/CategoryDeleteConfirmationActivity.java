@@ -85,6 +85,7 @@ public final static String AddCategoryFlag =  "AddCategoryFlag";
 
                 if(isLastItemInCategory){
                     // category.getIFEXPENSE()
+                    ((TextView)findViewById(R.id.deleteCategoryTitle)).setText(getString(R.string.info));
                     String messageText = getResources().getString(R.string.last_item_delete_category);
                     messageText = messageText.replace(CategoryListFragment.ei,expenseorIncomeTitle);
 

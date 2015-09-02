@@ -13,4 +13,20 @@
         android:layout_height="wrap_content" >
     </ListView>
 
+    <TextView
+        android:id="@+id/nodataTextNo_archive"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:text="@string/no_archive"
+        android:textColor="@color/app_green"
+        android:gravity="center"
+        android:layout_centerHorizontal="true"
+
+
+        />
+
 </RelativeLayout>

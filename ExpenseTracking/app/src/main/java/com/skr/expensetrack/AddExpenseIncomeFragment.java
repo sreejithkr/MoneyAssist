@@ -193,7 +193,7 @@ public class AddExpenseIncomeFragment extends Fragment {
                 newFragment.setDatePickerFragmentListener(new DatePickerFragment.DatePickerFragmentListener(){
                     public void onCancel(){
                         enableOrDisableTextFiled(true);
-                        newFragment.getDialog().dismiss();
+                        getActivity().getFragmentManager().beginTransaction().remove(newFragment).commit();
                     }
                     public void onDateSet(DatePicker view, int year, int month, int day ){
                         enableOrDisableTextFiled(true);
@@ -209,7 +209,9 @@ public class AddExpenseIncomeFragment extends Fragment {
                         }
                         format = new SimpleDateFormat(AppController.MonthSpaceDateSpaceYearFormat, Locale.ENGLISH);
                         editTextDateAddIncomeExpense.setText(format.format(date));
-                        newFragment.getDialog().dismiss();
+
+                        getActivity().getFragmentManager().beginTransaction().remove(newFragment).commit();
+
                     }
                 });
 

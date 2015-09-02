@@ -32,6 +32,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 
+
+
 public class FilterAndViewExpenseIncomeActivity extends ActionBarActivity {
 
     public static final String ifBothToBeShownKey =  "ifBothToBeShownKey";
@@ -164,13 +166,14 @@ progress.show();
             public boolean onTouch(View v, MotionEvent event) {
               //  if(start_date_checkbox.isChecked()) {
                     start_date_edit_text.setEnabled(true);
-                    DatePickerFragment newFragment = new DatePickerFragment();
+                    final DatePickerFragment newFragment = new DatePickerFragment();
                     newFragment.show(getFragmentManager(), "timePicker");
                     start_date_edit_text.setEnabled(false);
                     newFragment.setDatePickerFragmentListener(new DatePickerFragment.DatePickerFragmentListener() {
                         @Override
                         public void onCancel() {
                             start_date_edit_text.setEnabled(true);
+                            getFragmentManager().beginTransaction().remove(newFragment).commit();
 
                         }
 
@@ -179,6 +182,7 @@ progress.show();
                             String dateString = day + "-" + (month + 1) + "-" + year;
                             start_date_edit_text.setText(AppController.pareseDate_in_DD_dash_MM_dash_YYYY_to_Month_comma_Day_space_Year(dateString));
                             start_date_edit_text.setEnabled(true);
+                            getFragmentManager().beginTransaction().remove(newFragment).commit();
 
 
                         }
@@ -193,30 +197,20 @@ progress.show();
         final TextView end_date_checkbox = (TextView)findViewById(R.id.end_date_checkbox);
         final EditText end_date_edit_text = (EditText)findViewById(R.id.end_date_edit_text);
         start_date_edit_text.setSelected(true);
-//        end_date_checkbox.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if(end_date_checkbox.isChecked()){
-//                    end_date_edit_text.setEnabled(true);
-//                }else{
-//                    end_date_edit_text.setText("");
-//                    end_date_edit_text.setEnabled(false);
-//
-//                }
-//            }
-//        });
+
         end_date_edit_text.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
               //  if(end_date_checkbox.isChecked()) {
                     end_date_edit_text.setEnabled(true);
-                    DatePickerFragment newFragment = new DatePickerFragment();
+                    final DatePickerFragment newFragment = new DatePickerFragment();
                     newFragment.show(getFragmentManager(), "timePicker");
                     end_date_edit_text.setEnabled(false);
                     newFragment.setDatePickerFragmentListener(new DatePickerFragment.DatePickerFragmentListener() {
                         @Override
                         public void onCancel() {
                             end_date_edit_text.setEnabled(true);
+                            getFragmentManager().beginTransaction().remove(newFragment).commit();
 
                         }
 
@@ -225,6 +219,7 @@ progress.show();
                             String dateString = day + "-" + (month + 1) + "-" + year;
                             end_date_edit_text.setText(AppController.pareseDate_in_DD_dash_MM_dash_YYYY_to_Month_comma_Day_space_Year(dateString));
                             end_date_edit_text.setEnabled(true);
+                            getFragmentManager().beginTransaction().remove(newFragment).commit();
 
 
                         }
@@ -343,18 +338,9 @@ progress.show();
                     *
                     * */
 
+                intent.putExtra(FilterAndViewExpenseIncomeActivity.start_date_edit_text_key,start_date_edit_text_val);
+                intent.putExtra(FilterAndViewExpenseIncomeActivity.end_date_edit_text_key,end_date_edit_text_val);
 
-                if((AppController.compareTwoDateString(start_date_edit_text_val,end_date_edit_text_val)>0)){
-                    intent.putExtra(FilterAndViewExpenseIncomeActivity.start_date_edit_text_key,end_date_edit_text_val);
-                    intent.putExtra(FilterAndViewExpenseIncomeActivity.end_date_edit_text_key,start_date_edit_text_val);
-
-
-                }else{
-                    intent.putExtra(FilterAndViewExpenseIncomeActivity.start_date_edit_text_key,start_date_edit_text_val);
-                    intent.putExtra(FilterAndViewExpenseIncomeActivity.end_date_edit_text_key,end_date_edit_text_val);
-
-
-                }
 
                 // }
              //   if(min_amount_checkbox.isChecked()){

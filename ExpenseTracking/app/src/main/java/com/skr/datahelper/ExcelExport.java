@@ -1,9 +1,18 @@
 package com.skr.datahelper;
 
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.LabeledIntent;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Environment;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.TextUtils;
+import android.text.style.ForegroundColorSpan;
 import android.util.Log;
 
 import com.skr.AppController;
@@ -13,6 +22,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 
 import jxl.Workbook;
 import jxl.write.Label;
@@ -30,15 +40,49 @@ public class ExcelExport {
 
     public static void openFolder(Context context,String path)
     {
-        File file = new File(Environment.getExternalStorageDirectory(),
-                "myFolder");
+        File file = new File(path);
+//        Intent viewIntent = new Intent(Intent.ACTION_VIEW);
+//        Intent editIntent = new Intent(Intent.ACTION_EDIT);
+//        viewIntent.setDataAndType(Uri.fromFile(file), "application/xls");
+//        editIntent.setDataAndType(Uri.fromFile(file), "application/xls");
+//        Intent chooserIntent = Intent.createChooser(viewIntent, "Open in...");
+//        chooserIntent.putExtra(Intent.EXTRA_SUBJECT, "Shared from the ActionBar widget.");
+//
+//        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS, new Intent[] { viewIntent });
+//        context.startActivity(chooserIntent);
 
-        Log.d("path", file.toString());
 
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        //intent.setDataAndType(Uri.fromFile(file), "*/*");
-        intent.setDataAndType(Uri.fromFile(file), "resource/folder");
-        context.startActivity(intent);
+        PackageManager pm = context.getPackageManager();
+        Intent viewIntent = new Intent(Intent.ACTION_VIEW);
+        Intent editIntent = new Intent(Intent.ACTION_EDIT);
+        viewIntent.setDataAndType(Uri.fromFile(file), "application/xls");
+        editIntent.setDataAndType(Uri.fromFile(file), "application/xls");
+        Intent openInChooser = Intent.createChooser(viewIntent, "Open in...");
+
+// Append " (for editing)" to applicable apps, otherwise they will show up twice identically
+        Spannable forEditing = new SpannableString(" (for editing)");
+        forEditing.setSpan(new ForegroundColorSpan(Color.CYAN), 0, forEditing.length(), Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+        List<ResolveInfo> resInfo = pm.queryIntentActivities(editIntent, 0);
+        Intent[] extraIntents = new Intent[resInfo.size()];
+        if(resInfo.size() == 0){
+
+            Log.e("","NO APPS POSSIBLE");
+        }
+        for (int i = 0; i < resInfo.size(); i++) {
+            // Extract the label, append it, and repackage it in a LabeledIntent
+            ResolveInfo ri = resInfo.get(i);
+            String packageName = ri.activityInfo.packageName;
+            Intent intent = new Intent();
+            intent.setComponent(new ComponentName(packageName, ri.activityInfo.name));
+            intent.setAction(Intent.ACTION_EDIT);
+            editIntent.setDataAndType(Uri.fromFile(file), "application/xls");
+            CharSequence label = TextUtils.concat(ri.loadLabel(pm), forEditing);
+            extraIntents[i] = new LabeledIntent(intent, packageName, label, ri.icon);
+        }
+
+        openInChooser.putExtra(Intent.EXTRA_INITIAL_INTENTS, extraIntents);
+        context.startActivity(openInChooser);
+
     }
     public static String saveToExcel(Context context,ArrayList<ExpenseIncome>expenseIncomes,HashMap<Integer,String>categoryHashMap){
 
@@ -48,7 +92,7 @@ public class ExcelExport {
             Date date = new Date();
 
             String fileName = expenseIncomeDetails+"_"+date.toString()+".xls";
-            File dir = new File(sdCard.getAbsolutePath() + "/ExpenseIncomeDetails");
+            File dir = new File(sdCard.getAbsolutePath() + "/"+expenseIncomeDetails);
             dir.mkdirs();
             File file = new File(dir, fileName);
             WritableWorkbook workbook = Workbook.createWorkbook(file);
@@ -161,7 +205,7 @@ Integer row_num_income = 0;
             }
             workbook.write();
             workbook.close();
-            return  dir.getPath();
+            return  file.getPath();
         }catch (Exception e){
             Log.e("Exception 123",""+e.toString());
             return  "";

@@ -75,9 +75,14 @@ public class AppController {
     public static String ThreeWordsMonthSpaceDateSpaceYearFormatWithUndeScore = "MMM_d_yyyy";
     public static final String MY_APP_PREFERENCE = "myapppreference";
     public static final String CurrencyString = "CurrencyString";
+    public static final String OtherCurrencyString = "OtherCurrencyString";
     public final static String categoryprepopulated = "categoryprepopulated";
     public Boolean listExpenseIncomeItemClicked = false;
 
+    public Boolean expenceOrIncomeOrCategoryAdded = false;
+    public Boolean expenceAdded = false;
+    public Boolean incomeAdded = false;
+    public Boolean categoryAdded = false;
 
 
     public static String getCurrencyString() {
@@ -100,6 +105,15 @@ public class AppController {
         SharedPreferences.Editor editor = settings.edit();
 
         editor.putString(CurrencyString, currencyString);
+        editor.commit();
+        setCurrencyStringWithContext(context);
+
+    }
+    public static void setOtherCurrencyStringToSharePreference(String currencyString,Context context) {
+        SharedPreferences settings = context.getSharedPreferences(AppController.MY_APP_PREFERENCE, 0);
+        SharedPreferences.Editor editor = settings.edit();
+
+        editor.putString(OtherCurrencyString, currencyString);
         editor.commit();
         setCurrencyStringWithContext(context);
 
@@ -199,7 +213,36 @@ public class AppController {
 
         return Months.NoValue;
     }
+    public static int compareTwoDateStringInMMM_DD_YYYY(String firstDate,String secondDate ) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat(ThreeWordsMonthSpaceDateSpaceYearFormat);
+            Date date1 = sdf.parse(firstDate);
+            Date date2 = sdf.parse(secondDate);
 
+            Log.d(" date1", sdf.format(date1));
+            Log.d("date2", sdf.format(date2));
+
+            if (date1.compareTo(date2) > 0) {
+                Log.e("date compare", "1");
+                //firstDate>secondDate
+                return 1;
+            } else if (date1.compareTo(date2) < 0) {
+                Log.e("date compare", "2");
+                //firstDate<secondDate
+                return -1;
+            } else if (date1.compareTo(date2) == 0) {
+                Log.e("date compare", "3");
+                return 0;
+            } else {
+                Log.e("date compare", "4");
+                return 0;
+
+            }
+        } catch (Exception e) {
+            Log.d("exception in formatting date", "******************************");
+            return 0;
+        }
+    }
     public static int compareTwoDateString(String firstDate,String secondDate ) {
         try {
             SimpleDateFormat sdf = new SimpleDateFormat(DateDashMonthDashYearFormat);

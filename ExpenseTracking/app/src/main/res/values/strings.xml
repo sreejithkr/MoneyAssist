@@ -58,10 +58,10 @@
         <item>@string/side_panel_items_array_help</item>
     </string-array>
     <string-array name="category_array_expense">
-        <item>Expense</item>
+        <item>Expense Default</item>
     </string-array>
     <string-array name="category_array_income">
-        <item>Income</item>
+        <item>Income Default</item>
     </string-array>
     <string-array name="setting_name_array">
         <item>@string/currency_settings</item>
@@ -69,7 +69,63 @@
         <item>@string/duration_settings</item>
         <item>@string/amount_settings</item>
     </string-array>
-
+    <string name="nocurrency">NO CURRENCY</string>
+    <string name="othercurrency">Other</string>
+    <string-array name="currency_list">
+        <item>@string/nocurrency</item>
+        <item>@string/othercurrency</item>
+        <item>AED!cna!United Arab Emirates Dirham</item>
+        <item>ARS!cna!Argentine Peso</item>
+        <item>AUD!cna!Australian Dollar</item>
+        <item>BGN!cna!Bulgarian Lev</item>
+        <item>BND!cna!Brunei Dollar</item>
+        <item>BOB!cna!Bolivian Boliviano</item>
+        <item>BRL!cna!Brazilian Real</item>
+        <item>CAD!cna!Canadian Dollar</item>
+        <item>CHF!cna!Swiss Franc</item>
+        <item>CLP!cna!Chilean Peso</item>
+        <item>CNY!cna!Chinese Yuan Renminbi</item>
+        <item>COP!cna!Colombian Peso</item>
+        <item>CZK!cna!Czech Republic Koruna</item>
+        <item>DKK!cna!Danish Krone</item>
+        <item>EGP!cna!Egyptian Pound</item>
+        <item>EUR!cna!Euro</item>
+        <item>FJD!cna!Fijian Dollar</item>
+        <item>GBP!cna!British Pound Sterling</item>
+        <item>HKD!cna!Hong Kong Dollar</item>
+        <item>HRK!cna!Croatian Kuna</item>
+        <item>HUF!cna!Hungarian Forint</item>
+        <item>IDR!cna!Indonesian Rupiah</item>
+        <item>ILS!cna!Israeli New Sheqel</item>
+        <item>INR!cna!Indian Rupee</item>
+        <item>JPY!cna!Japanese Yen</item>
+        <item>KES!cna!Kenyan Shilling</item>
+        <item>KRW!cna!South Korean Won</item>
+        <item>LTL!cna!Lithuanian Litas</item>
+        <item>MAD!cna!Moroccan Dirham</item>
+        <item>MXN!cna!Mexican Peso</item>
+        <item>MYR!cna!Malaysian Ringgit</item>
+        <item>NOK!cna!Norwegian Krone</item>
+        <item>NZD!cna!New Zealand Dollar</item>
+        <item>PEN!cna!Peruvian Nuevo Sol</item>
+        <item>PHP!cna!Philippine Peso</item>
+        <item>PKR!cna!Pakistani Rupee</item>
+        <item>PLN!cna!Polish Zloty</item>
+        <item>RON!cna!Romanian Leu</item>
+        <item>RSD!cna!Serbian Dinar</item>
+        <item>RUB!cna!Russian Ruble</item>
+        <item>SAR!cna!Saudi Riyal</item>
+        <item>SEK!cna!Swedish Krona</item>
+        <item>SGD!cna!Singapore Dollar</item>
+        <item>THB!cna!Thai Baht</item>
+        <item>TRY!cna!Turkish Lira</item>
+        <item>TWD!cna!New Taiwan Dollar</item>
+        <item>UAH!cna!Ukrainian Hryvnia</item>
+        <item>USD!cna!US Dollar</item>
+        <item>VEF!cna!Venezuelan BolÃ­Â­var Fuerte</item>
+        <item>VND!cna!Vietnamese Dong</item>
+        <item>ZAR!cna!South African Ran</item>
+    </string-array>
     <string name="to">to</string>
     <string name="income_message">An amount of !*a*! was received as an income for item/service in !*c*! category on !*d*!</string>
     <string name="expense_message">An amount of !*a*! was spent for purchasing an item/service in !*c*! category on !*d*!</string>
@@ -134,7 +190,6 @@
     <string name="validation_msg_add_edit_expence_income_description">It seems you have not give any description. Do you want to continue without any description?</string>
     <string name="validation_msg_add_edit_expence_income_amount_limit">Please enter a value less that 10,000,000. If your Expence/Income exceeds this limit please enter it as two item</string>
     <string name="validation_msg_add_edit_expence_income_amount_limit_filter">Please enter a value less that 10,000,000.</string>
-
     <string name="validation_msg_add_edit_expence_income_amount__no_description_alert">Do not show this message again</string>
     <string name="success_msg_add_expence_income">Successfully add the details</string>
     <string name="success_msg_edit_expence_income">Successful updated the details.</string>
@@ -147,7 +202,7 @@
     <string name="success_msg_update_category">Successfully updated the new category</string>
     <string name="already_category_name_exist_msg_add_category">It seems there is already a category with this name. Please change the category name to be added</string>
     <string name="validation_msg_add_edit_expence_category">Please enter a valid category name!</string>
-    <string name="validation_msg_add_edit_expence_category_max">Please ensure only a maximum of 15 character is used in your category name</string>
+    <string name="validation_msg_add_edit_expence_category_max">Please ensure only a maximum of 20 character is used in your category name</string>
     <string name="last_item_delete_category">This is the last !*ei*! category. Please create a new !*ei*! category to delete this category.</string>
     <string name="validation_msg_set_currency">Please ensure only a maximum of three character is used to represent your currency</string>
     <string name="title_activity_set_your_currency">Set Your Currency</string>
@@ -179,14 +234,15 @@
     <string name="reload_archive_dialog_des_sucess_message">Successfully reloaded from archive!</string>
     <string name="title_activity_export_to_excel">@string/side_panel_items_array_export_Excel</string>
     <string name="msg_sucessfully_export_to_excel">Saved to phone successfully ! Please check your !*folder*! folder</string>
-    <string name="open_folder_export_excel">Open Folder</string>
+    <string name="open_folder_export_excel">Open File</string>
     <string name="msg_nodata__export_to_excel">It seem there is no data for the selected criteria. Please try again with different set</string>
     <string name="msg_problem_contactus">It seems there is some problem while exporting data to Excel. Please reach us at Blog or Email mentioned in Contact Us</string>
-    <string name="expenseIncomeDetails">ExpenseIncomeDetails</string>
+    <string name="expenseIncomeDetails">MoneyAssist</string>
     <string name="title_activity_splash">Money Assist</string>
     <string name="title_activity_add_expence_income">@string/side_panel_items_array_income_expense</string>
     <string name="hello_world">Hello world!</string>
+    <string name="no_archive">It seems you do not have any archived data !</string>
     <string name="title_activity_help_screen">HelpScreenActivity</string>
-
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>

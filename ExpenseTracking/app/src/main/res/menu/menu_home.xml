@@ -46,6 +46,11 @@
 
         android:title="@string/action_add_category_home"
         />
+    <item android:id="@+id/action_search_currency"
+        android:title="Search Currency"
+        android:icon="@drawable/search_currency"
+        app:showAsAction="ifRoom|collapseActionView"
+        app:actionViewClass="android.widget.SearchView" />
 
 
 

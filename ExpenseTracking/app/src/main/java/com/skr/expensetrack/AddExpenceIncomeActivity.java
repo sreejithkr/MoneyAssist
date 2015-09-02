@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.skr.AppController;
 import com.skr.datahelper.ExpenseIncome;
 
 public class AddExpenceIncomeActivity extends ActionBarActivity {
@@ -22,6 +23,10 @@ public class AddExpenceIncomeActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_expence_income);
+        AppController.getInstance().expenceOrIncomeOrCategoryAdded = false;
+        AppController.getInstance().incomeAdded = false;
+        AppController.getInstance().expenceAdded = false;
+        AppController.getInstance().categoryAdded = false;
         if(getSupportActionBar() != null){getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_green)));}
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.close_button);

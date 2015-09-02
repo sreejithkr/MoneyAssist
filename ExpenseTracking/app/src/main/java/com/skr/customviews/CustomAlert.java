@@ -40,6 +40,7 @@ public class CustomAlert extends AlertDialog {
         WebView webViewTextJustyfy;
         public CustomBuilder(final Context context,LayoutInflater inflater){
             super(context);
+
             this.context = context;
             // LayoutInflater inflater = getLayoutInflater();
             View view=inflater.inflate(R.layout.title_text_view, null);
@@ -53,6 +54,18 @@ public class CustomAlert extends AlertDialog {
 
 
 
+        }
+
+        public CustomBuilder(Context context, int theme,LayoutInflater inflater) {
+            super(context,theme);
+
+            this.context = context;
+            // LayoutInflater inflater = getLayoutInflater();
+            View view=inflater.inflate(R.layout.title_text_view, null);
+            cutomeAlertTitle= (TextView)view.findViewById(R.id.cutomeAlertTitle);
+
+            setCancelable(cancelFlag);
+            this.setCustomTitle(view);
         }
         @Override
         public CustomBuilder setTitle(int titleId) {

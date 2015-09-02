@@ -269,7 +269,7 @@ public class DBHelper  extends SQLiteOpenHelper {
         ArrayList<String> categoryNames = getExpenceOrIncomeCategoryNameList(newCategory.IFEXPENSE);
         Boolean categoryNameAlreadyExist = false;
         for (int count=0;count<categoryNames.size();count++){
-            categoryNameAlreadyExist = categoryNames.get(count).equalsIgnoreCase(category.CATEGORY_NAME);
+            categoryNameAlreadyExist = categoryNames.get(count).equalsIgnoreCase(newCategory.CATEGORY_NAME);
         }
         if(categoryNameAlreadyExist){
             return -1;
@@ -323,6 +323,8 @@ public class DBHelper  extends SQLiteOpenHelper {
 
         db.setTransactionSuccessful();
         db.endTransaction();
+        AppController.getInstance().expenceOrIncomeOrCategoryAdded = true;
+        AppController.getInstance().categoryAdded = true;
 return new Pair<>(0,new Category(category_id, category.getCATEGORY_NAME(),category.getIFEXPENSE()));
     }
 
@@ -395,6 +397,12 @@ return new Pair<>(0,new Category(category_id, category.getCATEGORY_NAME(),catego
                 EXPENCE_INCOME_ID+ " = "+oldExpenseIncome.getEXPENCE_INCOME_ID(),
                 null);
         saveValuesForHome();
+        AppController.getInstance().expenceOrIncomeOrCategoryAdded = true;
+        if(newExpenseIncome.getIF_EXPENSE()) {
+            AppController.getInstance().expenceAdded = true;
+        }else {
+            AppController.getInstance().incomeAdded = true;
+        }
         return returnVal;
 
     }
@@ -437,7 +445,12 @@ Log.d("addExpenseIncome ",expenseIncome.toString());
                 null, //nullColumnHack
                 values);
         saveValuesForHome();
-
+        AppController.getInstance().expenceOrIncomeOrCategoryAdded = true;
+        if(expenseIncome.getIF_EXPENSE()) {
+            AppController.getInstance().expenceAdded = true;
+        }else {
+            AppController.getInstance().incomeAdded = true;
+        }
         // key/value -> keys = column names/ values = column values
         // 4. close
         //db.close();

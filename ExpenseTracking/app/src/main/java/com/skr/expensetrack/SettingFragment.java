@@ -400,13 +400,14 @@ public class SettingFragment extends Fragment {
             public boolean onTouch(View v, MotionEvent event) {
                 if(start_date_checkbox.isChecked()) {
                     start_date_edit_text.setEnabled(true);
-                    DatePickerFragment newFragment = new DatePickerFragment();
+                   final DatePickerFragment newFragment = new DatePickerFragment();
                     newFragment.show(getFragmentManager(), "timePicker");
                     newFragment.setDatePickerFragmentListener( new DatePickerFragment.DatePickerFragmentListener() {
                         @Override
                         public void onCancel() {
 
                                 start_date_edit_text.setEnabled(true);
+                            getActivity().getFragmentManager().beginTransaction().remove(newFragment).commit();
 
                         }
 
@@ -418,6 +419,7 @@ public class SettingFragment extends Fragment {
 
                             start_date_edit_text.setText(dateString);
                             start_date_edit_text.setEnabled(true);
+                            getActivity().getFragmentManager().beginTransaction().remove(newFragment).commit();
 
                         }
                     });
@@ -445,13 +447,14 @@ public class SettingFragment extends Fragment {
             public boolean onTouch(View v, MotionEvent event) {
                 if(end_date_checkbox.isChecked()) {
                     end_date_edit_text.setEnabled(true);
-                    DatePickerFragment newFragment = new DatePickerFragment();
+                    final DatePickerFragment newFragment = new DatePickerFragment();
                     newFragment.show(getFragmentManager(), "timePicker");
                     newFragment.setDatePickerFragmentListener( new DatePickerFragment.DatePickerFragmentListener() {
                         @Override
                         public void onCancel() {
 
                             end_date_edit_text.setEnabled(true);
+                            getActivity().getFragmentManager().beginTransaction().remove(newFragment).commit();
 
                         }
 
@@ -463,6 +466,8 @@ public class SettingFragment extends Fragment {
 
                             end_date_edit_text.setText(dateString);
                             end_date_edit_text.setEnabled(true);
+                            getActivity().getFragmentManager().beginTransaction().remove(newFragment).commit();
+
                         }
                     });
                     end_date_edit_text.setEnabled(false);

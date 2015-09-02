@@ -110,13 +110,13 @@ public class ExportToExcelActivity extends ActionBarActivity {
             public boolean onTouch(View v, MotionEvent event) {
                 start_date_edit_text.setEnabled(false);
 
-                DatePickerFragment newFragment = new DatePickerFragment();
+               final DatePickerFragment newFragment = new DatePickerFragment();
                 newFragment.show(getFragmentManager(), "timePicker");
                 newFragment.setDatePickerFragmentListener(new DatePickerFragment.DatePickerFragmentListener() {
                     @Override
                     public void onCancel() {
                         start_date_edit_text.setEnabled(true);
-
+                        getFragmentManager().beginTransaction().remove(newFragment).commit();
                     }
 
                     @Override
@@ -125,6 +125,7 @@ public class ExportToExcelActivity extends ActionBarActivity {
 
                         start_date_edit_text.setText(AppController.pareseDate_in_DD_dash_MM_dash_YYYY_to_Month_comma_Day_space_Year(dateString));
                         start_date_edit_text.setEnabled(true);
+                        getFragmentManager().beginTransaction().remove(newFragment).commit();
 
                     }
                 });
@@ -149,12 +150,13 @@ public class ExportToExcelActivity extends ActionBarActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 end_date_edit_text.setEnabled(false);
-                DatePickerFragment newFragment = new DatePickerFragment();
+                final DatePickerFragment newFragment = new DatePickerFragment();
                 newFragment.show(getFragmentManager(), "timePicker");
                 newFragment.setDatePickerFragmentListener(new DatePickerFragment.DatePickerFragmentListener() {
                     @Override
                     public void onCancel() {
                         end_date_edit_text.setEnabled(true);
+                        getFragmentManager().beginTransaction().remove(newFragment).commit();
 
                     }
 
@@ -164,6 +166,7 @@ public class ExportToExcelActivity extends ActionBarActivity {
                         end_date_edit_text.setText(AppController.pareseDate_in_DD_dash_MM_dash_YYYY_to_Month_comma_Day_space_Year(dateString));
                         end_date_edit_text.setEnabled(true);
 
+                        getFragmentManager().beginTransaction().remove(newFragment).commit();
 
                     }
                 });

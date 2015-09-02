@@ -1,8 +1,8 @@
 package com.skr.expensetrack;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -11,9 +11,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.skr.AppController;
-import com.skr.customviews.CustomAlert;
 
 public class SetYourCurrencyActivity extends ActionBarActivity {
 
@@ -33,7 +33,9 @@ public class SetYourCurrencyActivity extends ActionBarActivity {
         });
         final Context context = this;
         final EditText editTextCurrencySaveEditText = (EditText)findViewById(R.id.editTextCurrencySaveEditText);
-        editTextCurrencySaveEditText.setText(AppController.getCurrencyString());
+        SharedPreferences settings = getSharedPreferences(AppController.MY_APP_PREFERENCE, 0);
+        String otherCurrencyString = settings.getString(AppController.OtherCurrencyString,"");
+        editTextCurrencySaveEditText.setText(otherCurrencyString);
         Button save_settings_button = (Button)findViewById(R.id.save_settings_button);
         save_settings_button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,7 +47,13 @@ public class SetYourCurrencyActivity extends ActionBarActivity {
                     validationAlert(getResources().getString(R.string.validation_msg_set_currency));
                     return;
                 }
-                AppController.setCurrencyStringToSharePreference(cName,context);
+                AppController.setOtherCurrencyStringToSharePreference(cName,context);
+                if(!cName.isEmpty()){
+                    AppController.setCurrencyStringToSharePreference(cName,context);
+                }else{
+                    AppController.setCurrencyStringToSharePreference("",context);
+
+                }
                 dismiss();
             }
         });
@@ -53,16 +61,20 @@ public class SetYourCurrencyActivity extends ActionBarActivity {
 
     public void validationAlert(String msg){
 
-        new CustomAlert.CustomBuilder(this,getLayoutInflater())
-                .setTitle(R.string.info)
-                .setMessage(msg).setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
+        TextView error = (TextView)findViewById(R.id.error_message_dialog_currency);
+        error.setText(msg);
+        error.setVisibility(View.VISIBLE);
 
-
-                // do nothing
-            }
-        }).setIcon(R.drawable.error_info)
-                .show();
+//        new CustomAlert.CustomBuilder(this,R.style.Base_Theme_AppCompat_Dialog,getLayoutInflater())
+//                .setTitle(R.string.info)
+//                .setMessage(msg).setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
+//            public void onClick(DialogInterface dialog, int which) {
+//
+//
+//                // do nothing
+//            }
+//        }).setIcon(R.drawable.error_info)
+//                .show();
     }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

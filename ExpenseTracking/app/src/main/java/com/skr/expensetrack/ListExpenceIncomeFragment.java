@@ -66,6 +66,8 @@ public class ListExpenceIncomeFragment extends Fragment {
     private ExpenseIncome positionDeleted;
     TextView nodataText;
     String nodataTextString;
+    Boolean groupByDateFlag = false;
+
 public Boolean isExpenseFlag = true;
     public Boolean searchButtonIsCollapsed = true;
     private Boolean isSearchViewHidden = true;
@@ -284,7 +286,7 @@ public Boolean isExpenseFlag = true;
 
                         }
                         listView.setAdapter(new ExpenceIncomeListAdapter(new ArrayList<Pair<String, ArrayList<ExpenseIncome>>>()));
-                        groupByDate();
+                        resetAndGroupByDate();
                     }
                 });
 
@@ -382,6 +384,7 @@ public Boolean isExpenseFlag = true;
             all.add(new Pair<String, ArrayList<ExpenseIncome>>(categoryIdName.get(key),entry.getValue()));
         }
         expenceIncomeListAdapter.reloadData(all);
+        groupByDateFlag = false;
         hideRefreshIcon = false;
         getActivity().invalidateOptionsMenu();
 
@@ -409,8 +412,15 @@ public Boolean isExpenseFlag = true;
             all.add(new Pair<String, ArrayList<ExpenseIncome>>(key,entry.getValue()));
         }
         expenceIncomeListAdapter.reloadData(all);
+        groupByDateFlag = false;
         hideRefreshIcon = false;
         getActivity().invalidateOptionsMenu();
+    }
+    public void resetAndGroupByDate(){
+        groupByDateFlag = true;
+        expenseIncomes.clear();
+        expenseIncomes.addAll(expenseIncomesOriginal);
+        groupByDate();
     }
     public void groupByDate(){
         cancelDelete();
@@ -468,23 +478,30 @@ public Boolean isExpenseFlag = true;
         String end_date_edit_text = data.getStringExtra(FilterAndViewExpenseIncomeActivity.end_date_edit_text_key);
         String min_amt_edit_text = data.getStringExtra(FilterAndViewExpenseIncomeActivity.min_amt_edit_text_key);
         String max_amt_edit_text = data.getStringExtra(FilterAndViewExpenseIncomeActivity.max_amt_edit_text_key);
+        if(!start_date_edit_text.isEmpty() && !end_date_edit_text.isEmpty() ){
+            if(AppController.compareTwoDateStringInMMM_DD_YYYY(start_date_edit_text, end_date_edit_text) > 0){
+                String tempStringA = start_date_edit_text;
+                start_date_edit_text = end_date_edit_text;
+                end_date_edit_text = tempStringA;
 
+            }
+        }
         ArrayList<ExpenseIncome> tempExpenceIncomeList = new ArrayList<>();
-        for(int count =0;count<expenseIncomes.size();count++) {
-            ExpenseIncome expenceIncomeLcl = expenseIncomes.get(count);
+        for(int count =0;count<expenseIncomesOriginal.size();count++) {
+            ExpenseIncome expenceIncomeLcl = expenseIncomesOriginal.get(count);
             Boolean ifGreaterThanStartDate = true;
             Boolean ifSmallerThanStartDate = true;
             Boolean ifGreaterThanMinAmount= true;
             Boolean ifSmallerThanMaxAmount = true;
             if(start_date_edit_text != null) {
                 if(!start_date_edit_text.isEmpty()){
-                    ifGreaterThanStartDate = (AppController.compareTwoDateString(start_date_edit_text, expenceIncomeLcl.getDateString()) >= 0);
+                    ifGreaterThanStartDate = (AppController.compareTwoDateStringInMMM_DD_YYYY(start_date_edit_text, expenceIncomeLcl.getDateinMMM_DD_YYYY()) <= 0);
 
                 }
             }
             if(end_date_edit_text != null){
                 if(!end_date_edit_text.isEmpty()) {
-                    ifSmallerThanStartDate =  (AppController.compareTwoDateString(end_date_edit_text, expenceIncomeLcl.getDateString()) <= 0);
+                    ifSmallerThanStartDate =  (AppController.compareTwoDateStringInMMM_DD_YYYY(end_date_edit_text, expenceIncomeLcl.getDateinMMM_DD_YYYY()) >= 0);
 
                 }
             }
@@ -502,21 +519,27 @@ public Boolean isExpenseFlag = true;
                 tempExpenceIncomeList.add(expenceIncomeLcl);
             }
         }
-        expenseIncomes.clear();
-        expenseIncomes.addAll(tempExpenceIncomeList);
-        groupByDate();
-        hideRefreshIcon = false;
-        getActivity().invalidateOptionsMenu();
+        if(expenseIncomesOriginal.size() != tempExpenceIncomeList.size()) {
+
+            expenseIncomes.clear();
+            expenseIncomes.addAll(tempExpenceIncomeList);
+            groupByDate();
+            hideRefreshIcon = false;
+            getActivity().invalidateOptionsMenu();
+        }
 
     }
 
     public  void resetToOriginal(){
+
         cancelDelete();
         expenseIncomes.clear();
         expenseIncomes.addAll(expenseIncomesOriginal);
         groupByDate();
-        hideRefreshIcon = true;
-        getActivity().invalidateOptionsMenu();
+        if(groupByDateFlag == true) {
+            hideRefreshIcon = true;
+            getActivity().invalidateOptionsMenu();
+        }
         resetSerachView();
         View v = getActivity().getWindow().getCurrentFocus();
         if (v != null) {
@@ -899,8 +922,11 @@ public Boolean isExpenseFlag = true;
             charText = charText.toLowerCase(Locale.getDefault());
             all.clear();
             if (charText.length() == 0) {
-                hideRefreshIcon = true;
-                getActivity().invalidateOptionsMenu();
+                if(groupByDateFlag == true) {
+
+                    hideRefreshIcon = true;
+                    getActivity().invalidateOptionsMenu();
+                }
                 nodataText.setText(nodataTextString);
                 all.addAll(originalAll);
             }

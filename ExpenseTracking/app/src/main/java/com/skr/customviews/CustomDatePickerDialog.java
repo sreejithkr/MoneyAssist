@@ -29,7 +29,7 @@ public   class CustomDatePickerDialog extends DatePickerDialog {
         super(context, 0, callBack, year, monthOfYear, dayOfMonth);
         View view= activity.getLayoutInflater().inflate(R.layout.title_text_view, null);
         cutomeAlertTitle= (TextView)view.findViewById(R.id.cutomeAlertTitle);
-        this.setCustomTitle(view);
+     //   this.setCustomTitle(view);
         DateFormat format = new SimpleDateFormat(AppController.MonthSpaceDateSpaceYearFormat, Locale.ENGLISH);
         cutomeAlertTitle.setText(format.format(new Date()));
 

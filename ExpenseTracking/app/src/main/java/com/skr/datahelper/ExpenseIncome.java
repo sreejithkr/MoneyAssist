@@ -127,6 +127,16 @@ public class ExpenseIncome implements Comparable<ExpenseIncome>, Parcelable {
             return null;
         }
     }
+    public  String getDateinMMM_DD_YYYY() {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat(AppController.DateDashMonthDashYearFormat);
+            Date date =  sdf.parse(this.dateString);
+            sdf = new SimpleDateFormat(AppController.ThreeWordsMonthSpaceDateSpaceYearFormat, Locale.ENGLISH);
+            return sdf.format(date);
+        }catch (Exception e){
+            return null;
+        }
+    }
     public String getMonthYearString() {
 
 

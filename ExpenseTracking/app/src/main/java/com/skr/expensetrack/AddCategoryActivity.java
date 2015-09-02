@@ -85,7 +85,7 @@ public class AddCategoryActivity extends ActionBarActivity {
                 }
 
                 int length = categoryName.length();
-                if(length >= 15){
+                if(length >= 20){
 
                     validationAlert(getResources().getString(R.string.validation_msg_add_edit_expence_category_max));
                     return;

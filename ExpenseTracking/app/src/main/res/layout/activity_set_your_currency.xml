@@ -6,12 +6,13 @@
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.skr.expensetrack.SetYourCurrencyActivity">
 
-    <RelativeLayout android:layout_height="190dp"
+    <RelativeLayout android:layout_height="230dp"
+
         android:layout_width="280dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:gravity="center_horizontal"
-        android:minHeight="190dp"
+        android:minHeight="210dp"
         android:background="@drawable/popupbackground"
         >
 
@@ -66,10 +67,27 @@
             android:textColor="@color/material_blue_grey_900"
 
             />
+        <TextView
+            android:id="@+id/error_message_dialog_currency"
+            android:layout_below="@+id/editTextCurrencySaveEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+           android:layout_marginTop="2dp"
+            android:textStyle="bold"
+            android:text=""
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_horizontal"
+            android:textColor="@color/error_red"
+            android:textSize="12dp"
+            android:visibility="invisible"
+
+            />
 
         <Button
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="25dp"
             android:background="@drawable/roundedbutton"

@@ -97,9 +97,9 @@ public class SettingListFragment extends Fragment {
    private void showTheIntent(String title){
        if(title.equalsIgnoreCase(getResources().getString(R.string.currency_settings))){
 
-           Intent intent = new Intent(getActivity(), CurrencySettingActivity.class);
-
-           startActivityForResult(intent,0);
+//           Intent intent = new Intent(getActivity(), CurrencySettingActivity.class);
+//
+//           startActivityForResult(intent,0);0
 
        }else if(title.equalsIgnoreCase(getResources().getString(R.string.category_settings))){
            Intent intent = new Intent(getActivity(), CategorySettingActivity.class);
