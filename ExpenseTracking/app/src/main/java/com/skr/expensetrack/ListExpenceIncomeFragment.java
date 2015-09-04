@@ -37,6 +37,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
@@ -414,6 +415,22 @@ public Boolean isExpenseFlag = true;
             String key = entry.getKey();
             all.add(new Pair<String, ArrayList<ExpenseIncome>>(key,entry.getValue()));
         }
+
+        Collections.sort(all, new Comparator<Pair<String, ArrayList<ExpenseIncome>>>() {
+            @Override
+            public int compare(Pair<String, ArrayList<ExpenseIncome>> lhs, Pair<String, ArrayList<ExpenseIncome>> rhs) {
+               if(Integer.parseInt(lhs.first.substring(4)) == Integer.parseInt(rhs.first.substring(4))){
+                   return AppController.compareTwoMonthStringString(rhs.first,lhs.first);
+
+               }else if(Integer.parseInt(lhs.first.substring(4)) > Integer.parseInt(rhs.first.substring(4))){
+                   return -1;
+               }else{
+                   return 1;
+               }
+
+            }
+        });
+
         expenceIncomeListAdapter.reloadData(all);
         groupByDateFlag = false;
         hideRefreshIcon = false;

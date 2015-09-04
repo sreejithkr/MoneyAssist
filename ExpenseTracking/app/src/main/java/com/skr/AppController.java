@@ -88,7 +88,7 @@ public class AppController {
     public static String getCurrencyString() {
 
 
-        return " " + currencyString;
+        return " " + currencyString.toUpperCase();
     }
     public static void setCurrencyStringWithContext(Context context) {
         SharedPreferences settings = context.getSharedPreferences(AppController.MY_APP_PREFERENCE, 0);
@@ -248,6 +248,37 @@ public class AppController {
             SimpleDateFormat sdf = new SimpleDateFormat(DateDashMonthDashYearFormat);
             Date date1 = sdf.parse(firstDate);
             Date date2 = sdf.parse(secondDate);
+
+            Log.d(" date1", sdf.format(date1));
+            Log.d("date2",sdf.format(date2));
+
+            if (date1.compareTo(date2) > 0) {
+                Log.e("date compare","1");
+                return  1;
+            } else if (date1.compareTo(date2) < 0) {
+                Log.e("date compare","2");
+                return -1;
+            } else if (date1.compareTo(date2) == 0) {
+                Log.e("date compare","3");
+                return 0;
+            } else {
+                Log.e("date compare","4");
+                return 0;
+
+            }
+        }catch (Exception e){
+            Log.d("exception in formatting date","******************************");
+            return 0;
+        }
+    }
+
+    public static int compareTwoMonthStringString(String month1,String month2 ) {
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat(
+                    "MMM"
+            );
+            Date date1 = sdf.parse(month1);
+            Date date2 = sdf.parse(month2);
 
             Log.d(" date1", sdf.format(date1));
             Log.d("date2",sdf.format(date2));

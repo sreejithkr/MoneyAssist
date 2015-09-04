@@ -34,11 +34,11 @@
                 android:layout_marginTop="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="30sp"
+                android:textSize="16sp"
                 android:textStyle="bold"
                 android:text="@string/no_data_home_message"
                 android:textColor="@color/app_green"
-                android:gravity="center"
+                android:gravity="center_horizontal"
                 android:layout_centerHorizontal="true"
 
 

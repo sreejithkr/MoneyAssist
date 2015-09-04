@@ -187,7 +187,7 @@ public class ExpenseIncome implements Comparable<ExpenseIncome>, Parcelable {
 
     @Override
     public int compareTo(ExpenseIncome another) {
-        return AppController.compareTwoDateString(another.getDateString(),this.getDateString());
+        return AppController.compareTwoDateString(this.getDateString(),another.getDateString());
     }
 
 }

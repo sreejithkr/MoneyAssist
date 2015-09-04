@@ -2,21 +2,15 @@ package com.skr.expensetrack;
 
 import android.app.Activity;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.graphics.PixelFormat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.util.Log;
 import android.util.Pair;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.animation.Animation;
-import android.view.animation.TranslateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -28,7 +22,6 @@ import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.utils.Legend;
-import com.github.mikephil.charting.utils.ValueFormatter;
 import com.skr.AppController;
 import com.skr.customviews.ViewCarousel;
 import com.skr.customviews.ViewCarousel.ViewCarouselAdapter;
@@ -69,15 +62,11 @@ public class HomeExpenceTrackFragment extends Fragment {
     String expenseMessage ="";
     String incomeMessage ="";
     PieChart pieChart;
-    public Boolean ifGetTotalToBeShow = false;
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
-    private Boolean toBottomFlag = true;
-    ImageView mTopImage;
+
+    Long incomePieChart;
+    Long expencePieChart;
     ImageView mBottomImage;
-    Bitmap mBmp1;// = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), splitYCoord);
-    Bitmap mBmp2;// = Bitmap.createBitmap(bmp, 0, splitYCoord, bmp.getWidth(), bmp.getHeight() - splitYCoord);
+
     public OnFragmentInteractionListener getmListener() {
         return mListener;
     }
@@ -110,154 +99,13 @@ public class HomeExpenceTrackFragment extends Fragment {
         // Required empty public constructor
     }
 
-    public void animateToShowQuickAdd(){
-//        final float scale = getActivity().getResources().getDisplayMetrics().density;
-//        final int minWidth =  (int)(50 * scale + 0.5f);
-//        DisplayMetrics displaymetrics = new DisplayMetrics();
-//        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-//        final int height = displaymetrics.heightPixels;
-//        final int width = displaymetrics.widthPixels;
-//        RelativeLayout summaryParentHomeFragment = (RelativeLayout)getView().findViewById(R.id.mainParentHomeFragment);
-//        RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) summaryParentHomeFragment.getLayoutParams();
-//        mParams.topMargin = 400;
-//       // summaryParentHomeFragment.setLayoutParams(mParams);
-//
-//        TranslateAnimation downAnimation = makeAnimation(toBottomFlag);
-//        toBottomFlag = !toBottomFlag;
-//        summaryParentHomeFragment.startAnimation(downAnimation );
-
-//        View root = getActivity().getWindow().getDecorView().findViewById(android.R.id.content);
-//        root.setDrawingCacheEnabled(true);
-//        Bitmap bmp = root.getDrawingCache();
-//
-//        int splitYCoord = bmp.getHeight() / 2;//(splitYCoord != -1 ? splitYCoord : bmp.getHeight() / 2);
-//        if (splitYCoord > bmp.getHeight())
-//            throw new IllegalArgumentException("Split Y coordinate [" + splitYCoord + "] exceeds the activity's height [" + bmp.getHeight() + "]");
-//         mBmp1 = Bitmap.createBitmap(bmp, 0, 0, bmp.getWidth(), splitYCoord);
-//         mBmp2 = Bitmap.createBitmap(bmp, 0, splitYCoord, bmp.getWidth(), bmp.getHeight() - splitYCoord);
-//          int[] mLoc1;
-//          int[] mLoc2;
-//        mLoc1 = new int[]{0, root.getTop()};
-//        mLoc2 = new int[]{0, root.getTop() + splitYCoord};
-//
-//        mTopImage = createImageView(getActivity(), mBmp1, mLoc1);
-//        mBottomImage = createImageView(getActivity(), mBmp2, mLoc2);
-//
-//        AnimatorSet mSetAnim = new AnimatorSet();
-//        mTopImage.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-//        mBottomImage.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-//        mSetAnim.addListener(new Animator.AnimatorListener() {
-//            @Override
-//            public void onAnimationStart(Animator animation){
-//
-//            }
-//            @Override
-//            public void onAnimationEnd(Animator animation) {
-//                clean(getActivity());
-//            }
-//
-//            @Override
-//            public void onAnimationCancel(Animator animation) {
-//                clean(getActivity());
-//            }
-//            @Override
-//            public void onAnimationRepeat(Animator animation){
-//
-//            }
-//
-//        });
-//
-//        Animator anim1 = ObjectAnimator.ofFloat(mTopImage, "translationY", 50);
-//        Animator anim2 = ObjectAnimator.ofFloat(mBottomImage,"translationY",30);
-//
-//        mSetAnim.setDuration(500);
-//        mSetAnim.playTogether(anim1, anim2);
-//        mSetAnim.start();
 
 
 
-    }
-
-    private static ImageView createImageView(Activity destActivity, Bitmap bmp, int loc[]) {
-        ImageView imageView = new ImageView(destActivity);
-        imageView.setImageBitmap(bmp);
-
-        WindowManager.LayoutParams windowParams = new WindowManager.LayoutParams();
-        windowParams.gravity = Gravity.TOP;
-        windowParams.x = loc[0];
-        windowParams.y = loc[1];
-        windowParams.height = ViewGroup.LayoutParams.WRAP_CONTENT;
-        windowParams.width = ViewGroup.LayoutParams.WRAP_CONTENT;
-        windowParams.flags =
-                WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
-        windowParams.format = PixelFormat.TRANSLUCENT;
-        windowParams.windowAnimations = 0;
-        destActivity.getWindowManager().addView(imageView, windowParams);
-
-        return imageView;
-    }
-
-    private void clean(Activity activity) {
-        if (mTopImage != null) {
-            mTopImage.setLayerType(View.LAYER_TYPE_NONE, null);
-            try {
-                activity.getWindowManager().removeViewImmediate(mBottomImage);
-            } catch (Exception ignored) {}
-        }
-        if (mBottomImage != null) {
-            mBottomImage.setLayerType(View.LAYER_TYPE_NONE, null);
-            try {
-                activity.getWindowManager().removeViewImmediate(mTopImage);
-            } catch (Exception ignored) {}
-        }
-
-        mBmp1 = null;
-        mBmp2 = null;
-    }
 
 
-//    private void setBottomMargin(View view, int bottomMarginInDips)
-//    {
-//        ViewGroup.MarginLayoutParams layoutParams =
-//                (ViewGroup.MarginLayoutParams)view.getLayoutParams();
-//        layoutParams.topMargin = dipsToPixels(bottomMarginInDips);
-//        view.requestLayout();
-//    }
-//
-//    private int dipsToPixels(int dips)
-//    {
-//        final float scale = getResources().getDisplayMetrics().density;
-//        return (int)(dips * scale + 0.5f);
-//    }
-    private TranslateAnimation makeAnimation(final Boolean toBottomFlag)
-    {
-        TranslateAnimation animation = toBottomFlag ?
-                new TranslateAnimation(0, 0, 0, 400) : new TranslateAnimation(0, 0, 400,0) ;
-        animation.setDuration(400);
-        animation.setAnimationListener(new Animation.AnimationListener()
-        {
-            public void onAnimationEnd(Animation animation)
-            {
-                RelativeLayout summaryParentHomeFragment = (RelativeLayout)getView().findViewById(R.id.mainParentHomeFragment);
 
-                // Cancel the animation to stop the menu from popping back.
-                summaryParentHomeFragment.clearAnimation();
 
-                RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) summaryParentHomeFragment.getLayoutParams();
-                if(toBottomFlag) {
-                    mParams.topMargin = 400;
-                }else{
-                    mParams.topMargin = 0;
-                }
-                 summaryParentHomeFragment.setLayoutParams(mParams);
-            }
-
-            public void onAnimationStart(Animation animation) {}
-
-            public void onAnimationRepeat(Animation animation) {}
-        });
-        return animation;
-    }
 
 
     public void reloadValuesForTotal(Long expence,Long income,ArrayList<CheckBoxListData> checkBoxListDataArrayList,Pair<Boolean,Boolean> allSlectedFlagPair, Pair<String,String> startEndDatePair,Pair<Boolean,Boolean> noIncomeExpenceSelectedPair){
@@ -271,6 +119,8 @@ public class HomeExpenceTrackFragment extends Fragment {
         Boolean noExpenceCategorySelected = true;
         Boolean noIncomeCategorySelected = true;
         if(expence== 0 && income == 0){
+            incomePieChart = new Long(0);
+            expencePieChart = incomePieChart;
             grapWithDataParent.setVisibility(View.INVISIBLE);
             nodataParent.setVisibility(View.VISIBLE);
         }else{
@@ -390,9 +240,11 @@ public class HomeExpenceTrackFragment extends Fragment {
         if(noIncomeExpenceSelectedPair.second){
             incomeMessage = noCategory;
         }
-        messageMap.put(expenseMessageKey,expenseMessage);
 
-        messageMap.put(incomeMessageKey,incomeMessage);
+
+        messageMap.put(expenseMessageKey,expenseMessage+" : " + expencePieChart + AppController.getCurrencyString());
+
+        messageMap.put(incomeMessageKey,incomeMessage+" : " + incomePieChart + AppController.getCurrencyString());
         messageMap.put(timePeriodKey,timePeriod);
 
 
@@ -405,8 +257,7 @@ public class HomeExpenceTrackFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+
         }
     }
 
@@ -427,6 +278,7 @@ RelativeLayout grapWithDataParent = (RelativeLayout)rootView.findViewById(R.id.g
         more_info_Link.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 if (mListener != null) {
                     mListener.onMoreInfoButtonClick(messageMap);
                 }
@@ -501,7 +353,7 @@ RelativeLayout grapWithDataParent = (RelativeLayout)rootView.findViewById(R.id.g
 //            messageMap.put(expenseMessageKey,allCategory);
 //
 //            messageMap.put(incomeMessageKey,allCategory);
-//            messageMap.put(timePeriodKey,getResources().getString(R.string.timePeriod_default_msg_show_total_details));
+       //     messageMap.put(timePeriodKey,getResources().getString(R.string.timePeriod_default_msg_show_total_details));
             calc_new_summary_button.setVisibility(View.GONE);
             myLayout.setVisibility(View.VISIBLE);
 
@@ -530,6 +382,8 @@ RelativeLayout grapWithDataParent = (RelativeLayout)rootView.findViewById(R.id.g
 
 
             if(expenceValue0 == 0 && incomeVal0 == 0){
+                incomePieChart = new Long(0);
+                expencePieChart = incomePieChart;
                 grapWithDataParent.setVisibility(View.INVISIBLE);
                 nodataParent.setVisibility(View.VISIBLE);
             }else{
@@ -546,8 +400,11 @@ RelativeLayout grapWithDataParent = (RelativeLayout)rootView.findViewById(R.id.g
                 l.setTextColor(getResources().getColor(R.color.app_green));
             }
 
-//            expenseAmountHomeText.setText(expenceValue0+" "+AppController.getCurrencyString().trim());
-//            incomeAmountHomeText.setText(incomeVal0+" "+AppController.getCurrencyString().trim());
+            final android.support.v4.view.ViewPager pager = new ViewPager(getActivity());
+            pager.setLayoutParams(new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.MATCH_PARENT));
+
             for (int i=0; i<6; i++)
             {
                 long expenceValue = settings.getLong(expenceTotalHome+i,0);
@@ -558,8 +415,26 @@ RelativeLayout grapWithDataParent = (RelativeLayout)rootView.findViewById(R.id.g
                 b.putLong(CalenderHomeFragment.ExpenceValue,expenceValue);
                 b.putLong(CalenderHomeFragment.IncomeVal,incomeVal);
                 CalenderHomeFragment f = new CalenderHomeFragment();
+
                 f.setArguments(b);
                 fragments.add(f);
+                f.setOnClickListener(new CalenderHomeFragmentClickListener(){
+                    @Override
+                    public void onItemClickListener(){
+                        messageMap = new HashMap<>();
+
+                        CalenderHomeFragment fragment = (CalenderHomeFragment)((ViewCarouselAdapter)pager.getAdapter()).getItem( pager.getCurrentItem());
+                        String allCategory = getResources().getString(R.string.allCategory_default_msg_show_total_details);
+                        messageMap.put(expenseMessageKey,allCategory +" : " + expencePieChart + AppController.getCurrencyString());
+
+                        messageMap.put(incomeMessageKey,allCategory +" : " + incomePieChart + AppController.getCurrencyString());
+                        messageMap.put(timePeriodKey,"For "+fragment.TAG);
+
+                        if (mListener != null) {
+                            mListener.onMoreInfoButtonClick(messageMap);
+                        }
+                    }
+                });
                 month = month - 1;
                 if(month == 0){
                     month = 12;
@@ -570,10 +445,7 @@ RelativeLayout grapWithDataParent = (RelativeLayout)rootView.findViewById(R.id.g
 
 
             //  android.support.v4.view.ViewPager pager = (ViewPager) rootView.findViewById(R.id.viewPager);
-            final android.support.v4.view.ViewPager pager = new ViewPager(getActivity());
-            pager.setLayoutParams(new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT,
-                    LinearLayout.LayoutParams.MATCH_PARENT));
+
 
             pager.setId(R.id.pagerIdentifier);
             myLayout.addView(pager);
@@ -581,6 +453,8 @@ RelativeLayout grapWithDataParent = (RelativeLayout)rootView.findViewById(R.id.g
             pager.setPageTransformer(true, new ViewCarouselTransformer());
             ViewCarousel vc = new ViewCarousel(this, getActivity().getSupportFragmentManager(), fragments,rootView,pager);
             vc.setChildrenWidth(160);
+            pager.setClickable(true);
+
             pager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
                 @Override
                 public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -601,6 +475,9 @@ RelativeLayout grapWithDataParent = (RelativeLayout)rootView.findViewById(R.id.g
 
 
                     if(fragment.incomeVal == 0 && fragment.expenceValue == 0){
+                        incomePieChart = new Long(0);
+                        expencePieChart = incomePieChart;
+
                         grapWithDataParent.setVisibility(View.INVISIBLE);
                         nodataParent.setVisibility(View.VISIBLE);
                     }else{
@@ -689,17 +566,17 @@ RelativeLayout grapWithDataParent = (RelativeLayout)rootView.findViewById(R.id.g
         chart.setRotationAngle(0);
         chart.setDrawXValues(false);
         chart.setRotationEnabled(false);
-        chart.setUsePercentValues(false);
+        chart.setUsePercentValues(true);
         chart.setTouchEnabled(false);
-
-        chart.setValueFormatter(new ValueFormatter()
-        {
-            @Override
-            public String getFormattedValue(float value)
-            {
-                return value + " " + AppController.getCurrencyString();
-            }
-        });
+        chart.setValueTextColor(getResources().getColor(R.color.app_blue_color));
+//        chart.setValueFormatter(new ValueFormatter()
+//        {
+//            @Override
+//            public String getFormattedValue(float value)
+//            {
+//                return (new Float(value)).longValue() + " " + AppController.getCurrencyString();
+//            }
+//        });
 //        String title = getString(R.string.expence_and_income);
 //
 //        if(!AppController.getCurrencyString().isEmpty()){
@@ -710,6 +587,10 @@ RelativeLayout grapWithDataParent = (RelativeLayout)rootView.findViewById(R.id.g
         return chart;
     }
     private PieChart setData(PieChart chart,Long income,Long expence) {
+
+
+        incomePieChart = income;
+        expencePieChart = expence;
 
      //   l.setYOffset(0f);
         ArrayList<Entry> yVals1 = new ArrayList<>();

@@ -474,7 +474,7 @@ public class CategorySettingActivity extends ActionBarActivity {
             Intent intent = new Intent();
             intent.putExtra(CategorySettingActivityCategoryList,getTotal());
 
-            if(noIncomeSelected && noIncomeSelected){
+            if(noExpenceSelected && noIncomeSelected){
                 validationAlert(getString(R.string.validation_get_total_category_selection_activity));
                 return;
             }

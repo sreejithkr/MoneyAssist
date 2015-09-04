@@ -9,9 +9,13 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+interface CalenderHomeFragmentClickListener{
+    public void onItemClickListener();
+}
+
 public class CalenderHomeFragment extends Fragment
 {
-    private String TAG ;
+    public String TAG ;
     public static final String MonthName = "MonthName";
     public static final String Year = "Year";
     public static final String ExpenceValue = "ExpenceValue";
@@ -20,6 +24,17 @@ public class CalenderHomeFragment extends Fragment
     String year ;
     Long expenceValue;
     Long incomeVal;
+
+    public CalenderHomeFragmentClickListener getOnClickListener() {
+        return onClickListener;
+    }
+
+    public void setOnClickListener(CalenderHomeFragmentClickListener onClickListener) {
+        this.onClickListener = onClickListener;
+    }
+
+    CalenderHomeFragmentClickListener onClickListener;
+
 
     @Override
     public String toString() {
@@ -31,6 +46,14 @@ public class CalenderHomeFragment extends Fragment
     {
         View rootView = inflater.inflate(R.layout.fragment_calender_home, container, false);
 
+        rootView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(onClickListener != null){
+                    onClickListener.onItemClickListener();
+                }
+            }
+        });
          monthName = getArguments().getString(MonthName);
          year = getArguments().getString(Year);
         expenceValue = getArguments().getLong(ExpenceValue);
