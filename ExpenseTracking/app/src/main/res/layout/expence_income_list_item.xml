@@ -5,10 +5,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:background="@color/backgroud_white">
-    <include layout="@layout/expense_income_list_header"
-        android:layout_margin="3dp"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
+
     <RelativeLayout
         android:id="@+id/parentListItemWithoutHeader"
         android:layout_height="wrap_content"

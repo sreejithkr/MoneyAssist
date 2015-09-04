@@ -4,7 +4,6 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.webkit.WebView;
 import android.widget.TextView;
 
 import com.skr.expensetrack.R;
@@ -35,16 +34,16 @@ public class CustomAlert extends AlertDialog {
     }
 
     public  static class CustomBuilder extends Builder {
-        TextView cutomeAlertTitle;
+       // TextView cutomeAlertTitle;
         Context context;
-        WebView webViewTextJustyfy;
-        public CustomBuilder(final Context context,LayoutInflater inflater){
+        public CustomBuilder(final Context context,LayoutInflater inflater,String title){
             super(context);
 
             this.context = context;
             // LayoutInflater inflater = getLayoutInflater();
             View view=inflater.inflate(R.layout.title_text_view, null);
-            cutomeAlertTitle= (TextView)view.findViewById(R.id.cutomeAlertTitle);
+            TextView cutomeAlertTitle= (TextView)view.findViewById(R.id.cutomeAlertTitle);
+            cutomeAlertTitle.setText(title);
 
             setCancelable(cancelFlag);
             this.setCustomTitle(view);
@@ -55,26 +54,6 @@ public class CustomAlert extends AlertDialog {
 
 
         }
-
-        public CustomBuilder(Context context, int theme,LayoutInflater inflater) {
-            super(context,theme);
-
-            this.context = context;
-            // LayoutInflater inflater = getLayoutInflater();
-            View view=inflater.inflate(R.layout.title_text_view, null);
-            cutomeAlertTitle= (TextView)view.findViewById(R.id.cutomeAlertTitle);
-
-            setCancelable(cancelFlag);
-            this.setCustomTitle(view);
-        }
-        @Override
-        public CustomBuilder setTitle(int titleId) {
-             super.setTitle(titleId);
-            cutomeAlertTitle.setText(context.getString(titleId));
-            return this;
-        }
-
-
 
     }
 

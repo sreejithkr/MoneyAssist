@@ -115,9 +115,9 @@ public class CurrencyListFragment extends Fragment {
                 = getActivity().getResources().getStringArray(R.array.currency_list);
         String nocurrency = getString(R.string.nocurrency);
         String othercurrency = getString(R.string.othercurrency);
-        currencyListString.add(new CurrencyItem(new Pair<>(nocurrency,nocurrency),AppController.getCurrencyString().isEmpty()));
+        currencyListString.add(new CurrencyItem(new Pair<>(nocurrency,nocurrency),AppController.getCurrencyString().trim().isEmpty()));
 
-        currencyListString.add(new CurrencyItem(new Pair<>(otherCurrencyString,othercurrency),(!otherCurrencyString.isEmpty() && otherCurrencyString.equalsIgnoreCase(AppController.getCurrencyString()))));
+        currencyListString.add(new CurrencyItem(new Pair<>(otherCurrencyString,othercurrency),((!otherCurrencyString.isEmpty()) && otherCurrencyString.equalsIgnoreCase(AppController.getCurrencyString().trim()))));
         for(int count=0;count< defaultCacurrencyArray.length;count++){
             String currentString  = defaultCacurrencyArray[count];
 

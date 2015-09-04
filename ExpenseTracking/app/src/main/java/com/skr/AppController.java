@@ -115,7 +115,7 @@ public class AppController {
 
         editor.putString(OtherCurrencyString, currencyString);
         editor.commit();
-        setCurrencyStringWithContext(context);
+        setCurrencyStringToSharePreference(currencyString, context);
 
     }
 

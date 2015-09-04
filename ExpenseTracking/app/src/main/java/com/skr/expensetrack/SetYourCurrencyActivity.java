@@ -48,12 +48,12 @@ public class SetYourCurrencyActivity extends ActionBarActivity {
                     return;
                 }
                 AppController.setOtherCurrencyStringToSharePreference(cName,context);
-                if(!cName.isEmpty()){
-                    AppController.setCurrencyStringToSharePreference(cName,context);
-                }else{
-                    AppController.setCurrencyStringToSharePreference("",context);
-
-                }
+//                if(!cName.isEmpty()){
+//                    AppController.setCurrencyStringToSharePreference(cName,context);
+//                }else{
+//                    AppController.setCurrencyStringToSharePreference("",context);
+//
+//                }
                 dismiss();
             }
         });

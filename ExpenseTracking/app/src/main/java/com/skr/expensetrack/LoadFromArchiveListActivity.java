@@ -94,7 +94,7 @@ public class LoadFromArchiveListActivity extends ActionBarActivity {
 
                 ArchiveDBHelper.reloadTheDataBAseFromArchive(archiveDetails.getCombinedArchiveName());
                 dialog.dismiss();
-                new CustomAlert.CustomBuilder(v.getContext(),getLayoutInflater())
+                new CustomAlert.CustomBuilder(v.getContext(),getLayoutInflater(),getString(R.string.info))
                         .setTitle(R.string.info)
                         .setMessage(getResources().getString(R.string.reload_archive_dialog_des_sucess_message))
                         .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -115,7 +115,7 @@ public class LoadFromArchiveListActivity extends ActionBarActivity {
 
 
                 archiveItemsListAdapter.reloadData(archiveList());
-                new CustomAlert.CustomBuilder(v.getContext(),getLayoutInflater())
+                new CustomAlert.CustomBuilder(v.getContext(),getLayoutInflater(),getString(R.string.info))
                         .setTitle(R.string.info)
                         .setMessage(getResources().getString(R.string.delete_dialog_des_sucess_message))
                         .setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
@@ -137,8 +137,8 @@ public class LoadFromArchiveListActivity extends ActionBarActivity {
         stringToExtractDetails = stringToExtractDetails.replace(ArchiveDBHelper.Archive,"");
         int stringLength = stringToExtractDetails.length();
 
-        String archive_name = stringToExtractDetails.substring(0, stringLength-dateStringLength-1);
-        String archived_date = stringToExtractDetails.substring(stringLength-dateStringLength-1,stringLength);
+        String archive_name = stringToExtractDetails.substring(0, stringLength-dateStringLength);
+        String archived_date = stringToExtractDetails.substring(stringLength-dateStringLength,stringLength-1);
         return  new ArchiveDetails(archive_name,archived_date);
     }
 

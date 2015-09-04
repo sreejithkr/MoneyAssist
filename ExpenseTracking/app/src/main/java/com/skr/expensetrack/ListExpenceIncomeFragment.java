@@ -18,17 +18,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.skr.AppController;
-import com.skr.customviews.AmazingAdapter;
-import com.skr.customviews.AmazingListView;
 import com.skr.customviews.CustomAlert;
 import com.skr.customviews.CustomProgressDialog;
 import com.skr.datahelper.DBHelper;
@@ -71,7 +70,7 @@ public class ListExpenceIncomeFragment extends Fragment {
 public Boolean isExpenseFlag = true;
     public Boolean searchButtonIsCollapsed = true;
     private Boolean isSearchViewHidden = true;
-     AmazingListView listView;
+    ListView listView;
     LinearLayout cancelDeleteParentFLEI;
      RelativeLayout searchViewParent;
     // TODO: Rename and change types of parameters
@@ -187,7 +186,7 @@ public Boolean isExpenseFlag = true;
         });
         nodataText = (TextView)rootView.findViewById(R.id.nodataText);
           searchViewParent = (RelativeLayout)rootView.findViewById(R.id.searchViewParent);
-        final Button search_drag = (Button)rootView.findViewById(R.id.search_drag_button);
+      //  final Button search_drag = (Button)rootView.findViewById(R.id.search_drag_button);
         final EditText editTextSearchItems = (EditText)rootView.findViewById(R.id.editTextSearchItems);
         RelativeLayout.LayoutParams layoutParams = (RelativeLayout.LayoutParams) searchViewParent.getLayoutParams();
         final float scale = getActivity().getResources().getDisplayMetrics().density;
@@ -209,38 +208,38 @@ public Boolean isExpenseFlag = true;
         });
 
         // convert the DP into pixel
-        final int minWidth =  (int)(50 * scale + 0.5f);
-        DisplayMetrics displaymetrics = new DisplayMetrics();
-        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-        final int height = displaymetrics.heightPixels;
-        final int width = displaymetrics.widthPixels;
-        layoutParams.leftMargin = width - minWidth;
-        Log.e("rootView.getWidth() - 50;", "" + minWidth);
-        searchViewParent.setLayoutParams(layoutParams);
-        searchViewParent.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-        search_drag.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) searchViewParent.getLayoutParams();
-                if(searchButtonIsCollapsed) {
-                    mParams.leftMargin = 10;
-                    search_drag.setBackgroundDrawable(getResources().getDrawable(R.drawable.search_drag_in));
-                    searchViewParent.setBackgroundColor(getResources().getColor(R.color.backgroud_white));
-                }else{
-                    mParams.leftMargin = width - minWidth;
-                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(editTextSearchItems.getWindowToken(), 0);
-                    editTextSearchItems.setText("");
-                    editTextSearchItems.clearFocus();
-                    ((ExpenceIncomeListAdapter)listView.getAdapter()).filter("");
-                    searchViewParent.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-                    search_drag.setBackgroundDrawable(getResources().getDrawable(R.drawable.search_drag_out));
-                }
-                searchViewParent.setLayoutParams(mParams);
-                searchButtonIsCollapsed = !searchButtonIsCollapsed;
-            }
-        });
-                listView = (AmazingListView)rootView.findViewById(R.id.expenseOrIncomeList);
+//        final int minWidth =  (int)(50 * scale + 0.5f);
+//        DisplayMetrics displaymetrics = new DisplayMetrics();
+//        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
+//        final int height = displaymetrics.heightPixels;
+//        final int width = displaymetrics.widthPixels;
+//        layoutParams.leftMargin = width - minWidth;
+      //  Log.e("rootView.getWidth() - 50;", "" + minWidth);
+   //     searchViewParent.setLayoutParams(layoutParams);
+    //    searchViewParent.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+//        search_drag.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) searchViewParent.getLayoutParams();
+//                if(searchButtonIsCollapsed) {
+//                    mParams.leftMargin = 10;
+//                    search_drag.setBackgroundDrawable(getResources().getDrawable(R.drawable.search_drag_in));
+//                    searchViewParent.setBackgroundColor(getResources().getColor(R.color.backgroud_white));
+//                }else{
+//                    mParams.leftMargin = width - minWidth;
+//                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+//                    imm.hideSoftInputFromWindow(editTextSearchItems.getWindowToken(), 0);
+//                    editTextSearchItems.setText("");
+//                    editTextSearchItems.clearFocus();
+//                    ((ExpenceIncomeListAdapter)listView.getAdapter()).filter("");
+//                    searchViewParent.setBackgroundColor(getResources().getColor(android.R.color.transparent));
+//                    search_drag.setBackgroundDrawable(getResources().getDrawable(R.drawable.search_drag_out));
+//                }
+//                searchViewParent.setLayoutParams(mParams);
+//                searchButtonIsCollapsed = !searchButtonIsCollapsed;
+//            }
+//        });
+                listView = (ListView)rootView.findViewById(R.id.expenseOrIncomeList);
                 listView.setEmptyView(rootView.findViewById(R.id.nodataParentLEIF));
 
 
@@ -265,7 +264,7 @@ public Boolean isExpenseFlag = true;
                 Collections.sort(expenseIncomes);
                 expenseIncomesOriginal = new ArrayList<>();
                 expenseIncomesOriginal.addAll(expenseIncomes);
-                final AmazingListView listView = (AmazingListView) getView().findViewById(R.id.expenseOrIncomeList);
+               // final ListView listView = (ListView) getView().findViewById(R.id.expenseOrIncomeList);
 
                 handler.post(new Runnable() {
                     @Override
@@ -297,13 +296,13 @@ public Boolean isExpenseFlag = true;
     }
 
     public Boolean toggleDelete(){
-        final AmazingListView listView = (AmazingListView) getView().findViewById(R.id.expenseOrIncomeList);
+        final ListView listView = (ListView) getView().findViewById(R.id.expenseOrIncomeList);
         ExpenceIncomeListAdapter expenceIncomeListAdapter = (ExpenceIncomeListAdapter)listView.getAdapter();
         expenceIncomeListAdapter.reloadDataForDeleteStatus(!expenceIncomeListAdapter.deleteFlag);
         return expenceIncomeListAdapter.deleteFlag;
     }
     public void cancelDelete(){
-        final AmazingListView listView = (AmazingListView) getView().findViewById(R.id.expenseOrIncomeList);
+        final ListView listView = (ListView) getView().findViewById(R.id.expenseOrIncomeList);
         ExpenceIncomeListAdapter expenceIncomeListAdapter = (ExpenceIncomeListAdapter)listView.getAdapter();
         expenceIncomeListAdapter.reloadDataForDeleteStatus(false);
     }
@@ -314,13 +313,13 @@ public Boolean isExpenseFlag = true;
 
 
 
-        new CustomAlert.CustomBuilder(getActivity(),getActivity().getLayoutInflater())
+        new CustomAlert.CustomBuilder(getActivity(),getActivity().getLayoutInflater(),dilogHeading)
                 .setTitle(dilogHeading)
                 .setMessage(confirmDilogMessage).setPositiveButton(R.string.delete, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 AppController.getInstance().listExpenseIncomeItemClicked = false;
 
-                 DBHelper dbHelper = DBHelper.getInstance(getActivity());
+                DBHelper dbHelper = DBHelper.getInstance(getActivity());
                 showAlert(dbHelper.deleteExpenseIncome(expenseIncomeFunctionParam) != 0);
                 // do nothing
             }
@@ -342,13 +341,17 @@ public Boolean isExpenseFlag = true;
 
 
 
-        new CustomAlert.CustomBuilder(getActivity(),getActivity().getLayoutInflater())
+        new CustomAlert.CustomBuilder(getActivity(),getActivity().getLayoutInflater(),getString(R.string.info))
                 .setTitle(R.string.info)
                 .setMessage(confirmDilogMessage).setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 if (sucessFlag) {
-                    expenseIncomes.remove(positionDeleted);
-                    groupByDate();
+                    expenseIncomesOriginal.remove(positionDeleted);
+                    if (expenseIncomesOriginal.size() <= 0) {
+                        searchViewParent.setVisibility(View.GONE);
+                    }
+                    resetAndGroupByDate();
+                    //groupByDate();
 
                 }
 
@@ -361,7 +364,7 @@ public Boolean isExpenseFlag = true;
     }
     public void groupByCategory(){
         cancelDelete();
-        final AmazingListView listView = (AmazingListView) getView().findViewById(R.id.expenseOrIncomeList);
+        final ListView listView = (ListView) getView().findViewById(R.id.expenseOrIncomeList);
         ExpenceIncomeListAdapter expenceIncomeListAdapter = (ExpenceIncomeListAdapter)listView.getAdapter();
 
         expenceIncomeListAdapter.ifOrderedByCategoryFlag = true;
@@ -381,7 +384,7 @@ public Boolean isExpenseFlag = true;
         for (Map.Entry<Integer, ArrayList<ExpenseIncome>> entry : temp.entrySet())
         {
             Integer key = entry.getKey();
-            all.add(new Pair<String, ArrayList<ExpenseIncome>>(categoryIdName.get(key),entry.getValue()));
+            all.add(new Pair<>(categoryIdName.get(key),entry.getValue()));
         }
         expenceIncomeListAdapter.reloadData(all);
         groupByDateFlag = false;
@@ -391,7 +394,7 @@ public Boolean isExpenseFlag = true;
     }
     public void groupByMonths(){
         cancelDelete();
-        final AmazingListView listView = (AmazingListView) getView().findViewById(R.id.expenseOrIncomeList);
+        final ListView listView = (ListView) getView().findViewById(R.id.expenseOrIncomeList);
         ExpenceIncomeListAdapter expenceIncomeListAdapter = (ExpenceIncomeListAdapter)listView.getAdapter();
 
         expenceIncomeListAdapter.ifOrderedByCategoryFlag = false;
@@ -418,13 +421,13 @@ public Boolean isExpenseFlag = true;
     }
     public void resetAndGroupByDate(){
         groupByDateFlag = true;
-        expenseIncomes.clear();
+        expenseIncomes = new ArrayList<>();
         expenseIncomes.addAll(expenseIncomesOriginal);
         groupByDate();
     }
     public void groupByDate(){
         cancelDelete();
-        final AmazingListView listView = (AmazingListView) getView().findViewById(R.id.expenseOrIncomeList);
+        final ListView listView = (ListView) getView().findViewById(R.id.expenseOrIncomeList);
         ExpenceIncomeListAdapter expenceIncomeListAdapter = (ExpenceIncomeListAdapter)listView.getAdapter();
         final ArrayList<Pair<String, ArrayList<ExpenseIncome>>> all = new ArrayList<>();
 
@@ -554,19 +557,13 @@ public Boolean isExpenseFlag = true;
             RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) searchViewParent.getLayoutParams();
             getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
             final EditText editTextSearchItems = (EditText) getView().findViewById(R.id.editTextSearchItems);
-            final int width = displaymetrics.widthPixels;
-            final Button search_drag = (Button)getView().findViewById(R.id.search_drag_button);
             editTextSearchItems.setText("");
-            final float scale = getActivity().getResources().getDisplayMetrics().density;
-            final int minWidth =  (int)(50 * scale + 0.5f);
-            mParams.leftMargin = width - minWidth;
             InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(editTextSearchItems.getWindowToken(), 0);
             editTextSearchItems.setText("");
             editTextSearchItems.clearFocus();
             ((ExpenceIncomeListAdapter)listView.getAdapter()).filter("");
             searchViewParent.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-            search_drag.setBackgroundDrawable(getResources().getDrawable(R.drawable.search_drag_out));
             searchButtonIsCollapsed = true;
 
         }
@@ -610,131 +607,70 @@ public Boolean isExpenseFlag = true;
         public void onFragmentInteraction(Uri uri);
 
         public void onCreatedFragment();
-        public void onItemClick(AdapterView<?> parent, int position,HashMap<Integer,String> categoryIdName);
+        public void onItemClick(ExpenseIncome expenseIncome, int position,HashMap<Integer,String> categoryIdName);
         public void onItemClickDelete(AdapterView<?> parent, int position);
         public void invalidateMenu(Boolean flag);
         public void addExpenceIncome();
 
     }
 
-    public class ExpenceIncomeListAdapter extends AmazingAdapter {
-        private ArrayList<Pair<String, ArrayList<ExpenseIncome>>> all ;
-        private ArrayList<Pair<String, ArrayList<ExpenseIncome>>> originalAll ;
-        private ArrayList<String> expandedAllGroups ;
+    public class ExpenceIncomeCollapsibleListAdapter extends BaseAdapter {
+        private ArrayList<ExpenseIncome> all ;
         public Boolean ifOrderedByCategoryFlag = false;
         public Boolean deleteFlag = false;
-        public ExpenceIncomeListAdapter(ArrayList<Pair<String, ArrayList<ExpenseIncome>>> all){
-            this.all = new ArrayList<>();
-            this.all.addAll(all);
-            originalAll = new ArrayList<>();
-            originalAll.addAll(all);
-            this.expandedAllGroups = new ArrayList<>();
-            this.expandedAllGroups.addAll(expandedAllGroups);
+        public Long sectionTotal ;
 
-            
-        }
-
-        @Override
-        public ExpenseIncome getItem(int position) {
-            int c = 0;
-            for (int i = 0; i < all.size(); i++) {
-                if (position >= c && position < c + all.get(i).second.size()) {
-                    return all.get(i).second.get(position - c);
-                }
-                c += all.get(i).second.size();
-            }
-            return null;
-        }
-
-
-
-        public String getItemGroup(int position) {
-            int c = 0;
-            for (int i = 0; i < all.size(); i++) {
-                if (position >= c && position < c + all.get(i).second.size()) {
-                    return all.get(i).first;
-                }
-                c += all.get(i).second.size();
-            }
-            return null;
-        }
-
-
-        @Override
-        public long getItemId(int position) {
-            return position;
-        }
-
-        @Override
-        protected void onNextPageRequested(int page) {
-        }
-
-        @Override
-        protected void bindSectionHeader(View view, int position, boolean displaySectionHeader) {
-            if (displaySectionHeader) {
-
-                final View rootView = view;
-                final FrameLayout parentFrameHeader = (FrameLayout) view.findViewById(R.id.parentFrameHeader);
-                parentFrameHeader.setVisibility(View.VISIBLE);
-                view.setVisibility(View.VISIBLE);
-                final TextView lSectionTitle = (TextView) view.findViewById(R.id.header_list_income_expense);
-                lSectionTitle.setText(getSections()[getSectionForPosition(position)]);
-                Button disclosureIndicator = (Button) view.findViewById(R.id.disclosureIndicator);
-
-                if(!expandedAllGroups.contains(getItemGroup(position))){
-                    disclosureIndicator.setBackgroundDrawable(getResources().getDrawable(R.drawable.disclosure_list_collapsed));
-
-                }else{
-
-                    disclosureIndicator.setBackgroundDrawable(getResources().getDrawable(R.drawable.disclosure_list_expanded));
-
-                }
-                final String headerTitle = lSectionTitle.getText().toString();
-                parentFrameHeader.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                      if(expandedAllGroups.contains(headerTitle)) {
-                          expandedAllGroups.remove(headerTitle);
-                      }else {
-
-                          expandedAllGroups.add(headerTitle);
-                      }
-                        notifyDataSetChanged();
-                    }
-                });
-
-
-            } else {
-                final FrameLayout parentFrameHeader = (FrameLayout) view.findViewById(R.id.parentFrameHeader);
-                parentFrameHeader.setVisibility(View.GONE);
+        public ExpenceIncomeCollapsibleListAdapter(ArrayList<ExpenseIncome> all,Boolean ifOrderedByCategoryFlag,Boolean deleteFlag,Long sectionTotal){
+            this.all = all;
+            this.ifOrderedByCategoryFlag = ifOrderedByCategoryFlag;
+            this.deleteFlag = deleteFlag;
+            this.sectionTotal = sectionTotal;
+            for(int count =0; count < all.size();count++){
+                this.sectionTotal = this.sectionTotal + all.get(count).getAMOUNT();
             }
         }
+        @Override
+        public long getItemId(int arg0) {
+            // TODO Auto-generated method stub
+            return arg0;
+        }
 
         @Override
-        public View getAmazingView(int position, View convertView, ViewGroup parent) {
-            View res = convertView;
+        public int getCount() {
+            // TODO Auto-generated method stub
+            return all.size();
+        }
+        @Override
+        public ExpenseIncome getItem(int position){
+            return all.get(position);
+        }
+
+        @Override
+        public View getView(int arg0, View arg1, ViewGroup arg2) {
+
+            View res = arg1;
             if (res == null) res = getActivity().getLayoutInflater().inflate(R.layout.expence_income_list_item, null);
 
-            final int positionFinal = position;
+            final int positionFinal = arg0;
 
             final RelativeLayout parentListItemWithoutHeader = (RelativeLayout)res.findViewById(R.id.parentListItemWithoutHeader);
             parentListItemWithoutHeader.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
-                    if(AppController.getInstance().listExpenseIncomeItemClicked == true){
+                   if(AppController.getInstance().listExpenseIncomeItemClicked == true){
 
                         return;
                     }
                     AppController.getInstance().listExpenseIncomeItemClicked = true;
-                    if(((ExpenceIncomeListAdapter)listView.getAdapter()).deleteFlag){
+                    if(deleteFlag){
 
                         mListener.onItemClickDelete(listView,positionFinal);
-                        positionDeleted = ((ExpenceIncomeListAdapter)listView.getAdapter()).getItem(positionFinal);
+                        positionDeleted = getItem(positionFinal);
                         showAlertForDeletedExpenceIncome(positionDeleted);
                     }else{
-                        mListener.onItemClick(listView,positionFinal,categoryIdName);
+                        mListener.onItemClick(getItem(positionFinal),positionFinal,categoryIdName);
                     }
+
                 }
             });
 
@@ -743,7 +679,7 @@ public Boolean isExpenseFlag = true;
             TextView itemAmountExpenceOrIncome = (TextView) res.findViewById(R.id.itemAmountExpenceOrIncome);
             TextView itemDateTextViewExpenceOrIncome = (TextView) res.findViewById(R.id.itemDateTextViewExpenceOrIncome);
 
-            ExpenseIncome expenseOrIncome = getItem(position);
+            ExpenseIncome expenseOrIncome = getItem(positionFinal);
             itemNameExpenceOrIncome.setText(categoryIdName.get(expenseOrIncome.getCATEGORY_ID()));
             itemAmountExpenceOrIncome.setText(expenseOrIncome.getAMOUNTWithCurrency());
             Date date = expenseOrIncome.getDateFromDateString();
@@ -769,119 +705,131 @@ public Boolean isExpenseFlag = true;
             }else {
                 deleteImage.setVisibility(View.GONE);
             }
-        //    RelativeLayout parentListItemWithoutHeader =(RelativeLayout)res.findViewById(R.id.parentListItemWithoutHeader);
-            ListItemDetails listItemDetails = positionOfItemInSection(expenseOrIncome);
+            //    RelativeLayout parentListItemWithoutHeader =(RelativeLayout)res.findViewById(R.id.parentListItemWithoutHeader);
+          //  ListItemDetails listItemDetails = positionOfItemInSection(expenseOrIncome);
 
             TextView totalLabelExpenceIncomeItem = (TextView)res.findViewById(R.id.totalLabelExpenceIncomeItem);
 
-            if(!expandedAllGroups.contains(getItemGroup(position))){
-               parentListItemWithoutHeader.setVisibility(View.GONE);
-                totalLabelExpenceIncomeItem.setVisibility(View.GONE);
 
-            }else{
-                if(listItemDetails.ifLastItem){
-                    totalLabelExpenceIncomeItem.setText("TOTAL: "+ listItemDetails.sectionTotal);
+                if(positionFinal == (all.size() -1)){
+                    totalLabelExpenceIncomeItem.setText("TOTAL: "+ sectionTotal + AppController.getCurrencyString());
                     totalLabelExpenceIncomeItem.setVisibility(View.VISIBLE);
                 }else{
                     totalLabelExpenceIncomeItem.setVisibility(View.GONE);
                 }
-                parentListItemWithoutHeader.setVisibility(View.VISIBLE);
-            }
+
 
 
 
             return res;
+
+        }
+    }
+
+    public class ExpenceIncomeListAdapter extends BaseAdapter {
+        private ArrayList<Pair<String, ArrayList<ExpenseIncome>>> all ;
+        private ArrayList<Pair<String, ArrayList<ExpenseIncome>>> originalAll ;
+       // private ArrayList<String> expandedAllGroups ;
+        public Boolean ifOrderedByCategoryFlag = false;
+        public Boolean deleteFlag = false;
+        public ExpenceIncomeListAdapter(ArrayList<Pair<String, ArrayList<ExpenseIncome>>> all){
+            this.all = new ArrayList<>();
+            for(int count = 0;count<all.size();count++){
+                if(all.get(count).second.size() >0) {
+                    this.all.add(all.get(count));
+                }
+            }
+
+           // this.all.addAll(all);
+            originalAll = new ArrayList<>();
+            originalAll.addAll(this.all);
+//            this.expandedAllGroups = new ArrayList<>();
+//            this.expandedAllGroups.addAll(expandedAllGroups);
+
+            
         }
 
-        @Override
-        public void configurePinnedHeader(View header, int position, int alpha) {
-            TextView lSectionHeader = (TextView)header.findViewById(R.id.header_list_income_expense);
-            lSectionHeader.setText(getSections()[getSectionForPosition(position)]);
-            header.setVisibility(View.VISIBLE);
-        }
         @Override
         public int getCount() {
-            int res = 0;
-            for (int i = 0; i < all.size(); i++) {
-                res += all.get(i).second.size();
-            }
-            return res;
+            // TODO Auto-generated method stub
+            return all.size();
         }
+
+
+
         @Override
-        public int getPositionForSection(int section) {
-            if (section < 0) section = 0;
-            if (section >= all.size()) section = all.size() - 1;
-            int c = 0;
-            for (int i = 0; i < all.size(); i++) {
-                if (section == i) {
-                    return c;
-                }
-                c += all.get(i).second.size();
-            }
-            return 0;
+        public long getItemId(int arg0) {
+            // TODO Auto-generated method stub
+            return arg0;
         }
 
+        @Override
+        public View getView(int arg0, View arg1, ViewGroup arg2) {
 
+            View res = arg1;
+            if (res == null) res = getActivity().getLayoutInflater().inflate(R.layout.expence_income_list_collapsible_item, null);
 
+            TextView headerText = (TextView)res.findViewById(R.id.header_list_income_expense);
+            headerText.setText(all.get(arg0).first);
+            final ListView collapsibleListView = (ListView)res.findViewById(R.id.collapsibleInsideList);
 
-        public ListItemDetails positionOfItemInSection(ExpenseIncome expenseIncome) {
-            ListItemDetails listItemDetails =  new ListItemDetails();
-            int totalSizeI = all.size();
-            for (int i = 0; i < totalSizeI; i++) {
-                Boolean exitILoop = false;
-                listItemDetails.sectionTotal = 0;
-                int totalSizeJ = all.get(i).second.size();
-                for (int j = 0; j < totalSizeJ; j++) {
-                    Log.e("all.get(i).second.get(j).getAMOUNT()","i "+i+" j "+j+all.get(i).second.get(j).toString());
-                    listItemDetails.sectionTotal = listItemDetails.sectionTotal + all.get(i).second.get(j).getAMOUNT();
+            collapsibleListView.setAdapter( new ExpenceIncomeCollapsibleListAdapter(all.get(arg0).second,ifOrderedByCategoryFlag,deleteFlag,Long.decode("0")));
+            final Button disclosureIndicator = (Button)res.findViewById(R.id.disclosureIndicator);
 
-                    if(all.get(i).second.get(j).getEXPENCE_INCOME_ID() == expenseIncome.getEXPENCE_INCOME_ID()){
-                        if(j==totalSizeJ-1){
-                            listItemDetails.ifLastItem = true;
-                        }
-                        listItemDetails.positionInSection = j;
-                        listItemDetails.sectionName = all.get(i).first;
-                       // j = totalSizeJ;
-                        exitILoop = true;
-
+            res.findViewById(R.id.parentFrameHeader).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if(collapsibleListView.getVisibility() == View.GONE){
+                        disclosureIndicator.setBackgroundDrawable(getResources().getDrawable(R.drawable.disclosure_list_expanded));
+                        collapsibleListView.setVisibility(View.VISIBLE);
+                    }else{
+                        disclosureIndicator.setBackgroundDrawable(getResources().getDrawable(R.drawable.disclosure_list_collapsed));
+                        collapsibleListView.setVisibility(View.GONE);
                     }
+
                 }
-                if(exitILoop){
-                    i = totalSizeI;
-                    continue;
-                }
-            }
+            });
 
 
+            setListViewHeightBasedOnChildren(collapsibleListView);
+            return res;
 
-            return listItemDetails;
         }
 
         @Override
-        public int getSectionForPosition(int position) {
+        public Pair<String, ArrayList<ExpenseIncome>> getItem(int position) {
+            //TODO
+
+             return all.get(position);
+
+        }
+
+
+
+        public String getItemGroup(int position) {
             int c = 0;
             for (int i = 0; i < all.size(); i++) {
                 if (position >= c && position < c + all.get(i).second.size()) {
-                    return i;
+                    return all.get(i).first;
                 }
                 c += all.get(i).second.size();
             }
-            return -1;
+            return null;
         }
 
-        @Override
-        public String[] getSections() {
-            String[] res = new String[all.size()];
-            for (int i = 0; i < all.size(); i++) {
-                res[i] = all.get(i).first;
-            }
-            return res;
-        }
+
+
+
 
         public void  reloadData(ArrayList<Pair<String, ArrayList<ExpenseIncome>>> all){
             this.originalAll.clear();
-            this.all = all;
-            this.originalAll.addAll(all);
+            this.all.clear();
+            for(int count = 0;count<all.size();count++){
+                if(all.get(count).second.size() >0) {
+                    this.all.add(all.get(count));
+                }
+            }
+            this.originalAll.addAll(this.all);
             notifyDataSetChanged();
         }
         public void  reloadDataForDeleteStatus(Boolean flag){
@@ -898,15 +846,12 @@ public Boolean isExpenseFlag = true;
             }
             notifyDataSetChanged();
         }
-        public void  reloadDataRemovingItemAtIndex(int position){
-            this.all.remove(position);
-            notifyDataSetChanged();
-        }
+
 
         private class ListItemDetails{
             public int positionInSection;
             public String sectionName;
-            public Integer sectionTotal;
+            public Long sectionTotal;
             Boolean ifLastItem = false;
 
             private ListItemDetails() {
@@ -972,6 +917,31 @@ public Boolean isExpenseFlag = true;
             notifyDataSetChanged();
         }
 
+    }
+
+    /**** Method for Setting the Height of the ListView dynamically.
+     **** Hack to fix the issue of not showing all the items of the ListView
+     **** when placed inside a ScrollView  ****/
+    public  void setListViewHeightBasedOnChildren(ListView listView) {
+        ExpenceIncomeCollapsibleListAdapter listAdapter = (ExpenceIncomeCollapsibleListAdapter)listView.getAdapter();
+        if (listAdapter == null)
+            return;
+
+        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
+        int totalHeight = 0;
+        View view = null;
+        for (int i = 0; i < listAdapter.getCount(); i++) {
+            view = listAdapter.getView(i, view, listView);
+            if (i == 0)
+                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
+            totalHeight += view.getMeasuredHeight();
+        }
+        ViewGroup.LayoutParams params = listView.getLayoutParams();
+        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1))+20;
+        listView.setLayoutParams(params);
+        listView.requestLayout();
     }
 
 }

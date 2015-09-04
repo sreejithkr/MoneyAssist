@@ -7,6 +7,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.skr.AppController;
+
 public class SplashActivity extends ActionBarActivity {
     // Splash screen timer
     private static int SPLASH_TIME_OUT = 1000;
@@ -14,7 +16,7 @@ public class SplashActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-
+        AppController.setCurrencyStringWithContext(this);
         new Handler().postDelayed(new Runnable() {
 
             /*

@@ -2,13 +2,16 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context="com.skr.expensetrack.ListExpenceIncomeFragment">
 
-    <com.skr.customviews.AmazingListView android:id="@+id/expenseOrIncomeList"
+    <ListView android:id="@+id/expenseOrIncomeList"
+        android:layout_marginTop="2dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
         android:divider="@android:color/transparent"
         android:dividerHeight="0dp"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/searchViewParent"
         android:background="@color/backgroud_white"/>
     <RelativeLayout
         android:id="@+id/nodataParentLEIF"
@@ -95,7 +98,7 @@ android:layout_alignParentBottom="true"
 
             />
         <ImageView
-            android:visibility="gone"
+            android:visibility="invisible"
             android:layout_gravity="center_vertical"
             android:layout_alignParentRight="true"
             android:layout_width="24dp"
@@ -111,18 +114,8 @@ android:layout_alignParentBottom="true"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:id="@+id/searchViewParent">
-        <Button
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginLeft="10dp"
-            android:id="@+id/search_drag_button"
-            android:visibility="visible"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_gravity="right|center_vertical"
-            android:background="@drawable/search_drag_out" />
+
         <EditText
-            android:layout_toRightOf="@+id/search_drag_button"
             android:layout_margin="10dp"
             android:layout_width="match_parent"
             android:layout_height="40dp"

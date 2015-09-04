@@ -465,7 +465,7 @@ addExpenceIncomeActivityShow(null);
                 }else {
                     ((CategoryListFragment) fragment).removeCategoryFromListAfterSuccessfulDelete();
                     String confirmDilogMessage = getResources().getString(R.string.delete_dialog_des_sucess_message);
-                    new CustomAlert.CustomBuilder(this,getLayoutInflater())
+                    new CustomAlert.CustomBuilder(this,getLayoutInflater(),getString(R.string.info))
                             .setTitle(R.string.info)
                             .setMessage(confirmDilogMessage).setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
@@ -488,7 +488,7 @@ addExpenceIncomeActivityShow(null);
                 }
                 String confirmDilogMessage = getResources().getString(R.string.success_msg_add_category);
 
-                new CustomAlert.CustomBuilder(this,getLayoutInflater())
+                new CustomAlert.CustomBuilder(this,getLayoutInflater(),getString(R.string.info))
                         .setTitle(R.string.info)
                         .setMessage(confirmDilogMessage).setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -511,7 +511,7 @@ addExpenceIncomeActivityShow(null);
                 }
                 String confirmDilogMessage = getResources().getString(R.string.success_msg_update_category);;
 
-                new CustomAlert.CustomBuilder(this,getLayoutInflater())
+                new CustomAlert.CustomBuilder(this,getLayoutInflater(),getString(R.string.info))
                         .setTitle(R.string.info)
                         .setMessage(confirmDilogMessage).setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
@@ -626,6 +626,8 @@ addExpenceIncomeActivityShow(null);
     }
 
 
+
+
     public ListExpenceIncomeFragment getExpenceIncomeListFragment(Boolean isExpenseFlag) {
 
         ListExpenceIncomeFragment listExpenceIncomeFragment = new ListExpenceIncomeFragment();
@@ -642,9 +644,9 @@ addExpenceIncomeActivityShow(null);
                         invalidateOptionsMenu();
                     }
                     @Override
-                    public void onItemClick(AdapterView<?> parent, int position,HashMap<Integer,String> categoryIdName) {
-                        ListExpenceIncomeFragment.ExpenceIncomeListAdapter expenceIncomeListAdapter = (ListExpenceIncomeFragment.ExpenceIncomeListAdapter)parent.getAdapter();
-                        ExpenseIncome expenseIncome = expenceIncomeListAdapter.getItem(position);
+                    public void onItemClick(ExpenseIncome expenseIncome, int position,HashMap<Integer,String> categoryIdName) {
+                        //TODO the onclick
+
                         Intent detailPage = new Intent(getApplication(),ExpenceIncomeDetailActivity.class);
                         detailPage.putExtra(ListExpenceIncomeFragment.categoryName, categoryIdName.get(expenseIncome.getCATEGORY_ID()));
                         detailPage.putExtra(ListExpenceIncomeFragment.expenseIncome,expenseIncome);
@@ -666,20 +668,7 @@ addExpenceIncomeActivityShow(null);
 
                         //TODO: CHECK IMPLEMENTATION
                         addExpenceIncomeActivityShow(null);
-//                       if(fragment != null) {
-//                            getFragmentManager().beginTransaction().remove(fragment).commit();
-//                        }
-//                        if(homefragment != null) {
-//                            getSupportFragmentManager().beginTransaction().remove(homefragment).commit();
-//                        }
-//                        int position = 0;
-//                        for(int count = 0;count<mTitles.length;count++){
-//                            if(mTitles[count].equalsIgnoreCase(getString(R.string.side_panel_items_array_income_expense))){
-//                                position = count;
-//                            }
-//                        }
-//                        setupAddExpenceIncomeFragement();
-//                        selectItem(position,fragment,R.id.content_frame);
+
                     }
                 });
         }else{
@@ -697,9 +686,8 @@ addExpenceIncomeActivityShow(null);
             }
 
             @Override
-            public void onItemClick(AdapterView<?> parent, int position, HashMap<Integer, String> categoryIdName) {
-                ListExpenceIncomeFragment.ExpenceIncomeListAdapter expenceIncomeListAdapter = (ListExpenceIncomeFragment.ExpenceIncomeListAdapter) parent.getAdapter();
-                ExpenseIncome expenseIncome = expenceIncomeListAdapter.getItem(position);
+            public void onItemClick(ExpenseIncome expenseIncome, int position, HashMap<Integer, String> categoryIdName) {
+                //TODO Onclick
                 Intent detailPage = new Intent(getApplication(), ExpenceIncomeDetailActivity.class);
                 detailPage.putExtra(ListExpenceIncomeFragment.categoryName, categoryIdName.get(expenseIncome.getCATEGORY_ID()));
                 detailPage.putExtra(ListExpenceIncomeFragment.expenseIncome, expenseIncome);

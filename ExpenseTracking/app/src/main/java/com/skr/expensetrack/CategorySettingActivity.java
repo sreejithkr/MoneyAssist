@@ -451,8 +451,7 @@ public class CategorySettingActivity extends ActionBarActivity {
 
     public void validationAlert(String msg){
 
-        new CustomAlert.CustomBuilder(this,getLayoutInflater())
-                .setTitle(R.string.info)
+        new CustomAlert.CustomBuilder(this,getLayoutInflater(),getString(R.string.info))
                 .setMessage(msg).setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
 

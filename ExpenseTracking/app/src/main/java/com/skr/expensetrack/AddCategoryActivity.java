@@ -77,8 +77,8 @@ public class AddCategoryActivity extends ActionBarActivity {
             @Override
             public void onClick(View v) {
 
-                final String categoryName = editTextNameAddCategory.getText().toString();
-                if(categoryName.equalsIgnoreCase("")){
+                final String categoryName = editTextNameAddCategory.getText().toString().trim();
+                if(categoryName.equalsIgnoreCase("") || categoryName.isEmpty()){
 
                     validationAlert(getResources().getString(R.string.validation_msg_add_edit_expence_category));
                     return;
@@ -233,7 +233,7 @@ public class AddCategoryActivity extends ActionBarActivity {
 
     public void validationAlert(String msg){
 
-        new CustomAlert.CustomBuilder(this,getLayoutInflater())
+        new CustomAlert.CustomBuilder(this,getLayoutInflater(),getString(R.string.info))
                 .setTitle(R.string.info)
                 .setMessage(msg).setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {

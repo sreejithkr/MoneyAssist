@@ -422,7 +422,7 @@ maxVal = Integer.parseInt(max_amount_edit_text_val);
     }
     public void validationAlert(String msg){
 
-        new CustomAlert.CustomBuilder(this,getLayoutInflater()).setTitle(R.string.info)
+        new CustomAlert.CustomBuilder(this,getLayoutInflater(),getString(R.string.info)).setTitle(R.string.info)
                 .setMessage(msg).setNeutralButton(android.R.string.ok, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
 
