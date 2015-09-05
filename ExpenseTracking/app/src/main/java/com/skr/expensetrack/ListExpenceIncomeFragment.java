@@ -208,38 +208,7 @@ public Boolean isExpenseFlag = true;
             }
         });
 
-        // convert the DP into pixel
-//        final int minWidth =  (int)(50 * scale + 0.5f);
-//        DisplayMetrics displaymetrics = new DisplayMetrics();
-//        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displaymetrics);
-//        final int height = displaymetrics.heightPixels;
-//        final int width = displaymetrics.widthPixels;
-//        layoutParams.leftMargin = width - minWidth;
-      //  Log.e("rootView.getWidth() - 50;", "" + minWidth);
-   //     searchViewParent.setLayoutParams(layoutParams);
-    //    searchViewParent.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-//        search_drag.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                RelativeLayout.LayoutParams mParams = (RelativeLayout.LayoutParams) searchViewParent.getLayoutParams();
-//                if(searchButtonIsCollapsed) {
-//                    mParams.leftMargin = 10;
-//                    search_drag.setBackgroundDrawable(getResources().getDrawable(R.drawable.search_drag_in));
-//                    searchViewParent.setBackgroundColor(getResources().getColor(R.color.backgroud_white));
-//                }else{
-//                    mParams.leftMargin = width - minWidth;
-//                    InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
-//                    imm.hideSoftInputFromWindow(editTextSearchItems.getWindowToken(), 0);
-//                    editTextSearchItems.setText("");
-//                    editTextSearchItems.clearFocus();
-//                    ((ExpenceIncomeListAdapter)listView.getAdapter()).filter("");
-//                    searchViewParent.setBackgroundColor(getResources().getColor(android.R.color.transparent));
-//                    search_drag.setBackgroundDrawable(getResources().getDrawable(R.drawable.search_drag_out));
-//                }
-//                searchViewParent.setLayoutParams(mParams);
-//                searchButtonIsCollapsed = !searchButtonIsCollapsed;
-//            }
-//        });
+
                 listView = (ListView)rootView.findViewById(R.id.expenseOrIncomeList);
                 listView.setEmptyView(rootView.findViewById(R.id.nodataParentLEIF));
 
@@ -292,6 +261,8 @@ public Boolean isExpenseFlag = true;
 
             }
         }).start();
+
+
 
         return rootView;
     }
@@ -498,6 +469,8 @@ public Boolean isExpenseFlag = true;
         String end_date_edit_text = data.getStringExtra(FilterAndViewExpenseIncomeActivity.end_date_edit_text_key);
         String min_amt_edit_text = data.getStringExtra(FilterAndViewExpenseIncomeActivity.min_amt_edit_text_key);
         String max_amt_edit_text = data.getStringExtra(FilterAndViewExpenseIncomeActivity.max_amt_edit_text_key);
+
+
         if(!start_date_edit_text.isEmpty() && !end_date_edit_text.isEmpty() ){
             if(AppController.compareTwoDateStringInMMM_DD_YYYY(start_date_edit_text, end_date_edit_text) > 0){
                 String tempStringA = start_date_edit_text;
