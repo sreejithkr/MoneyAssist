@@ -52,8 +52,8 @@ public class ViewCarousel
     public void setChildrenWidth(int width)
     {
         this.childrenWidth = width;
-        padding = screenWidth / 2 - dpToPx(childrenWidth / 2);
-        pager.setPadding(padding, 50, padding, 50);
+        padding = 10;//screenWidth / 2 - dpToPx(childrenWidth / 2);
+       // pager.setPadding(padding, 10, padding, 10);
         pager.setClipToPadding(false);
     }
 

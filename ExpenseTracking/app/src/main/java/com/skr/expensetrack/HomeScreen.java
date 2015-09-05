@@ -35,6 +35,7 @@ import com.skr.AppController;
 import com.skr.customviews.AmazingAdapter;
 import com.skr.customviews.AmazingListView;
 import com.skr.customviews.CustomAlert;
+import com.skr.customviews.CustomProgressDialog;
 import com.skr.datahelper.Category;
 import com.skr.datahelper.CheckBoxListData;
 import com.skr.datahelper.DBHelper;
@@ -69,14 +70,33 @@ public class HomeScreen extends ActionBarActivity {
     ArrayList<String> subItemsArray;
     Fragment fragment;
     android.support.v4.app.Fragment homefragment;
-Boolean ifExpenceOrIncomeListEmpty = false;
+    Boolean ifExpenceOrIncomeListEmpty = false;
+    private CustomProgressDialog progress;
 
     private void onStarupSetup(){
-
+        progress =  CustomProgressDialog.getInstance(this);
+        progress.setMessage(getResources().getString(R.string.wait_message));
+        progress.show();
         // Restore preferences
-        SharedPreferences settings = getSharedPreferences(AppController.MY_APP_PREFERENCE, 0);
-        boolean isCategoryPresentInDB = settings.getBoolean(AppController.categoryprepopulated, false);
-        AppController.categoryReloadToDB(settings,isCategoryPresentInDB,this);
+        final SharedPreferences settings = getSharedPreferences(AppController.MY_APP_PREFERENCE, 0);
+        final boolean isCategoryPresentInDB = settings.getBoolean(AppController.categoryprepopulated, false);
+        final Handler handler = new Handler();
+
+        new Thread( new Runnable() {
+            @Override
+            public void run() {
+
+                AppController.categoryReloadToDB(settings,isCategoryPresentInDB,HomeScreen.this);
+
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        progress.dismiss();
+                        navigateToHome();
+                    }
+                });
+            }
+        }).start();
 
         
     }
@@ -86,7 +106,7 @@ Boolean ifExpenceOrIncomeListEmpty = false;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
-        Crittercism.initialize(getApplicationContext(), "559aa1145c69e80d008f93f7");
+          Crittercism.initialize(getApplicationContext(), "559aa1145c69e80d008f93f7");
        
         if(getSupportActionBar() != null){getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_green)));}
         mTitles = getResources().getStringArray(R.array.side_panel_items_array);
@@ -137,8 +157,9 @@ for(int count=0;count< mTitles.length;count++){
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_drawer);
 
+
         onStarupSetup();
-        navigateToHome();
+
 
      //   selectItem(0,homefragment);
 
@@ -172,26 +193,20 @@ for(int count=0;count< mTitles.length;count++){
             @Override
             public void onMoreInfoButtonClick(HashMap<String,String> message){
                 onMoreInfoButtonClickHome(message);
-
-
             }
 
             @Override
             public void onAddExpenceOrIncome() {
-
-
                 //TODO: check implementation
                 addExpenceIncomeActivityShow(null);
             }
 
         });
-
         android.support.v4.app.FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, homefragment).commit();
         mDrawerList.setItemChecked(0, true);
         setTitle(mTitles[0]);
         mDrawerLayout.closeDrawer(mDrawerList);
-
     }
 
 
@@ -203,11 +218,6 @@ for(int count=0;count< mTitles.length;count++){
     }
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-//        if(personDataNoAvailable) {
-//            menu.findItem(R.id.action_delete_person_eventED).setVisible(false);
-//        }else{
-//            menu.findItem(R.id.action_delete_person_eventED).setVisible(true);
-//        }
         menu.findItem(R.id.action_settings).setVisible(false);
         menu.findItem(R.id.action_add_category).setVisible(false);
         menu.findItem(R.id.action_add_an_expense_or_income).setVisible(false);
@@ -222,7 +232,6 @@ for(int count=0;count< mTitles.length;count++){
         menu.findItem(R.id.dataRefresh).setVisible(false);
         menu.findItem(R.id.quickAdd).setVisible(true);
         menu.findItem(R.id.action_search_currency).setVisible(false);
-
         switch(state){
             case HomePage:
                 break;
@@ -243,7 +252,6 @@ for(int count=0;count< mTitles.length;count++){
                 menu.findItem(R.id.action_sort_by_category).setVisible(!ifExpenceOrIncomeListEmpty);
                 menu.findItem(R.id.action_sort_by_other_factors).setVisible(!ifExpenceOrIncomeListEmpty);
                 menu.findItem(R.id.action_reset_to_original).setVisible(false);
-
                 break;
             case Expense:
                 menu.findItem(R.id.dataRefresh).setVisible(!((ListExpenceIncomeFragment)fragment).hideRefreshIcon);
@@ -254,7 +262,6 @@ for(int count=0;count< mTitles.length;count++){
                 menu.findItem(R.id.action_sort_by_category).setVisible(!ifExpenceOrIncomeListEmpty);
                 menu.findItem(R.id.action_sort_by_other_factors).setVisible(!ifExpenceOrIncomeListEmpty);
                 menu.findItem(R.id.action_reset_to_original).setVisible(false);
-
                 break;
             case Settings:
 
@@ -268,21 +275,18 @@ for(int count=0;count< mTitles.length;count++){
                 menu.findItem(R.id.action_search_currency).setVisible(true);
                 final MenuItem searchItem = menu.findItem(R.id.action_search_currency);
                 final SearchView searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-
                 MenuItemCompat.setOnActionExpandListener(searchItem, new MenuItemCompat.OnActionExpandListener() {
                     @Override
                     public boolean onMenuItemActionExpand(MenuItem item) {
                         searchView.setQuery("",false);
                         return true;
                     }
-
                     @Override
                     public boolean onMenuItemActionCollapse(MenuItem item) {
                         ((CurrencyListFragment)fragment).filter("");
                         return true;
                     }
                 });
-
                 ((CurrencyListFragment)fragment).searchItem = searchItem;
                 // Configure the search info and add any event listeners
                 searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -291,7 +295,6 @@ for(int count=0;count< mTitles.length;count++){
                         ((CurrencyListFragment)fragment).filter(query);
                         return true;
                     }
-
                     @Override
                     public boolean onQueryTextChange(String newText) {
 
@@ -299,12 +302,8 @@ for(int count=0;count< mTitles.length;count++){
                         return true;
                     }
                 });
-
                 break;
-
-
         }
-
         return super.onPrepareOptionsMenu(menu);
     }
     @Override
@@ -809,20 +808,6 @@ addExpenceIncomeActivityShow(null);
                     public void onAddExpenceOrIncome() {
                         //TODO: CHECK IMPLEMENTATION
                         addExpenceIncomeActivityShow(null);
-//                        if(fragment != null) {
-//                            getFragmentManager().beginTransaction().remove(fragment).commit();
-//                        }
-//                        if(homefragment != null) {
-//                            getSupportFragmentManager().beginTransaction().remove(homefragment).commit();
-//                        }
-//                        int position = 0;
-//                        for(int count = 0;count<mTitles.length;count++){
-//                            if(mTitles[count].equalsIgnoreCase(getString(R.string.side_panel_items_array_income_expense))){
-//                                position = count;
-//                            }
-//                        }
-//                        setupAddExpenceIncomeFragement();
-//                        selectItem(position,fragment,R.id.content_frame);
                     }
                 });
 
