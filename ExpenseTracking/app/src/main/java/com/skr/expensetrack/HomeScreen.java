@@ -848,6 +848,7 @@ addExpenceIncomeActivityShow(null);
                     @Override
                     public void onCreatedFragment() {
                         state = CurrentPage.ContactUs;
+                        invalidateOptionsMenu();
 
                     }
                 });

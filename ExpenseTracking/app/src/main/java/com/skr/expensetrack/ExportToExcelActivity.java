@@ -457,7 +457,7 @@ public class ExportToExcelActivity extends ActionBarActivity {
 
             final ArrayList<CheckBoxListData> checkBoxListDatas = getTotal();
 
-            if (noIncomeSelected && noIncomeSelected) {
+            if (noExpenceSelected && noIncomeSelected) {
                 validationAlert(getString(R.string.validation_get_total_category_selection_activity));
                 return;
             }
