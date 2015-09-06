@@ -138,7 +138,7 @@ public class LoadFromArchiveListActivity extends ActionBarActivity {
         int stringLength = stringToExtractDetails.length();
 
         String archive_name = stringToExtractDetails.substring(0, stringLength-dateStringLength);
-        String archived_date = stringToExtractDetails.substring(stringLength-dateStringLength,stringLength-1);
+        String archived_date = stringToExtractDetails.substring(stringLength-dateStringLength,stringLength);
         return  new ArchiveDetails(archive_name,archived_date);
     }
 

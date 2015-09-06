@@ -30,7 +30,6 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
-import com.crittercism.app.Crittercism;
 import com.skr.AppController;
 import com.skr.customviews.AmazingAdapter;
 import com.skr.customviews.AmazingListView;
@@ -106,7 +105,7 @@ public class HomeScreen extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_screen);
 
-          Crittercism.initialize(getApplicationContext(), "559aa1145c69e80d008f93f7");
+          //Crittercism.initialize(getApplicationContext(), "559aa1145c69e80d008f93f7");
        
         if(getSupportActionBar() != null){getSupportActionBar().setBackgroundDrawable(new ColorDrawable(getResources().getColor(R.color.app_green)));}
         mTitles = getResources().getStringArray(R.array.side_panel_items_array);
@@ -433,7 +432,9 @@ addExpenceIncomeActivityShow(null);
             final ExpenseIncome ei = data.getParcelableExtra(ListExpenceIncomeFragment.expenseIncome);
             addExpenceIncomeActivity.putExtra(ListExpenceIncomeFragment.expenseIncome,ei);
         }
-
+        if(state == CurrentPage.Income){
+            addExpenceIncomeActivity.putExtra(AddExpenseIncomeFragment.ExpenseFlagKey,false);
+        }
         startActivityForResult(addExpenceIncomeActivity,ActivityResultIdentifies.AddExpenceIncomeActivityKey);
     }
     @Override

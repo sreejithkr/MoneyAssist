@@ -241,7 +241,12 @@ public class HomeExpenceTrackFragment extends Fragment {
             incomeMessage = noCategory;
         }
 
-
+        if(expenseMessage.isEmpty()){
+            expenseMessage = allCategory;
+        }
+        if(incomeMessage.isEmpty()){
+            incomeMessage = allCategory;
+        }
         messageMap.put(expenseMessageKey,expenseMessage+" : " + expencePieChart + AppController.getCurrencyString());
 
         messageMap.put(incomeMessageKey,incomeMessage+" : " + incomePieChart + AppController.getCurrencyString());
@@ -271,6 +276,13 @@ public class HomeExpenceTrackFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_home_expence_track, container, false);
 RelativeLayout grapWithDataParent = (RelativeLayout)rootView.findViewById(R.id.grapWithDataParent);
          pieChart = (PieChart) rootView.findViewById(R.id.chart);
+        messageMap = new HashMap<>();
+
+        String allCategory = getResources().getString(R.string.allCategory_default_msg_show_total_details);
+        messageMap.put(expenseMessageKey,allCategory+" : " + expencePieChart + AppController.getCurrencyString());
+
+        messageMap.put(incomeMessageKey,allCategory+" : " + incomePieChart + AppController.getCurrencyString());
+        messageMap.put(timePeriodKey,getResources().getString(R.string.timePeriod_default_msg_show_total_details));
 
         LinearLayout myLayout = (LinearLayout)rootView.findViewById(R.id.pagerParent);
         Button calc_new_summary_button = (Button)rootView.findViewById(R.id.calc_new_summary_button);
