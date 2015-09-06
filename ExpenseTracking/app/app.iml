@@ -86,10 +86,8 @@
     <orderEntry type="library" exported="" name="log4j-1.2.14" level="project" />
     <orderEntry type="library" exported="" name="appcompat-v7-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="jxl-2.6.12" level="project" />
-    <orderEntry type="library" exported="" name="crittercism-android-agent-5.0.6" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-21.0.3" level="project" />
     <orderEntry type="library" exported="" name="support-v4-21.0.3" level="project" />
-    <orderEntry type="library" exported="" name="carousel-1.0.1" level="project" />
     <orderEntry type="library" exported="" name="mpandroidchart-1.7.5" level="project" />
   </component>
 </module>

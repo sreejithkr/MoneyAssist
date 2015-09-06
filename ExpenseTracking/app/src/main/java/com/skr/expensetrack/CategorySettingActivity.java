@@ -442,6 +442,8 @@ public class CategorySettingActivity extends ActionBarActivity {
 
         //noinspection SimplifiableIfStatement
         if (id ==  android.R.id.home) {
+
+
             finish();
 
         }

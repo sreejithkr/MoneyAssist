@@ -137,8 +137,8 @@
     <string name="check_box_list_title_message">Select categories for your search filter</string>
     <string name="check_box_list_title_message_total_calculate">Select categories to be included while calculating Income And Expense total</string>
     <string name="check_box_list_title_message_total_excel_export">Select categories from which data should be exported to Excel</string>
-    <string name="start_end_date_message">Select start and end date check box to enable and include the selected days in your filter</string>
-    <string name="max_min_amount_message">Select maximum and minimum amount check box to enable and filter by using them as at-most and the least value of the amount spent/received</string>
+    <string name="start_end_date_message">Enter any or both start and end date to include the selected days in your filter</string>
+    <string name="max_min_amount_message">Enter any or both maximum and minimum amount to specify at-most and the least value of the amount in your filter</string>
     <string name="select_all">Select All</string>
     <string name="select_none">Select None</string>
     <string name="start_date_message">Start Date </string>
@@ -168,7 +168,7 @@
     <string name="duration_message_title">The data to plot Expense - Income chart, will be within the duration specified in Duration setting</string>
     <string name="duration_message">Select and enter number of previous days, months or years data to be utilised</string>
     <string name="start_end_date_message_duration_setting">Select any or both  start and end date check box to specify the duration</string>
-    <string name="max_min_amount_message_amount_Setting">Select and enter maximum and minimum amount check box to specify at-most and the least value of the amount spent/received in amount settings</string>
+    <string name="max_min_amount_message_amount_Setting">Enter any or both maximum and minimum amount to specify at-most and the least value of the amount in your filter</string>
     <string name="amount_settings">Amount Settings</string>
     <string name="duration_settings">Duration Settings</string>
     <string name="category_settings">Category Settings</string>

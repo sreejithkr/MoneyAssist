@@ -16,6 +16,9 @@ android {
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+        debug {
+            minifyEnabled false
+        }
     }
 }
 
@@ -23,7 +26,5 @@ dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:appcompat-v7:21.0.3'
     compile 'org.quanqi:mpandroidchart:1.7.5'
-    compile 'com.crittercism:crittercism-android-agent:5.0.6'
-    compile 'fr.rolandl:carousel:1.0.1'
     compile 'net.sourceforge.jexcelapi:jxl:2.6.12'
 }
